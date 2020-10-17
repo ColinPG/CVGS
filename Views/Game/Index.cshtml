@@ -1,0 +1,131 @@
+﻿@model IEnumerable<CVGS.Models.Game>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.EnglishName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FrenchName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FrenchVersion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EnglishPlayerCount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FrenchPlayerCount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EnglishTrailer)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FrenchTrailer)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EnglishDescription)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FrenchDescription)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EnglishDetail)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FrenchDetail)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UserName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EsrbRatingCodeNavigation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.GameCategory)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.GamePerspectiveCodeNavigation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.GameStatusCodeNavigation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.GameSubCategory)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.EnglishName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FrenchName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FrenchVersion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EnglishPlayerCount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FrenchPlayerCount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EnglishTrailer)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FrenchTrailer)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EnglishDescription)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FrenchDescription)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EnglishDetail)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FrenchDetail)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EsrbRatingCodeNavigation.Code)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.GameCategory.EnglishCategory)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.GamePerspectiveCodeNavigation.Code)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.GameStatusCodeNavigation.Code)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.GameSubCategory.EnglishCategory)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Guid">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Guid">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Guid">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

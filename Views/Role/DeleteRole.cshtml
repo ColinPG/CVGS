@@ -1,0 +1,25 @@
+﻿@model IEnumerable<UserViewModel>
+@{
+    var roleId = ViewBag.roleId;
+    var roleName = ViewBag.roleName;
+    ViewData["Title"] = $"Confirm delete of Role '{roleName}'";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<form asp-controller="Role" asp-action="DeleteRolePost" asp-route-id="@roleId" method="post">
+    <h4>Users in Role:</h4>
+    <ul>
+        @foreach (var user in Model)
+        {
+            @if (user.IsInRole)
+            {
+                <li>@user.UserName</li>
+            }
+        }
+    </ul>
+    <button class="btn btn-danger" type="submit" value="">Delete Confirmed</button>
+    <a class="btn btn-secondary" asp-action="Index" asp-controller="CARole">Cancel Delete</a>
+</form>
+
+<a asp-action="Index" asp-controller="Role">Return to Role List</a>

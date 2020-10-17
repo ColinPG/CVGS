@@ -1,0 +1,108 @@
+﻿@model CVGS.Models.Game
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Game</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Guid" class="control-label"></label>
+                <input asp-for="Guid" class="form-control" />
+                <span asp-validation-for="Guid" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="GameStatusCode" class="control-label"></label>
+                <select asp-for="GameStatusCode" class ="form-control" asp-items="ViewBag.GameStatusCode"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="GameCategoryId" class="control-label"></label>
+                <select asp-for="GameCategoryId" class ="form-control" asp-items="ViewBag.GameCategoryId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="GameSubCategoryId" class="control-label"></label>
+                <select asp-for="GameSubCategoryId" class ="form-control" asp-items="ViewBag.GameSubCategoryId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="EsrbRatingCode" class="control-label"></label>
+                <select asp-for="EsrbRatingCode" class ="form-control" asp-items="ViewBag.EsrbRatingCode"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="EnglishName" class="control-label"></label>
+                <input asp-for="EnglishName" class="form-control" />
+                <span asp-validation-for="EnglishName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FrenchName" class="control-label"></label>
+                <input asp-for="FrenchName" class="form-control" />
+                <span asp-validation-for="FrenchName" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="FrenchVersion" /> @Html.DisplayNameFor(model => model.FrenchVersion)
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="EnglishPlayerCount" class="control-label"></label>
+                <input asp-for="EnglishPlayerCount" class="form-control" />
+                <span asp-validation-for="EnglishPlayerCount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FrenchPlayerCount" class="control-label"></label>
+                <input asp-for="FrenchPlayerCount" class="form-control" />
+                <span asp-validation-for="FrenchPlayerCount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="GamePerspectiveCode" class="control-label"></label>
+                <select asp-for="GamePerspectiveCode" class ="form-control" asp-items="ViewBag.GamePerspectiveCode"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="EnglishTrailer" class="control-label"></label>
+                <input asp-for="EnglishTrailer" class="form-control" />
+                <span asp-validation-for="EnglishTrailer" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FrenchTrailer" class="control-label"></label>
+                <input asp-for="FrenchTrailer" class="form-control" />
+                <span asp-validation-for="FrenchTrailer" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EnglishDescription" class="control-label"></label>
+                <input asp-for="EnglishDescription" class="form-control" />
+                <span asp-validation-for="EnglishDescription" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FrenchDescription" class="control-label"></label>
+                <input asp-for="FrenchDescription" class="form-control" />
+                <span asp-validation-for="FrenchDescription" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EnglishDetail" class="control-label"></label>
+                <input asp-for="EnglishDetail" class="form-control" />
+                <span asp-validation-for="EnglishDetail" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FrenchDetail" class="control-label"></label>
+                <input asp-for="FrenchDetail" class="form-control" />
+                <span asp-validation-for="FrenchDetail" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,61 @@
+﻿@model IEnumerable<UserViewModel>
+@{
+    var roleId = ViewBag.roleId;
+    var roleName = ViewBag.roleName;
+    ViewData["Title"] = $"Users In Role '{roleName}'";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<form asp-controller="Role" asp-action="CreateUserRole" asp-route-roleId="@roleId" method="post">
+    <label>Users Not in Role:</label>
+
+    <select id="ddlUsersNotInRole" name="userId">
+        @foreach (var user in Model)
+        {
+            @if (!user.IsInRole)
+            {
+                <option value="@user.UserId">@user.UserName</option>
+            }
+        }
+    </select>
+    <input type="submit" class="btn btn-primary" value="Add to Role" />
+</form>
+
+@if (Model.Any())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.UserName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Email)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                @if (item.IsInRole)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.UserName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Email)
+                        </td>
+                        <td>
+                            <a asp-action="RemoveUserRole" asp-route-roleId="@roleId" asp-route-userId="@item.UserId">Remove</a>
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+}
+
+<a asp-action="Index" asp-controller="Role">Return to Role List</a>
