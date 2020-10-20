@@ -121,9 +121,15 @@
                 @Html.DisplayFor(modelItem => item.GameSubCategory.EnglishCategory)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Guid">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Guid">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Guid">Delete</a>
+                @if (User.IsInRole("administrators") || User.IsInRole("Employees"))
+                {
+                    <a asp-action="Edit" asp-route-id="@item.Guid">Edit</a> 
+                }
+                <a asp-action="Details" asp-route-id="@item.Guid">Details</a> 
+                @if (User.IsInRole("administrators") || User.IsInRole("Employees"))
+                {
+            <a asp-action="Delete" asp-route-id="@item.Guid">Delete</a>
+                }
             </td>
         </tr>
 }

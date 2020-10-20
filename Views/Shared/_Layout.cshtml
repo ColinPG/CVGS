@@ -38,17 +38,12 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Game" asp-action="Index">Game</a>
                         </li>
-                        <li class="nav-item dropdown">
-                            <ul class="dropdown-toggle" data-toggle="dropdown"> Security</ul>
-                            <ul class="dropdown-menu">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="" asp-action="">
-                                    User Maintenace
-                                </a>
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Role" asp-action="Index">
-                                    Role Maintenace
-                                </a>
-                            </ul>
-                        </li>
+                        @if (User.IsInRole("administrators"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Role" asp-action="Index">Role Maintenace</a>
+                            </li>
+                        }
                     </ul>
                 </div>
             </div>

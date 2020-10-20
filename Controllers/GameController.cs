@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using CVGS.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CVGS.Controllers
 {
@@ -49,6 +50,7 @@ namespace CVGS.Controllers
         }
 
         // GET: Game/Create
+        [Authorize(Roles = "Employees")]
         public IActionResult Create()
         {
             ViewData["EsrbRatingCode"] = new SelectList(_context.EsrbRating, "Code", "Code");
@@ -82,6 +84,7 @@ namespace CVGS.Controllers
         }
 
         // GET: Game/Edit/5
+        [Authorize(Roles = "Employees")]
         public async Task<IActionResult> Edit(Guid? id)
         {
             if (id == null)
@@ -143,6 +146,7 @@ namespace CVGS.Controllers
         }
 
         // GET: Game/Delete/5
+        [Authorize(Roles = "Employees")]
         public async Task<IActionResult> Delete(Guid? id)
         {
             if (id == null)
