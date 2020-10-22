@@ -33,7 +33,6 @@ namespace CVGS.Controllers
             {
                 return NotFound();
             }
-
             var game = await _context.Game
                 .Include(g => g.EsrbRatingCodeNavigation)
                 .Include(g => g.GameCategory)
@@ -43,6 +42,7 @@ namespace CVGS.Controllers
                 .FirstOrDefaultAsync(m => m.Guid == id);
             if (game == null)
             {
+                TempData["message"] = "Please select a game to see it's details.";
                 return NotFound();
             }
 
