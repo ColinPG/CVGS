@@ -65,8 +65,8 @@ namespace CVGS.Areas.Identity.Pages.Account
             [Display(Name = "Gamer Tag")]
             public string GamerTag { get; set; }
 
-            [Display(Name = "Bio")]
-            public string Bio { get; set; }
+            //[Display(Name = "Bio")]
+            //public string Bio { get; set; }
 
             [Phone]
             [Display(Name = "Phone number")]
@@ -92,7 +92,7 @@ namespace CVGS.Areas.Identity.Pages.Account
                     Email = Input.Email, 
                     PhoneNumber = Input.PhoneNumber,
                     GamerTag = Input.GamerTag, 
-                    Bio = Input.Bio, 
+                    //Bio = Input.Bio, 
                     PromoEmailEnabled = Input.PromoEmailEnabled};
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)

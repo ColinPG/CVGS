@@ -58,9 +58,9 @@ namespace CVGS.Areas.Identity.Pages.Account.Manage
             [Display(Name = "Gamer Tag")]
             public string GamerTag { get; set; }
 
-            [Required]
-            [Display(Name = "Bio")]
-            public string Bio { get; set; }
+            //[Required]
+            //[Display(Name = "Bio")]
+            //public string Bio { get; set; }
 
             [Display(Name  = "Recieving Promotional Emails")]
             public bool PromotionalEmail { get; set; }
@@ -78,7 +78,7 @@ namespace CVGS.Areas.Identity.Pages.Account.Manage
             var email = await _userManager.GetEmailAsync(user);
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
             var gamerTag = user.GamerTag;
-            var bio = user.Bio;
+            //var bio = user.Bio;
             var promotionalEmail = user.PromoEmailEnabled;
 
             Input = new InputModel
@@ -87,7 +87,7 @@ namespace CVGS.Areas.Identity.Pages.Account.Manage
                 Email = email,
                 PhoneNumber = phoneNumber,
                 GamerTag = gamerTag,
-                Bio = bio,
+                //Bio = bio,
                 PromotionalEmail = promotionalEmail
             };
 
@@ -140,11 +140,11 @@ namespace CVGS.Areas.Identity.Pages.Account.Manage
                 user.GamerTag = Input.GamerTag;
             }
 
-            var bio = user.Bio;
-            if(Input.Bio !=bio)
-            {
-                user.Bio = Input.Bio;
-            }
+            //var bio = user.Bio;
+            //if(Input.Bio !=bio)
+            //{
+            //user.Bio = Input.Bio;
+            //}
             var promotionalEmail = user.PromoEmailEnabled;
             if (Input.PromotionalEmail !=promotionalEmail)
             {
