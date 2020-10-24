@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CVGS.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -13,11 +14,11 @@ namespace CVGS.Controllers
     public class RoleController : Controller
     {
         private readonly RoleManager<IdentityRole> roleManager;
-        private readonly UserManager<IdentityUser> userManager;
+        private readonly UserManager<User> userManager;
 
         // Initializes the controller.
         public RoleController(RoleManager<IdentityRole> roleManager,
-                                        UserManager<IdentityUser> userManager)
+                                        UserManager<User> userManager)
         {
             this.roleManager = roleManager;
             this.userManager = userManager;

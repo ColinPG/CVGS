@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
+using CVGS.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -13,13 +14,13 @@ namespace CVGS.Areas.Identity.Pages.Account.Manage
 {
     public partial class IndexModel : PageModel
     {
-        private readonly UserManager<IdentityUser> _userManager;
-        private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly UserManager<User> _userManager;
+        private readonly SignInManager<User> _signInManager;
         private readonly IEmailSender _emailSender;
 
         public IndexModel(
-            UserManager<IdentityUser> userManager,
-            SignInManager<IdentityUser> signInManager,
+            UserManager<User> userManager,
+            SignInManager<User> signInManager,
             IEmailSender emailSender)
         {
             _userManager = userManager;
@@ -27,7 +28,7 @@ namespace CVGS.Areas.Identity.Pages.Account.Manage
             _emailSender = emailSender;
         }
 
-        public string Username { get; set; }
+        //public string Username { get; set; }
 
         public bool IsEmailConfirmed { get; set; }
 
@@ -40,12 +41,29 @@ namespace CVGS.Areas.Identity.Pages.Account.Manage
         public class InputModel
         {
             [Required]
+            [StringLength(25, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 3)]
+            [Display(Name = "User Name")]
+            public string UserName { get; set; }
+
+            [Required]
             [EmailAddress]
             public string Email { get; set; }
 
             [Phone]
             [Display(Name = "Phone number")]
             public string PhoneNumber { get; set; }
+
+            [Required]
+            [StringLength(25, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 3)]
+            [Display(Name = "Gamer Tag")]
+            public string GamerTag { get; set; }
+
+            [Required]
+            [Display(Name = "Bio")]
+            public string Bio { get; set; }
+
+            [Display(Name  = "Recieving Promotional Emails")]
+            public bool PromotionalEmail { get; set; }
         }
 
         public async Task<IActionResult> OnGetAsync()
@@ -59,13 +77,18 @@ namespace CVGS.Areas.Identity.Pages.Account.Manage
             var userName = await _userManager.GetUserNameAsync(user);
             var email = await _userManager.GetEmailAsync(user);
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
-
-            Username = userName;
+            var gamerTag = user.GamerTag;
+            var bio = user.Bio;
+            var promotionalEmail = user.PromoEmailEnabled;
 
             Input = new InputModel
             {
+                UserName = userName,
                 Email = email,
-                PhoneNumber = phoneNumber
+                PhoneNumber = phoneNumber,
+                GamerTag = gamerTag,
+                Bio = bio,
+                PromotionalEmail = promotionalEmail
             };
 
             IsEmailConfirmed = await _userManager.IsEmailConfirmedAsync(user);
@@ -85,7 +108,11 @@ namespace CVGS.Areas.Identity.Pages.Account.Manage
             {
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
-
+            //var userName = user.UserName;
+            //if(Input.UserName != userName)
+            //{
+            //    user.UserName = Input.UserName;
+            //}
             var email = await _userManager.GetEmailAsync(user);
             if (Input.Email != email)
             {
@@ -107,7 +134,26 @@ namespace CVGS.Areas.Identity.Pages.Account.Manage
                     throw new InvalidOperationException($"Unexpected error occurred setting phone number for user with ID '{userId}'.");
                 }
             }
+            var gamerTag = user.GamerTag;
+            if(Input.GamerTag != gamerTag)
+            {
+                user.GamerTag = Input.GamerTag;
+            }
 
+            var bio = user.Bio;
+            if(Input.Bio !=bio)
+            {
+                user.Bio = Input.Bio;
+            }
+            var promotionalEmail = user.PromoEmailEnabled;
+            if (Input.PromotionalEmail !=promotionalEmail)
+            {
+                user.PromoEmailEnabled = Input.PromotionalEmail;
+            }
+
+
+
+            await _userManager.UpdateAsync(user);
             await _signInManager.RefreshSignInAsync(user);
             StatusMessage = "Your profile has been updated";
             return RedirectToPage();

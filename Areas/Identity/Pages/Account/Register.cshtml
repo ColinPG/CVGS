@@ -12,6 +12,12 @@
             <h4>Create a new account.</h4>
             <hr />
             <div asp-validation-summary="All" class="text-danger"></div>
+
+            <div class="form-group">
+                <label asp-for="Input.UserName"></label>
+                <input asp-for="Input.UserName" class="form-control" />
+                <span asp-validation-for="Input.UserName" class="text-danger"></span>
+            </div>
             <div class="form-group">
                 <label asp-for="Input.Email"></label>
                 <input asp-for="Input.Email" class="form-control" />
@@ -26,6 +32,26 @@
                 <label asp-for="Input.ConfirmPassword"></label>
                 <input asp-for="Input.ConfirmPassword" class="form-control" />
                 <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.PhoneNumber"></label>
+                <input asp-for="Input.PhoneNumber" class="form-control" />
+                <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.GamerTag"></label>
+                <input asp-for="Input.GamerTag" class="form-control" />
+                <span asp-validation-for="Input.GamerTag" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.Bio"></label>
+                <input asp-for="Input.Bio" class="form-control" />
+                <span asp-validation-for="Input.Bio" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.PromoEmailEnabled"></label>
+                <input checked asp-for="Input.PromoEmailEnabled" class="form-control" />
+                <span asp-validation-for="Input.PromoEmailEnabled" class="text-danger"></span>
             </div>
             <button type="submit" class="btn btn-primary">Register</button>
         </form>

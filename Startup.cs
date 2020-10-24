@@ -43,7 +43,7 @@ namespace CVGS
             services.AddDbContext<CVGSContext>(options => 
                 options.UseSqlServer(Configuration.GetConnectionString("CVGSConnection")));
 
-            services.AddDefaultIdentity<IdentityUser>()
+            services.AddDefaultIdentity<User>()
                 .AddRoles<IdentityRole>()
                 .AddDefaultUI(UIFramework.Bootstrap4)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
