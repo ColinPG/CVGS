@@ -13,7 +13,16 @@ namespace CVGS.Models
     {
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
+            if (EnglishName == null || EnglishName.Trim() == "")
+                yield return new ValidationResult("English Name cannot be blank.", new[] { nameof(EnglishName) });
+            else
+                EnglishName = ModelValidations.Capitilize(EnglishName).Trim();
             yield return ValidationResult.Success;
+
+            //Title captilized
+            //player count  must be number
+            //ESRB rating code, category, perspective category, status code, subcategory dropdowns (no blanks)
+            //description, detail no blanks no formatting
         }
     }
     public class GameMetaData

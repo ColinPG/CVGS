@@ -11,13 +11,13 @@
     <h4>Game</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.EnglishName)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.EnglishName)
         </dd>
-        <dt class = "col-sm-2">
+        @*<dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.FrenchName)
         </dt>
         <dd class = "col-sm-10">
@@ -28,12 +28,6 @@
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.FrenchVersion)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.EnglishPlayerCount)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.EnglishPlayerCount)
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.FrenchPlayerCount)
@@ -54,22 +48,10 @@
             @Html.DisplayFor(model => model.FrenchTrailer)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.EnglishDescription)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.EnglishDescription)
-        </dd>
-        <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.FrenchDescription)
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.FrenchDescription)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.EnglishDetail)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.EnglishDetail)
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.FrenchDetail)
@@ -82,37 +64,55 @@
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.UserName)
+        </dd>*@
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.EnglishPlayerCount)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.EnglishPlayerCount)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.EsrbRatingCodeNavigation)
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.EsrbRatingCode)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.EsrbRatingCodeNavigation.Code)
-        </dd class>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.GameCategory)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.GameCategoryId)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.GameCategory.EnglishCategory)
-        </dd class>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.GamePerspectiveCodeNavigation)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.GamePerspectiveCode)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.GamePerspectiveCodeNavigation.Code)
-        </dd class>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.GameStatusCodeNavigation)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.GameStatusCode)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.GameStatusCodeNavigation.Code)
-        </dd class>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.GameSubCategory)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.GameSubCategoryId)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.GameSubCategory.EnglishCategory)
-        </dd class>
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.EnglishDescription)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.EnglishDescription)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.EnglishDetail)
+        </dt>
+        <dd class="col-sm-10">
+            <ul><li>@Html.DisplayFor(model => model.EnglishDetail)</li></ul>
+        </dd>
     </dl>
     
     <form asp-action="Delete">

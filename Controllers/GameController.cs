@@ -71,6 +71,12 @@ namespace CVGS.Controllers
             if (ModelState.IsValid)
             {
                 game.Guid = Guid.NewGuid();
+                game.FrenchName = "";
+                game.FrenchDescription = "";
+                game.FrenchDetail = "";
+                game.FrenchPlayerCount = "";
+                game.FrenchTrailer = "";
+                game.FrenchVersion = false;
                 _context.Add(game);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -121,6 +127,12 @@ namespace CVGS.Controllers
             {
                 try
                 {
+                    game.FrenchName = "";
+                    game.FrenchDescription = "";
+                    game.FrenchDetail = "";
+                    game.FrenchPlayerCount = "";
+                    game.FrenchTrailer = "";
+                    game.FrenchVersion = false;
                     _context.Update(game);
                     await _context.SaveChangesAsync();
                 }
