@@ -51,7 +51,7 @@
     </header>
     <div class="container">
         <partial name="_CookieConsentPartial" />
-        <div class="text-danger"><strong>@TempData["message"]</strong></div>
+        <div id="TempMessage" class="text-danger font-weight-bold">@TempData["message"]</div>
         <main role="main" class="pb-3">
             @RenderBody()
         </main>

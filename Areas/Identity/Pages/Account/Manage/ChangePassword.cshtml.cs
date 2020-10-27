@@ -92,6 +92,7 @@ namespace CVGS.Areas.Identity.Pages.Account.Manage
             }
 
             await _signInManager.RefreshSignInAsync(user);
+            TempData["message"] = $"Password changed successfully.";
             _logger.LogInformation("User changed their password successfully.");
             StatusMessage = "Your password has been changed.";
 

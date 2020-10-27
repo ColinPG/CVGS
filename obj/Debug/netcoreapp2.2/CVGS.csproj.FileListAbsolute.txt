@@ -10,7 +10,6 @@ C:\Users\colin\source\repos\CVGS\CVGS\bin\Debug\netcoreapp2.2\CVGS.dll
 C:\Users\colin\source\repos\CVGS\CVGS\bin\Debug\netcoreapp2.2\CVGS.pdb
 C:\Users\colin\source\repos\CVGS\CVGS\bin\Debug\netcoreapp2.2\CVGS.Views.dll
 C:\Users\colin\source\repos\CVGS\CVGS\bin\Debug\netcoreapp2.2\CVGS.Views.pdb
-C:\Users\colin\source\repos\CVGS\CVGS\obj\Debug\netcoreapp2.2\CVGS.csprojAssemblyReference.cache
 C:\Users\colin\source\repos\CVGS\CVGS\obj\Debug\netcoreapp2.2\CVGS.AssemblyInfoInputs.cache
 C:\Users\colin\source\repos\CVGS\CVGS\obj\Debug\netcoreapp2.2\CVGS.AssemblyInfo.cs
 C:\Users\colin\source\repos\CVGS\CVGS\obj\Debug\netcoreapp2.2\CVGS.RazorAssemblyInfo.cache
@@ -77,3 +76,4 @@ C:\Users\colin\source\repos\CVGS\CVGS\obj\Debug\netcoreapp2.2\CVGS.csproj.CoreCo
 C:\Users\colin\source\repos\CVGS\CVGS\obj\Debug\netcoreapp2.2\Razor\Views\Role\DeleteRole.cshtml.g.cs
 C:\Users\colin\source\repos\CVGS\CVGS\obj\Debug\netcoreapp2.2\Razor\Views\Role\Index.cshtml.g.cs
 C:\Users\colin\source\repos\CVGS\CVGS\obj\Debug\netcoreapp2.2\Razor\Views\Role\ListUsersInRole.cshtml.g.cs
+C:\Users\colin\source\repos\CVGS\CVGS\obj\Debug\netcoreapp2.2\CVGS.csprojAssemblyReference.cache

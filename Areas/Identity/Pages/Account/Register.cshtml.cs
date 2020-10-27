@@ -92,12 +92,13 @@ namespace CVGS.Areas.Identity.Pages.Account
                     Email = Input.Email, 
                     PhoneNumber = Input.PhoneNumber,
                     GamerTag = Input.GamerTag, 
-                    //Bio = Input.Bio, 
+                    Bio = "", 
                     PromoEmailEnabled = Input.PromoEmailEnabled};
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
+                    TempData["message"] = $"Account: {Input.UserName} created.";
 
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     var callbackUrl = Url.Page(

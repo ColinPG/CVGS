@@ -40,7 +40,6 @@ namespace CVGS.Areas.Identity.Pages.Account.Manage
 
         public class InputModel
         {
-            [Required]
             [StringLength(25, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 3)]
             [Display(Name = "User Name")]
             public string UserName { get; set; }
@@ -109,7 +108,7 @@ namespace CVGS.Areas.Identity.Pages.Account.Manage
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
             //var userName = user.UserName;
-            //if(Input.UserName != userName)
+            //if (Input.UserName != userName)
             //{
             //    user.UserName = Input.UserName;
             //}
@@ -156,6 +155,7 @@ namespace CVGS.Areas.Identity.Pages.Account.Manage
             await _userManager.UpdateAsync(user);
             await _signInManager.RefreshSignInAsync(user);
             StatusMessage = "Your profile has been updated";
+            TempData["message"] = $"Profile updated.";
             return RedirectToPage();
         }
 

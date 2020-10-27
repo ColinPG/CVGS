@@ -13,16 +13,45 @@ namespace CVGS.Models
     {
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
+            //Title (must not be blank)
             if (EnglishName == null || EnglishName.Trim() == "")
                 yield return new ValidationResult("English Name cannot be blank.", new[] { nameof(EnglishName) });
             else
                 EnglishName = ModelValidations.Capitilize(EnglishName).Trim();
-            yield return ValidationResult.Success;
+            //Player Count (must not be blank and be a number)
+            if (EnglishPlayerCount == null || EnglishPlayerCount.Trim() == "")
+                yield return new ValidationResult("Player Count cannot be blank.", new[] { nameof(EnglishPlayerCount) });
+            else if (ModelValidations.IsStringNumeric(EnglishPlayerCount))
+                EnglishPlayerCount = EnglishPlayerCount.Trim();
+            //ESRB Rating code (must not be blank)
+            if (EsrbRatingCode == null || EsrbRatingCode.Trim() == "")
+                yield return new ValidationResult("Esrb Rating Code cannot be blank.", new[] { nameof(EsrbRatingCode) });
+            else
+                EsrbRatingCode = EsrbRatingCode.Trim();
+            //Category is an int, does not need to be validated.
+            //Perspective Code (must not be blank)
+            if (GamePerspectiveCode == null || GamePerspectiveCode.Trim() == "")
+                yield return new ValidationResult("Perspective Code cannot be blank.", new[] { nameof(GamePerspectiveCode) });
+            else
+                GamePerspectiveCode = GamePerspectiveCode.Trim();
+            //Status Code (must not be blank)
+            if (GameStatusCode == null || GameStatusCode.Trim() == "")
+                yield return new ValidationResult("Status Code cannot be blank.", new[] { nameof(GameStatusCode) });
+            else
+                GameStatusCode = GameStatusCode.Trim();
+            //Subcategory is an int, does not need to be validated.
+            //Description (must not be blank)
+            if (EnglishDescription == null || EnglishDescription.Trim() == "")
+                yield return new ValidationResult("Description cannot be blank.", new[] { nameof(EnglishDescription) });
+            else
+                EnglishDescription = EnglishDescription.Trim();
+            //Status Code (must not be blank)
+            if (EnglishDetail == null || EnglishDetail.Trim() == "")
+                yield return new ValidationResult("Detail cannot be blank.", new[] { nameof(EnglishDetail) });
+            else
+                EnglishDetail = EnglishDetail.Trim();
 
-            //Title captilized
-            //player count  must be number
-            //ESRB rating code, category, perspective category, status code, subcategory dropdowns (no blanks)
-            //description, detail no blanks no formatting
+            yield return ValidationResult.Success;
         }
     }
     public class GameMetaData

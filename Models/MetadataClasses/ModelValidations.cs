@@ -23,5 +23,17 @@ namespace CVGS.Models
             }
             return output;
         }
+
+        public static bool IsStringNumeric(string input)
+        {
+            input = input.Trim();
+            char[] letters = input.ToCharArray();
+            for (int i = 0; i < letters.Length; i++)
+            {
+                if (!char.IsDigit(letters[i]))
+                    return false;
+            }
+            return true;
+        }
     }
 }

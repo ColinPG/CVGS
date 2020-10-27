@@ -22,7 +22,13 @@ namespace CVGS.Controllers
         // GET: Game
         public async Task<IActionResult> Index()
         {
-            var cVGSContext = _context.Game.Include(g => g.EsrbRatingCodeNavigation).Include(g => g.GameCategory).Include(g => g.GamePerspectiveCodeNavigation).Include(g => g.GameStatusCodeNavigation).Include(g => g.GameSubCategory);
+            var cVGSContext = _context.Game
+                .Include(g => g.EsrbRatingCodeNavigation)
+                .Include(g => g.GameCategory)
+                .Include(g => g.GamePerspectiveCodeNavigation)
+                .Include(g => g.GameStatusCodeNavigation)
+                .Include(g => g.GameSubCategory)
+                .OrderBy(g => g.EnglishName);
             return View(await cVGSContext.ToListAsync());
         }
 
@@ -70,7 +76,8 @@ namespace CVGS.Controllers
         {
             if (ModelState.IsValid)
             {
-                game.Guid = Guid.NewGuid();
+                Guid newGuid = Guid.NewGuid();
+                game.Guid = newGuid;
                 game.FrenchName = "";
                 game.FrenchDescription = "";
                 game.FrenchDetail = "";
@@ -79,6 +86,7 @@ namespace CVGS.Controllers
                 game.FrenchVersion = false;
                 _context.Add(game);
                 await _context.SaveChangesAsync();
+                TempData["message"] = $"New Game: {game.EnglishName} created with id:{newGuid}";
                 return RedirectToAction(nameof(Index));
             }
             ViewData["EsrbRatingCode"] = new SelectList(_context.EsrbRating, "Code", "Code", game.EsrbRatingCode);
@@ -135,6 +143,7 @@ namespace CVGS.Controllers
                     game.FrenchVersion = false;
                     _context.Update(game);
                     await _context.SaveChangesAsync();
+                    TempData["message"] = $"Editted Game: {game.EnglishName} with id:{game.Guid}";
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -189,6 +198,7 @@ namespace CVGS.Controllers
             var game = await _context.Game.FindAsync(id);
             _context.Game.Remove(game);
             await _context.SaveChangesAsync();
+            TempData["message"] = $"Game: {game.EnglishName} deleted with id:{id.ToString()}";
             return RedirectToAction(nameof(Index));
         }
 
