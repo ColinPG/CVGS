@@ -77,6 +77,8 @@ namespace CVGS.Controllers
             if (ModelState.IsValid)
             {
                 Guid newGuid = Guid.NewGuid();
+                //while (GameExists(newGuid))
+                //    newGuid = Guid.NewGuid();
                 game.Guid = newGuid;
                 game.FrenchName = "";
                 game.FrenchDescription = "";
