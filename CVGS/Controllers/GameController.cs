@@ -27,8 +27,7 @@ namespace CVGS.Controllers
                 .Include(g => g.GameCategory)
                 .Include(g => g.GamePerspectiveCodeNavigation)
                 .Include(g => g.GameStatusCodeNavigation)
-                .Include(g => g.GameSubCategory)
-                .OrderBy(g => g.EnglishName);
+                .Include(g => g.GameSubCategory);
             return View(await cVGSContext.ToListAsync());
         }
 
