@@ -8,7 +8,7 @@ namespace CVGS.Models
 {
     public class User : IdentityUser
     {
-        public bool? PromoEmailEnabled { get; set; }
+        public bool PromoEmailEnabled { get; set; }
         public string Bio { get; set; }
         public string GamerTag { get; set; }
         public string FirstName { get; set; }

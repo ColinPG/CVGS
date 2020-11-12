@@ -6,6 +6,7 @@ C:\Users\colin\source\repos\CVGS\CVGS.Tests\bin\Debug\netcoreapp3.1\CVGS.Tests.d
 C:\Users\colin\source\repos\CVGS\CVGS.Tests\bin\Debug\netcoreapp3.1\CVGS.Tests.runtimeconfig.json
 C:\Users\colin\source\repos\CVGS\CVGS.Tests\bin\Debug\netcoreapp3.1\CVGS.Tests.runtimeconfig.dev.json
 C:\Users\colin\source\repos\CVGS\CVGS.Tests\bin\Debug\netcoreapp3.1\CVGS.Tests.dll
+C:\Users\colin\source\repos\CVGS\CVGS.Tests\bin\Debug\netcoreapp3.1\CVGS.Tests.pdb
 C:\Users\colin\source\repos\CVGS\CVGS.Tests\bin\Debug\netcoreapp3.1\Microsoft.VisualStudio.CodeCoverage.Shim.dll
 C:\Users\colin\source\repos\CVGS\CVGS.Tests\bin\Debug\netcoreapp3.1\Microsoft.DotNet.InternalAbstractions.dll
 C:\Users\colin\source\repos\CVGS\CVGS.Tests\bin\Debug\netcoreapp3.1\Microsoft.TestPlatform.CoreUtilities.dll
@@ -19,6 +20,8 @@ C:\Users\colin\source\repos\CVGS\CVGS.Tests\bin\Debug\netcoreapp3.1\testhost.dll
 C:\Users\colin\source\repos\CVGS\CVGS.Tests\bin\Debug\netcoreapp3.1\Newtonsoft.Json.dll
 C:\Users\colin\source\repos\CVGS\CVGS.Tests\bin\Debug\netcoreapp3.1\NuGet.Frameworks.dll
 C:\Users\colin\source\repos\CVGS\CVGS.Tests\bin\Debug\netcoreapp3.1\nunit.framework.dll
+C:\Users\colin\source\repos\CVGS\CVGS.Tests\bin\Debug\netcoreapp3.1\WebDriver.Support.dll
+C:\Users\colin\source\repos\CVGS\CVGS.Tests\bin\Debug\netcoreapp3.1\WebDriver.dll
 C:\Users\colin\source\repos\CVGS\CVGS.Tests\bin\Debug\netcoreapp3.1\System.Xml.XPath.XmlDocument.dll
 C:\Users\colin\source\repos\CVGS\CVGS.Tests\bin\Debug\netcoreapp3.1\cs\Microsoft.TestPlatform.CoreUtilities.resources.dll
 C:\Users\colin\source\repos\CVGS\CVGS.Tests\bin\Debug\netcoreapp3.1\cs\Microsoft.VisualStudio.TestPlatform.ObjectModel.resources.dll
@@ -88,11 +91,8 @@ C:\Users\colin\source\repos\CVGS\CVGS.Tests\bin\Debug\netcoreapp3.1\zh-Hant\Micr
 C:\Users\colin\source\repos\CVGS\CVGS.Tests\obj\Debug\netcoreapp3.1\CVGS.Tests.csprojAssemblyReference.cache
 C:\Users\colin\source\repos\CVGS\CVGS.Tests\obj\Debug\netcoreapp3.1\CVGS.Tests.AssemblyInfoInputs.cache
 C:\Users\colin\source\repos\CVGS\CVGS.Tests\obj\Debug\netcoreapp3.1\CVGS.Tests.AssemblyInfo.cs
-C:\Users\colin\source\repos\CVGS\CVGS.Tests\obj\Debug\netcoreapp3.1\CVGS.Tests.csproj.CopyComplete
-C:\Users\colin\source\repos\CVGS\CVGS.Tests\obj\Debug\netcoreapp3.1\CVGS.Tests.genruntimeconfig.cache
-C:\Users\colin\source\repos\CVGS\CVGS.Tests\bin\Debug\netcoreapp3.1\WebDriver.dll
-C:\Users\colin\source\repos\CVGS\CVGS.Tests\bin\Debug\netcoreapp3.1\CVGS.Tests.pdb
-C:\Users\colin\source\repos\CVGS\CVGS.Tests\bin\Debug\netcoreapp3.1\WebDriver.Support.dll
 C:\Users\colin\source\repos\CVGS\CVGS.Tests\obj\Debug\netcoreapp3.1\CVGS.Tests.csproj.CoreCompileInputs.cache
+C:\Users\colin\source\repos\CVGS\CVGS.Tests\obj\Debug\netcoreapp3.1\CVGS.Tests.csproj.CopyComplete
 C:\Users\colin\source\repos\CVGS\CVGS.Tests\obj\Debug\netcoreapp3.1\CVGS.Tests.dll
 C:\Users\colin\source\repos\CVGS\CVGS.Tests\obj\Debug\netcoreapp3.1\CVGS.Tests.pdb
+C:\Users\colin\source\repos\CVGS\CVGS.Tests\obj\Debug\netcoreapp3.1\CVGS.Tests.genruntimeconfig.cache

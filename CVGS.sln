@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.30320.27
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CVGS", "CVGS\CVGS.csproj", "{DBEBEB64-8AF0-4DDA-B94F-C1682F59735B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CVGS.Tests", "CVGS.Tests\CVGS.Tests.csproj", "{662760B4-61B9-4643-99F7-F50EFC9F3730}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CVGS.Tests", "CVGS.Tests\CVGS.Tests.csproj", "{662760B4-61B9-4643-99F7-F50EFC9F3730}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
