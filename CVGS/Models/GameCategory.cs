@@ -7,6 +7,7 @@ namespace CVGS.Models
     {
         public GameCategory()
         {
+            CategoryPreference = new HashSet<CategoryPreference>();
             Game = new HashSet<Game>();
         }
 
@@ -14,6 +15,7 @@ namespace CVGS.Models
         public string EnglishCategory { get; set; }
         public string FrenchCategory { get; set; }
 
+        public virtual ICollection<CategoryPreference> CategoryPreference { get; set; }
         public virtual ICollection<Game> Game { get; set; }
     }
 }

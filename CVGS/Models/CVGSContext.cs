@@ -15,6 +15,16 @@ namespace CVGS.Models
         {
         }
 
+        public virtual DbSet<AddressMailing> AddressMailing { get; set; }
+        public virtual DbSet<AddressShipping> AddressShipping { get; set; }
+        public virtual DbSet<AspNetRoleClaims> AspNetRoleClaims { get; set; }
+        public virtual DbSet<AspNetRoles> AspNetRoles { get; set; }
+        public virtual DbSet<AspNetUserClaims> AspNetUserClaims { get; set; }
+        public virtual DbSet<AspNetUserLogins> AspNetUserLogins { get; set; }
+        public virtual DbSet<AspNetUserRoles> AspNetUserRoles { get; set; }
+        public virtual DbSet<AspNetUserTokens> AspNetUserTokens { get; set; }
+        public virtual DbSet<AspNetUsers> AspNetUsers { get; set; }
+        public virtual DbSet<CategoryPreference> CategoryPreference { get; set; }
         public virtual DbSet<Country> Country { get; set; }
         public virtual DbSet<CreditCard> CreditCard { get; set; }
         public virtual DbSet<Department> Department { get; set; }
@@ -36,11 +46,13 @@ namespace CVGS.Models
         public virtual DbSet<LocationType> LocationType { get; set; }
         public virtual DbSet<Person> Person { get; set; }
         public virtual DbSet<Platform> Platform { get; set; }
+        public virtual DbSet<PlatformPreference> PlatformPreference { get; set; }
         public virtual DbSet<Population> Population { get; set; }
         public virtual DbSet<PopulationClassification> PopulationClassification { get; set; }
         public virtual DbSet<Product> Product { get; set; }
         public virtual DbSet<Province> Province { get; set; }
         public virtual DbSet<Region> Region { get; set; }
+        public virtual DbSet<SubCategoryPreference> SubCategoryPreference { get; set; }
         public virtual DbSet<Supplier> Supplier { get; set; }
         public virtual DbSet<SupplierContact> SupplierContact { get; set; }
 
@@ -58,6 +70,297 @@ namespace CVGS.Models
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasAnnotation("ProductVersion", "2.2.6-servicing-10079");
+
+            modelBuilder.Entity<AddressMailing>(entity =>
+            {
+                entity.HasKey(e => e.MailingId)
+                    .HasName("PK__AddressM__4E8DFD561DD20E0B");
+
+                entity.Property(e => e.MailingId)
+                    .HasColumnName("mailingId")
+                    .ValueGeneratedNever();
+
+                entity.Property(e => e.ApartmentNumber)
+                    .IsRequired()
+                    .HasColumnName("apartmentNumber")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.City)
+                    .IsRequired()
+                    .HasColumnName("city")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.FirstName)
+                    .IsRequired()
+                    .HasColumnName("firstName")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.LastModified)
+                    .HasColumnName("lastModified")
+                    .HasColumnType("datetime")
+                    .HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.LastName)
+                    .IsRequired()
+                    .HasColumnName("lastName")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.PostalCode)
+                    .IsRequired()
+                    .HasColumnName("postalCode")
+                    .HasMaxLength(6);
+
+                entity.Property(e => e.Province)
+                    .IsRequired()
+                    .HasColumnName("province")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.Street)
+                    .IsRequired()
+                    .HasColumnName("street")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.UserId)
+                    .IsRequired()
+                    .HasColumnName("userId")
+                    .HasMaxLength(450);
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.AddressMailing)
+                    .HasForeignKey(d => d.UserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__AddressMa__userI__7908F585");
+            });
+
+            modelBuilder.Entity<AddressShipping>(entity =>
+            {
+                entity.HasKey(e => e.ShippingId)
+                    .HasName("PK__AddressS__EDF80BCA6656726E");
+
+                entity.Property(e => e.ShippingId)
+                    .HasColumnName("shippingId")
+                    .ValueGeneratedNever();
+
+                entity.Property(e => e.ApartmentNumber)
+                    .IsRequired()
+                    .HasColumnName("apartmentNumber")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.City)
+                    .IsRequired()
+                    .HasColumnName("city")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.FirstName)
+                    .IsRequired()
+                    .HasColumnName("firstName")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.LastModified)
+                    .HasColumnName("lastModified")
+                    .HasColumnType("datetime")
+                    .HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.LastName)
+                    .IsRequired()
+                    .HasColumnName("lastName")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.PostalCode)
+                    .IsRequired()
+                    .HasColumnName("postalCode")
+                    .HasMaxLength(6);
+
+                entity.Property(e => e.Province)
+                    .IsRequired()
+                    .HasColumnName("province")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.Street)
+                    .IsRequired()
+                    .HasColumnName("street")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.UserId)
+                    .IsRequired()
+                    .HasColumnName("userId")
+                    .HasMaxLength(450);
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.AddressShipping)
+                    .HasForeignKey(d => d.UserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__AddressSh__userI__79FD19BE");
+            });
+
+            modelBuilder.Entity<AspNetRoleClaims>(entity =>
+            {
+                entity.HasIndex(e => e.RoleId);
+
+                entity.Property(e => e.RoleId).IsRequired();
+
+                entity.HasOne(d => d.Role)
+                    .WithMany(p => p.AspNetRoleClaims)
+                    .HasForeignKey(d => d.RoleId);
+            });
+
+            modelBuilder.Entity<AspNetRoles>(entity =>
+            {
+                entity.HasIndex(e => e.NormalizedName)
+                    .HasName("RoleNameIndex")
+                    .IsUnique()
+                    .HasFilter("([NormalizedName] IS NOT NULL)");
+
+                entity.Property(e => e.Id).ValueGeneratedNever();
+
+                entity.Property(e => e.Name).HasMaxLength(256);
+
+                entity.Property(e => e.NormalizedName).HasMaxLength(256);
+            });
+
+            modelBuilder.Entity<AspNetUserClaims>(entity =>
+            {
+                entity.HasIndex(e => e.UserId);
+
+                entity.Property(e => e.UserId).IsRequired();
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.AspNetUserClaims)
+                    .HasForeignKey(d => d.UserId);
+            });
+
+            modelBuilder.Entity<AspNetUserLogins>(entity =>
+            {
+                entity.HasKey(e => new { e.LoginProvider, e.ProviderKey });
+
+                entity.HasIndex(e => e.UserId);
+
+                entity.Property(e => e.LoginProvider).HasMaxLength(128);
+
+                entity.Property(e => e.ProviderKey).HasMaxLength(128);
+
+                entity.Property(e => e.UserId).IsRequired();
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.AspNetUserLogins)
+                    .HasForeignKey(d => d.UserId);
+            });
+
+            modelBuilder.Entity<AspNetUserRoles>(entity =>
+            {
+                entity.HasKey(e => new { e.UserId, e.RoleId });
+
+                entity.HasIndex(e => e.RoleId);
+
+                entity.HasOne(d => d.Role)
+                    .WithMany(p => p.AspNetUserRoles)
+                    .HasForeignKey(d => d.RoleId);
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.AspNetUserRoles)
+                    .HasForeignKey(d => d.UserId);
+            });
+
+            modelBuilder.Entity<AspNetUserTokens>(entity =>
+            {
+                entity.HasKey(e => new { e.UserId, e.LoginProvider, e.Name });
+
+                entity.Property(e => e.LoginProvider).HasMaxLength(128);
+
+                entity.Property(e => e.Name).HasMaxLength(128);
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.AspNetUserTokens)
+                    .HasForeignKey(d => d.UserId);
+            });
+
+            modelBuilder.Entity<AspNetUsers>(entity =>
+            {
+                entity.HasIndex(e => e.NormalizedEmail)
+                    .HasName("EmailIndex");
+
+                entity.HasIndex(e => e.NormalizedUserName)
+                    .HasName("UserNameIndex")
+                    .IsUnique()
+                    .HasFilter("([NormalizedUserName] IS NOT NULL)");
+
+                entity.Property(e => e.Id).ValueGeneratedNever();
+
+                entity.Property(e => e.Bio)
+                    .IsRequired()
+                    .HasDefaultValueSql("('Tell us about yourself.')");
+
+                entity.Property(e => e.City)
+                    .HasColumnName("city")
+                    .HasMaxLength(450);
+
+                entity.Property(e => e.Country)
+                    .HasColumnName("country")
+                    .HasMaxLength(450);
+
+                entity.Property(e => e.DateOfBirth)
+                    .HasColumnName("dateOfBirth")
+                    .HasColumnType("datetime");
+
+                entity.Property(e => e.Email).HasMaxLength(256);
+
+                entity.Property(e => e.FirstName)
+                    .HasColumnName("firstName")
+                    .HasMaxLength(450);
+
+                entity.Property(e => e.GamerTag)
+                    .IsRequired()
+                    .HasDefaultValueSql("('YourGamerTag')");
+
+                entity.Property(e => e.Gender)
+                    .HasColumnName("gender")
+                    .HasMaxLength(450);
+
+                entity.Property(e => e.LastName)
+                    .HasColumnName("lastName")
+                    .HasMaxLength(450);
+
+                entity.Property(e => e.NormalizedEmail).HasMaxLength(256);
+
+                entity.Property(e => e.NormalizedUserName).HasMaxLength(256);
+
+                entity.Property(e => e.PromoEmailEnabled)
+                    .IsRequired()
+                    .HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.ProvinceState)
+                    .HasColumnName("provinceState")
+                    .HasMaxLength(450);
+
+                entity.Property(e => e.UserName).HasMaxLength(256);
+            });
+
+            modelBuilder.Entity<CategoryPreference>(entity =>
+            {
+                entity.HasKey(e => new { e.UserId, e.GamecategoryId })
+                    .HasName("PK__Category__5503CE5E31DD18C6");
+
+                entity.Property(e => e.UserId).HasColumnName("userId");
+
+                entity.Property(e => e.GamecategoryId).HasColumnName("gamecategoryId");
+
+                entity.Property(e => e.LastModified)
+                    .HasColumnName("lastModified")
+                    .HasColumnType("datetime")
+                    .HasDefaultValueSql("(getdate())");
+
+                entity.HasOne(d => d.Gamecategory)
+                    .WithMany(p => p.CategoryPreference)
+                    .HasForeignKey(d => d.GamecategoryId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__CategoryP__gamec__61316BF4");
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.CategoryPreference)
+                    .HasForeignKey(d => d.UserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__CategoryP__userI__603D47BB");
+            });
 
             modelBuilder.Entity<Country>(entity =>
             {
@@ -319,6 +622,11 @@ namespace CVGS.Models
                 entity.Property(e => e.GameStatusCode)
                     .IsRequired()
                     .HasMaxLength(1);
+
+                entity.Property(e => e.LastModified)
+                    .HasColumnName("lastModified")
+                    .HasColumnType("datetime")
+                    .HasDefaultValueSql("(getdate())");
 
                 entity.Property(e => e.UserName)
                     .IsRequired()
@@ -640,6 +948,35 @@ namespace CVGS.Models
                     .HasMaxLength(40);
             });
 
+            modelBuilder.Entity<PlatformPreference>(entity =>
+            {
+                entity.HasKey(e => new { e.UserId, e.PlatformCode })
+                    .HasName("PK__Platform__A669FBFE92BE477D");
+
+                entity.Property(e => e.UserId).HasColumnName("userId");
+
+                entity.Property(e => e.PlatformCode)
+                    .HasColumnName("platformCode")
+                    .HasMaxLength(10);
+
+                entity.Property(e => e.LastModified)
+                    .HasColumnName("lastModified")
+                    .HasColumnType("datetime")
+                    .HasDefaultValueSql("(getdate())");
+
+                entity.HasOne(d => d.PlatformCodeNavigation)
+                    .WithMany(p => p.PlatformPreference)
+                    .HasForeignKey(d => d.PlatformCode)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__PlatformP__platf__5C6CB6D7");
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.PlatformPreference)
+                    .HasForeignKey(d => d.UserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__PlatformP__userI__5B78929E");
+            });
+
             modelBuilder.Entity<Population>(entity =>
             {
                 entity.HasKey(e => e.Guid)
@@ -879,6 +1216,33 @@ namespace CVGS.Models
                 entity.Property(e => e.FrenchName)
                     .IsRequired()
                     .HasMaxLength(30);
+            });
+
+            modelBuilder.Entity<SubCategoryPreference>(entity =>
+            {
+                entity.HasKey(e => new { e.UserId, e.GameSubcategoryId })
+                    .HasName("PK__SubCateg__AEDF96AEA68DA694");
+
+                entity.Property(e => e.UserId).HasColumnName("userId");
+
+                entity.Property(e => e.GameSubcategoryId).HasColumnName("gameSubcategoryId");
+
+                entity.Property(e => e.LastModified)
+                    .HasColumnName("lastModified")
+                    .HasColumnType("datetime")
+                    .HasDefaultValueSql("(getdate())");
+
+                entity.HasOne(d => d.GameSubcategory)
+                    .WithMany(p => p.SubCategoryPreference)
+                    .HasForeignKey(d => d.GameSubcategoryId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__SubCatego__gameS__65F62111");
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.SubCategoryPreference)
+                    .HasForeignKey(d => d.UserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__SubCatego__userI__6501FCD8");
             });
 
             modelBuilder.Entity<Supplier>(entity =>

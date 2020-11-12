@@ -7,6 +7,7 @@ namespace CVGS.Models
     {
         public Platform()
         {
+            PlatformPreference = new HashSet<PlatformPreference>();
             Product = new HashSet<Product>();
         }
 
@@ -14,6 +15,7 @@ namespace CVGS.Models
         public string EnglishName { get; set; }
         public string FrenchName { get; set; }
 
+        public virtual ICollection<PlatformPreference> PlatformPreference { get; set; }
         public virtual ICollection<Product> Product { get; set; }
     }
 }

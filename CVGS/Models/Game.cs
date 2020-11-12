@@ -29,6 +29,7 @@ namespace CVGS.Models
         public string EnglishDetail { get; set; }
         public string FrenchDetail { get; set; }
         public string UserName { get; set; }
+        public DateTime? LastModified { get; set; }
 
         public virtual EsrbRating EsrbRatingCodeNavigation { get; set; }
         public virtual GameCategory GameCategory { get; set; }
