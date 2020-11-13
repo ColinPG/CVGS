@@ -6,27 +6,15 @@ using System;
 
 namespace CVGS.Tests
 {
-    public class CVGSTests
+    public class CVGSTests : CVGSTestContainer
     {
-        private IWebDriver driver;
-
-        private string homeURL;
-        private string profileUrl;
-        private string loginUrl;
-        private string registerUrl;
-        private string gameUrl;
-        private string gameCreateUrl;
-        private string gameEditUrl;
-        private string gameDetailsUrl;
-        private string gameDeleteUrl;
 
         private string guid;
         private string gameTitleData;
         private string gameEdittedTitleData;
 
-        private string employeeUsername;
+
         private string userUsername;
-        private string password;
         private string newUserPassword;
         private string userGamerTag;
         private string gamePlayerData;
@@ -35,15 +23,6 @@ namespace CVGS.Tests
 
         public CVGSTests()
         {
-            homeURL = "https://localhost:44321/";
-            profileUrl = "Identity/Account/Manage";
-            loginUrl = "Identity/Account/Login";
-            registerUrl = "Identity/Account/Register";
-            gameUrl = "Game";
-            gameCreateUrl = "Game/Create/";
-            gameEditUrl = "Game/Edit/";
-            gameDetailsUrl = "Game/Details/";
-            gameDeleteUrl = "Game/Delete/";
             guid = "";
             gameTitleData = "Selenium Test Game";
             gamePlayerData = "1";
@@ -51,24 +30,9 @@ namespace CVGS.Tests
             gameDetailData = "Selenium Test Detail"; 
             gameEdittedTitleData = "Selenium Editted Test Game";
 
-            employeeUsername = "Employee@test.com";
             userUsername = "test@test.com"; 
-            password = "aA!123";
             newUserPassword = "Aa!123";
             userGamerTag = "SeleniumGamerTag";
-        }
-
-        [SetUp]
-        public void Setup()
-        {
-            driver = new ChromeDriver();
-            Login(employeeUsername, password);
-        }
-
-        [TearDown]
-        public void TearDown()
-        {
-            driver.Close();
         }
 
         [Test, Order(1)]
@@ -291,32 +255,6 @@ namespace CVGS.Tests
 
             IWebElement tempMessage = driver.FindElement(By.Id("TempMessage"));
             Assert.AreEqual($"User deleted {userUsername} deleted themselves.", tempMessage.Text);
-        }
-
-        public void Login(string user, string pass)
-        {
-            driver.Navigate().GoToUrl(homeURL + loginUrl);
-            //Accept cookies
-            try
-            {
-                IWebElement cookiesLink = driver.FindElement(By.ClassName("accept-policy"));
-                cookiesLink.Click();
-            }
-            catch { }
-
-            //Input_UserName
-            IWebElement usernameTextbox = driver.FindElement(By.Id("Input_UserName"));
-            usernameTextbox.SendKeys(user);
-            //Input_Password
-            IWebElement passwordTextbox = driver.FindElement(By.Id("Input_Password"));
-            passwordTextbox.SendKeys(pass);
-            usernameTextbox.Submit();
-        }
-
-        private void Logout()
-        {
-            IWebElement logoutLink = driver.FindElement(By.Id("logout"));
-            logoutLink.Click();
         }
 
         private string ParseTitleFromTempData()

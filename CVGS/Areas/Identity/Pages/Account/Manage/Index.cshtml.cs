@@ -28,8 +28,6 @@ namespace CVGS.Areas.Identity.Pages.Account.Manage
             _emailSender = emailSender;
         }
 
-        //public string Username { get; set; }
-
         public bool IsEmailConfirmed { get; set; }
 
         [TempData]
