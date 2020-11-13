@@ -1,0 +1,31 @@
+﻿@page
+@model CVGS.Areas.Identity.Pages.Account.Manage.PreferencesIndexPageModel
+@{
+    ViewData["Title"] = "Preferences";
+    ViewData["ActivePage"] = ManageNavPages.Preferences;
+
+}
+
+<h4>@ViewData["Title"]</h4>
+<partial name="_StatusMessage" for="StatusMessage" />
+<div class="row">
+    <div class="col-md-6">
+        <div>
+            <label>Platform Preference</label>
+            <h6>@ViewData["platformPreference"]</h6>
+        </div>
+        <div>
+            <label>Category Preference</label>
+            <h1>@ViewData["categoryPreference"]</h1>
+        </div>
+        <div>
+            <label>Subcategory Preference</label>
+            <h1>@ViewData["subcatgoryPreference"]</h1>
+        </div>
+    </div>
+</div>
+<a class="nav-link @ManageNavPages.PersonalDataNavClass(ViewContext)" id="change-preferences" asp-page="./ChangePreferences">Change Preferences</a>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
