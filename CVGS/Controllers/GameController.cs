@@ -87,7 +87,10 @@ namespace CVGS.Controllers
                 game.FrenchVersion = false;
                 _context.Add(game);
                 await _context.SaveChangesAsync();
-                TempData["message"] = $"New Game: {game.EnglishName} created with id:{newGuid}";
+                if (User.IsInRole("administrators"))
+                    TempData["message"] = $"New Game: {game.EnglishName} created with id:{newGuid}";
+                else
+                    TempData["message"] = $"New Game: {game.EnglishName} created.";
                 return RedirectToAction(nameof(Index));
             }
             ViewData["EsrbRatingCode"] = new SelectList(_context.EsrbRating, "Code", "Code", game.EsrbRatingCode);
@@ -144,7 +147,10 @@ namespace CVGS.Controllers
                     game.FrenchVersion = false;
                     _context.Update(game);
                     await _context.SaveChangesAsync();
-                    TempData["message"] = $"Editted Game: {game.EnglishName} with id:{game.Guid}";
+                    if (User.IsInRole("administrators"))
+                        TempData["message"] = $"Editted Game: {game.EnglishName} with id:{game.Guid}";
+                    else
+                        TempData["message"] = $"Editted Game: {game.EnglishName} created.";
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -199,7 +205,10 @@ namespace CVGS.Controllers
             var game = await _context.Game.FindAsync(id);
             _context.Game.Remove(game);
             await _context.SaveChangesAsync();
-            TempData["message"] = $"Game: {game.EnglishName} deleted with id:{id.ToString()}";
+            if (User.IsInRole("administrators"))
+                TempData["message"] = $"Game: {game.EnglishName} deleted with id:{id.ToString()}";
+            else
+                TempData["message"] = $"Game: {game.EnglishName} deleted.";
             return RedirectToAction(nameof(Index));
         }
 
