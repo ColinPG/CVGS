@@ -1,30 +1,33 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\colin\\source\\repos\\CVGS\\CVGS.Tests\\CVGS.Tests.csproj": {}
+    "C:\\Users\\Justin\\Documents\\GitHub\\CVGS\\CVGS.Tests\\CVGS.Tests.csproj": {}
   },
   "projects": {
-    "C:\\Users\\colin\\source\\repos\\CVGS\\CVGS.Tests\\CVGS.Tests.csproj": {
+    "C:\\Users\\Justin\\Documents\\GitHub\\CVGS\\CVGS.Tests\\CVGS.Tests.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\colin\\source\\repos\\CVGS\\CVGS.Tests\\CVGS.Tests.csproj",
+        "projectUniqueName": "C:\\Users\\Justin\\Documents\\GitHub\\CVGS\\CVGS.Tests\\CVGS.Tests.csproj",
         "projectName": "CVGS.Tests",
-        "projectPath": "C:\\Users\\colin\\source\\repos\\CVGS\\CVGS.Tests\\CVGS.Tests.csproj",
-        "packagesPath": "C:\\Users\\colin\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\colin\\source\\repos\\CVGS\\CVGS.Tests\\obj\\",
+        "projectPath": "C:\\Users\\Justin\\Documents\\GitHub\\CVGS\\CVGS.Tests\\CVGS.Tests.csproj",
+        "packagesPath": "C:\\Users\\Justin\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Justin\\Documents\\GitHub\\CVGS\\CVGS.Tests\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
+          "C:\\Microsoft\\Xamarin\\NuGet\\",
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\colin\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Users\\Justin\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp3.1"
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Users\\Justin\\Desktop\\Conestoga\\Term 3\\MS web Tech\\JBClassLibrary\\JBClassLibrary\\bin\\Debug": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -77,7 +80,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.403\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.402\\RuntimeIdentifierGraph.json"
         }
       }
     }
