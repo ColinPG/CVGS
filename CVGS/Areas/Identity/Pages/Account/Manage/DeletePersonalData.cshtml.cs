@@ -76,7 +76,7 @@ namespace CVGS.Areas.Identity.Pages.Account.Manage
 
             await _signInManager.SignOutAsync();
             TempData["message"] = $"User deleted {user.UserName} deleted themselves.";
-            _logger.LogInformation("User with ID '{UserId}' deleted themselves.", userId);
+            _logger.LogInformation($"User with Name '{user.UserName}' deleted themselves.");
 
             return Redirect("~/");
         }

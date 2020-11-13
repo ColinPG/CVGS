@@ -42,8 +42,7 @@ namespace CVGS.Areas.Identity.Pages.Account.Manage
             [StringLength(25, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 3)]
             [Display(Name = "Last Name")]
             public string LastName { get; set; }
-            [Range(typeof(DateTime), "1/1/1900", "11/11/2020",
-                ErrorMessage = "Date of Birth cannot be in the future.")]
+            //[Range(typeof(DateTime), "1/1/1900", "11/11/2020", ErrorMessage = "Date of Birth cannot be in the future.")]
             [Display(Name = "Date Of Birth")]
             public DateTime? DateOfBirth { get; set; }
             [StringLength(25, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 3)]

@@ -15,15 +15,9 @@ namespace CVGS.Tests
         protected string profileUrl;
         protected string loginUrl;
         protected string registerUrl;
-        protected string employeeUsername;
-        protected string password;
+        private const string adminUsername = "admin@test.com";
+        protected const string password = "aA!123";
 
-        //Game tests
-        protected string gameUrl;
-        protected string gameCreateUrl;
-        protected string gameEditUrl;
-        protected string gameDetailsUrl;
-        protected string gameDeleteUrl;
 
         public CVGSTestContainer()
         {
@@ -31,23 +25,13 @@ namespace CVGS.Tests
             profileUrl = "Identity/Account/Manage";
             loginUrl = "Identity/Account/Login";
             registerUrl = "Identity/Account/Register";
-
-            employeeUsername = "Employee@test.com";
-            password = "aA!123";
-
-
-            gameUrl = "Game";
-            gameCreateUrl = "Game/Create/";
-            gameEditUrl = "Game/Edit/";
-            gameDetailsUrl = "Game/Details/";
-            gameDeleteUrl = "Game/Delete/";
         }
 
         [SetUp]
         public void Setup()
         {
             driver = new ChromeDriver();
-            Login(employeeUsername, password);
+            Login(adminUsername, password);
         }
 
         [TearDown]
@@ -56,7 +40,7 @@ namespace CVGS.Tests
             driver.Close();
         }
 
-        public void Login(string user, string pass)
+        public void Login(string user = adminUsername, string pass = password)
         {
             driver.Navigate().GoToUrl(homeURL + loginUrl);
             //Accept cookies, if not accepted already.
