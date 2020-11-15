@@ -30,12 +30,20 @@ namespace CVGS.Areas.Identity.Pages.Account.Manage
             _userManager = userManager;
             _signInManager = signInManager;
             _emailSender = emailSender;
-
-
         }
+
+        [BindProperty]
+        public PreferenceModel preferenceModel { get; set; }
 
         [TempData]
         public string StatusMessage { get; set; }
+
+        public class PreferenceModel
+        {
+            public List<PlatformPreference> platformPreferences {get; set;}
+            public List<CategoryPreference> categoryPreferences { get; set; }
+            public List<SubCategoryPreference> subCategoryPreferences { get; set; }
+        }
 
         public async Task<IActionResult> OnGetAsync()
         {
@@ -46,32 +54,20 @@ namespace CVGS.Areas.Identity.Pages.Account.Manage
             }
 
             //Prefrences info
-            var platformPrefrence = _context.PlatformPreference
-               .Include(g => g.PlatformCodeNavigation)
-               .Where(g =>g.UserId==user.Id);
-
-            var categoryPreference = _context.CategoryPreference
+            preferenceModel = new PreferenceModel();
+            preferenceModel.platformPreferences = await _context.PlatformPreference
+                .Include(g => g.PlatformCodeNavigation)
+                .Where(g =>g.UserId==user.Id)
+                .ToListAsync();
+            preferenceModel.categoryPreferences = await _context.CategoryPreference
                 .Include(g => g.Gamecategory)
-                .Where(g => g.UserId == user.Id);
-
-            var subcatgoryPreference = _context.SubCategoryPreference
+                .Where(g => g.UserId == user.Id)
+                .ToListAsync();
+            preferenceModel.subCategoryPreferences = await _context.SubCategoryPreference
                 .Include(g => g.GameSubcategory)
-                .Where(g => g.UserId == user.Id); 
-               
-          ViewData["platformPreference"] = _context.PlatformPreference
-               .Include(g => g.PlatformCodeNavigation)
-               .Include(g => g.User).ToString();
-            ViewData["categoryPreference"] = _context.CategoryPreference
-                .Include(g => g.Gamecategory)
-                .Include(g => g.User).ToString();
-
-            ViewData["subcatgoryPreference"] = _context.SubCategoryPreference
-                .Include(g => g.GameSubcategory)
-                .Include(g => g.User).ToList();
+                .Where(g => g.UserId == user.Id)
+                .ToListAsync();
             return Page();
         }
-
-
-
     }
 }

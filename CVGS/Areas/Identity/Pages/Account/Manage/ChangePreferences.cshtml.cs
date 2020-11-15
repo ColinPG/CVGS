@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
@@ -7,6 +8,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 
 namespace CVGS.Areas.Identity.Pages.Account.Manage
 {
@@ -15,47 +17,36 @@ namespace CVGS.Areas.Identity.Pages.Account.Manage
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
         private readonly IEmailSender _emailSender;
+        private readonly CVGSContext _context;
 
         public ChangePreferencesModel(
             UserManager<User> userManager,
             SignInManager<User> signInManager,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            CVGSContext context)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _emailSender = emailSender;
+            _context = context;
         }
+
         [BindProperty]
-        public InputModel Input { get; set; }
+        public PreferenceInputModel preferenceInputModel { get; set; }
+
         [TempData]
         public string StatusMessage { get; set; }
 
-        public class InputModel
+        public class PreferenceInputModel
         {
-            [Display(Name = "Bio")]
-            public string Bio { get; set; }
-            [StringLength(25, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 3)]
-            [Display(Name = "First Name")]
-            public string FirstName { get; set; }
-            [StringLength(25, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 3)]
-            [Display(Name = "Last Name")]
-            public string LastName { get; set; }
-            [Range(typeof(DateTime), "1/1/1900", "11/11/2020",
-                ErrorMessage = "Date of Birth cannot be in the future.")]
-            [Display(Name = "Date Of Birth")]
-            public DateTime? DateOfBirth { get; set; }
-            [StringLength(25, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 3)]
-            [Display(Name = "Gender")]
-            public string Gender { get; set; }
-            [StringLength(25, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 3)]
-            [Display(Name = "Country")]
-            public string Country { get; set; }
-            [StringLength(25, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 3)]
-            [Display(Name = "Province/State")]
-            public string ProvinceState { get; set; }
-            [StringLength(25, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 3)]
-            [Display(Name = "City")]
-            public string City { get; set; }
+            public string AddValue { get; set; }
+            public bool AllSelected { get; set; }
+            public List<PlatformPreference> platformSelected { get; set; }
+            public List<CategoryPreference> categorySelected { get; set; }
+            public List<SubCategoryPreference> subCategorySelected { get; set; }
+            public List<Platform> platforms { get; set; }
+            public List<GameCategory> categories { get; set; }
+            public List<GameSubCategory> subCategories { get; set; }
         }
 
         public async Task<IActionResult> OnGetAsync()
@@ -66,18 +57,32 @@ namespace CVGS.Areas.Identity.Pages.Account.Manage
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
 
-            Input = new InputModel
-            {
-                Bio = user.Bio,
-                City = user.City,
-                Country = user.Country,
-                DateOfBirth = user.DateOfBirth,
-                FirstName = user.FirstName,
-                Gender = user.Gender,
-                LastName = user.LastName,
-                ProvinceState = user.ProvinceState
-            };
+            preferenceInputModel = new PreferenceInputModel();
 
+            preferenceInputModel.platformSelected = await _context.PlatformPreference
+                .Include(g => g.PlatformCodeNavigation)
+                .Where(g => g.UserId == user.Id)
+                .ToListAsync();
+            preferenceInputModel.platforms = await _context.Platform
+                .ToListAsync();
+            preferenceInputModel.categorySelected = await _context.CategoryPreference
+                .Include(g => g.Gamecategory)
+                .Where(g => g.UserId == user.Id)
+                .ToListAsync();
+            preferenceInputModel.categories = await _context.GameCategory
+                .ToListAsync();
+            preferenceInputModel.subCategorySelected = await _context.SubCategoryPreference
+                .Include(g => g.GameSubcategory)
+                .Where(g => g.UserId == user.Id)
+                .ToListAsync();
+            preferenceInputModel.subCategories = await _context.GameSubCategory
+                .ToListAsync();
+            if (preferenceInputModel.categories.Count == preferenceInputModel.categorySelected.Count &&
+                preferenceInputModel.platforms.Count == preferenceInputModel.platformSelected.Count &&
+                preferenceInputModel.subCategories.Count == preferenceInputModel.subCategorySelected.Count)
+                preferenceInputModel.AllSelected = true;
+            else
+                preferenceInputModel.AllSelected = false;
             return Page();
         }
 
@@ -95,19 +100,92 @@ namespace CVGS.Areas.Identity.Pages.Account.Manage
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
 
-            user.Bio = Input.Bio;
-            user.City = Input.City;
-            user.Country = Input.Country;
-            user.DateOfBirth = Input.DateOfBirth;
-            user.Gender = Input.Gender;
-            user.ProvinceState = Input.ProvinceState;
-            user.FirstName = Input.FirstName;
-            user.LastName = Input.LastName;
+            var platPref = _context.Platform.Where(a => a.EnglishName == preferenceInputModel.AddValue).FirstOrDefault();
+            if (platPref != null)
+            {
+                _context.PlatformPreference.Add(
+                    new PlatformPreference { UserId = user.Id, PlatformCode = platPref.Code, LastModified = DateTime.Now });
+                StatusMessage = $"Preference Platform {preferenceInputModel.AddValue} has been added.";
+            }
+            var catPref = _context.GameCategory.Where(a => a.EnglishCategory == preferenceInputModel.AddValue).FirstOrDefault();
+            if (catPref != null)
+            {
+                _context.CategoryPreference.Add(
+                    new CategoryPreference { UserId = user.Id, GamecategoryId = catPref.Id, LastModified = DateTime.Now });
+                StatusMessage = $"Preference Category {preferenceInputModel.AddValue} has been added.";
+            }
+            var subcatPref = _context.GameSubCategory.Where(a => a.EnglishCategory == preferenceInputModel.AddValue).FirstOrDefault();
+            if(subcatPref != null) {
+                _context.SubCategoryPreference.Add(
+                    new SubCategoryPreference { UserId = user.Id, GameSubcategoryId = subcatPref.Id, LastModified = DateTime.Now });
+                StatusMessage = $"Preference Subcategory {preferenceInputModel.AddValue} has been added.";
+            }
 
-            await _userManager.UpdateAsync(user);
-            await _signInManager.RefreshSignInAsync(user);
-            StatusMessage = "Your Personal Information has been updated";
+            await _context.SaveChangesAsync();
             return RedirectToPage();
+        }
+
+        public async Task<IActionResult> OnPostRemove(string id)
+        {
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+            }
+
+            var platPref = _context.PlatformPreference
+                .Include(a => a.PlatformCodeNavigation)
+                .Where(a => a.PlatformCodeNavigation.EnglishName == id && a.User.Id == user.Id)
+                .FirstOrDefault();
+            if (platPref != null)
+            {
+                _context.PlatformPreference.Remove(platPref);
+                StatusMessage = $"Preference Platform {platPref.PlatformCodeNavigation.EnglishName} has been removed.";
+            }
+            var catPref = _context.CategoryPreference
+                .Include(a => a.Gamecategory)
+                .Where(a => a.Gamecategory.EnglishCategory == id && a.User.Id == user.Id)
+                .FirstOrDefault();
+            if (catPref != null)
+            {
+                _context.CategoryPreference.Remove(catPref);
+                StatusMessage = $"Preference Category {catPref.Gamecategory.EnglishCategory} has been removed.";
+            }
+            var subCatPref = _context.SubCategoryPreference
+                .Include(a => a.GameSubcategory)
+                .Where(a => a.GameSubcategory.EnglishCategory == id && a.User.Id == user.Id)
+                .FirstOrDefault();
+            if (subCatPref != null)
+            {
+                _context.SubCategoryPreference.Remove(subCatPref);
+                StatusMessage = $"Preference SubCategory {subCatPref.GameSubcategory.EnglishCategory} has been removed.";
+            }
+
+            await _context.SaveChangesAsync();
+            return RedirectToPage();
+        }
+        public bool PlatformPrefExists(string name)
+        {
+            var userid = _userManager.GetUserId(User);
+            return _context.PlatformPreference.
+                Include(a => a.PlatformCodeNavigation)
+                .Any(a => a.PlatformCodeNavigation.EnglishName == name && a.UserId == userid);
+        }
+
+        public bool CategoryPrefExists(string name)
+        {
+            var userid = _userManager.GetUserId(User);
+            return _context.CategoryPreference.
+                Include(a => a.Gamecategory)
+                .Any(a => a.Gamecategory.EnglishCategory == name && a.UserId == userid);
+        }
+
+        public bool SubCategoryPrefExists(string name)
+        {
+            var userid = _userManager.GetUserId(User);
+            return _context.SubCategoryPreference.
+                Include(a => a.GameSubcategory)
+                .Any(a => a.GameSubcategory.EnglishCategory == name && a.UserId == userid);
         }
     }
 }

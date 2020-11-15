@@ -7,4 +7,98 @@
 }
 
 <h4>@ViewData["Title"]</h4>
+<partial name="_StatusMessage" for="StatusMessage" />
+<div class="row">
+    <div class="col-md-6">
+        <form method="post">
+            @if (Model.preferenceInputModel.AllSelected)
+            {
+                <div id="AllSelected">All Preferences selected.</div>
+            }
+            else
+            {
+            <select asp-for="@Model.preferenceInputModel.AddValue">
+                <optgroup label="Platforms">
+                    @foreach (var item in Model.preferenceInputModel.platforms)
+                    {
+                        if (!Model.PlatformPrefExists(item.EnglishName))
+                        {
+                            <option value="@item.EnglishName">@item.EnglishName</option>
+                        }
+                    }
+                </optgroup>
+                <optgroup label="Categories">
+                    @foreach (var item in Model.preferenceInputModel.categories)
+                    {
+                        if (!Model.CategoryPrefExists(item.EnglishCategory))
+                        {
+                            <option value="@item.EnglishCategory">@item.EnglishCategory</option>
+                        }
+                    }
+                </optgroup>
+                <optgroup label="SubCategories">
+                    @foreach (var item in Model.preferenceInputModel.subCategories)
+                    {
+                        if (!Model.SubCategoryPrefExists(item.EnglishCategory))
+                        {
+                            <option value="@item.EnglishCategory">@item.EnglishCategory</option>
+                        }
+                    }
+                </optgroup>
+            </select>
+            <button id="add" type="submit" class="btn btn-primary">Add</button>
+            }
+        </form>
 
+        <div>
+            <hr />
+            <h6>Platform Preferences</h6>
+            <ul>
+                @foreach (var item in Model.preferenceInputModel.platformSelected)
+                {
+                    <li>
+                        <form asp-page-handler="Remove" asp-route-id="@item.PlatformCodeNavigation.EnglishName" method="post">
+                            @item.PlatformCodeNavigation.EnglishName <button id="@item.PlatformCodeNavigation.EnglishName" class="btn btn-link">Remove</button>
+                        </form>
+                    </li>
+                }
+            </ul>
+        </div>
+        <div>
+            <hr />
+            <h6>Category Preferences</h6>
+            <ul>
+                @foreach (var item in Model.preferenceInputModel.categorySelected)
+                {
+                    <li>
+                        <form asp-page-handler="Remove" asp-route-id="@item.Gamecategory.EnglishCategory" method="post">
+                            @item.Gamecategory.EnglishCategory <button id="@item.Gamecategory.EnglishCategory" class="btn btn-link">Remove</button>
+                        </form>
+                    </li>
+                }
+            </ul>
+        </div>
+        <div>
+            <hr />
+
+            <h6>Subcategory Preferences</h6>
+            <ul>
+                @foreach (var item in Model.preferenceInputModel.subCategorySelected)
+                {
+                    <li>
+                        <form asp-page-handler="Remove" asp-route-id="@item.GameSubcategory.EnglishCategory" method="post">
+                            @item.GameSubcategory.EnglishCategory <button id="@item.GameSubcategory.EnglishCategory" class="btn btn-link">Remove</button>
+                        </form>
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+</div>
+
+
+<a class="nav-link" id="go-back" asp-page="./PreferencesIndexPage">Go back</a>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

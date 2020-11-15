@@ -11,20 +11,44 @@
 <div class="row">
     <div class="col-md-6">
         <div>
-            <label>Platform Preference</label>
-            <h6>@ViewData["platformPreference"]</h6>
+            <hr />
+            <h6>Platform Preferences</h6>
+            <ul>
+                @foreach (var item in Model.preferenceModel.platformPreferences)
+                {
+                    <li>
+                        @item.PlatformCodeNavigation.EnglishName
+                    </li>
+                }
+            </ul>
         </div>
         <div>
-            <label>Category Preference</label>
-            <h1>@ViewData["categoryPreference"]</h1>
+            <hr />
+            <h6>Category Preferences</h6>
+            <ul>
+                @foreach (var item in Model.preferenceModel.categoryPreferences)
+                {
+                    <li>
+                        @item.Gamecategory.EnglishCategory
+                    </li>
+                }
+            </ul>
         </div>
         <div>
-            <label>Subcategory Preference</label>
-            <h1>@ViewData["subcatgoryPreference"]</h1>
+            <hr />
+            <h6>Subcategory Preferences</h6>
+            <ul>
+                @foreach (var item in Model.preferenceModel.subCategoryPreferences)
+                {
+                    <li>
+                        @item.GameSubcategory.EnglishCategory
+                    </li>
+                }
+            </ul>
         </div>
     </div>
 </div>
-<a class="nav-link @ManageNavPages.PersonalDataNavClass(ViewContext)" id="change-preferences" asp-page="./ChangePreferences">Change Preferences</a>
+<a class="nav-link" id="change-preferences" asp-page="ChangePreferences">Change Preferences</a>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />

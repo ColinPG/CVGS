@@ -27,6 +27,7 @@
           "Microsoft.AspNetCore.App": "2.2.0",
           "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore": "2.2.0",
           "Microsoft.AspNetCore.Razor.Design": "2.2.0",
+          "Microsoft.NET.Sdk.Razor": "3.1.10",
           "Microsoft.NETCore.App": "2.2.0",
           "Microsoft.VisualStudio.Web.CodeGeneration.Design": "2.2.4"
         },
@@ -72,6 +73,7 @@
           "lib/netstandard1.3/Microsoft.CodeAnalysis.Workspaces.dll": {}
         }
       },
+      "Microsoft.NET.Sdk.Razor/3.1.10": {},
       "Microsoft.VisualStudio.Web.CodeGeneration/2.2.4": {
         "dependencies": {
           "Microsoft.Extensions.DependencyInjection": "2.2.0",
@@ -3558,6 +3560,13 @@
       "sha512": "sha512-tJlJ99SD8bHBAXShOG/pXQ1K118cnsF01obEf9aAtdgLbw3yEPahZ7qvWeGMjrheUhvOsSkv/wTKYg9euKa8MQ==",
       "path": "microsoft.codeanalysis.workspaces.common/2.8.0",
       "hashPath": "microsoft.codeanalysis.workspaces.common.2.8.0.nupkg.sha512"
+    },
+    "Microsoft.NET.Sdk.Razor/3.1.10": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-JH+dWc9PZHh34upQDrYSN+v+GDGHzXCAlPrMI39QhkTAZ+U+ZS4zeboS13UiI2tJ+D4yg6t/K6KMTDtafWOT5Q==",
+      "path": "microsoft.net.sdk.razor/3.1.10",
+      "hashPath": "microsoft.net.sdk.razor.3.1.10.nupkg.sha512"
     },
     "Microsoft.VisualStudio.Web.CodeGeneration/2.2.4": {
       "type": "package",

@@ -55,10 +55,6 @@ namespace CVGS.Areas.Identity.Pages.Account.Manage
             [Display(Name = "Gamer Tag")]
             public string GamerTag { get; set; }
 
-            //[Required]
-            //[Display(Name = "Bio")]
-            //public string Bio { get; set; }
-
             [Display(Name  = "Recieving Promotional Emails")]
             public bool PromotionalEmail { get; set; }
         }
