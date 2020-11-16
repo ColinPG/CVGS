@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using CVGS.Models;
 using Microsoft.AspNetCore.Identity;
@@ -40,24 +41,45 @@ namespace CVGS.Areas.Identity.Pages.Account.Manage
         public class InputModel
         {
             [Required]
+            [StringLength(25, ErrorMessage = "No information entered for Street.", MinimumLength = 1)]
             public string Street { get; set; }
             [Required]
+            [Display(Name = "Postal Code")]
             [StringLength(6, ErrorMessage = "Postal code must be 6 characters long.", MinimumLength = 6)]
             public string PostalCode { get; set; }
             [Required]
+            [StringLength(25, ErrorMessage = "No information entered for City.", MinimumLength = 1)]
             public string City { get; set; }
             [Required]
+            [Display(Name = "Apartment Number")]
+            [StringLength(25, ErrorMessage = "No information entered for Apartment Number.", MinimumLength = 1)]
             public string ApartmentNumber { get; set; }
             [Required]
+            [StringLength(25, ErrorMessage = "No information entered for Province.", MinimumLength = 1)]
             public string Province { get; set; }
             [Required]
+            [Display(Name = "First Name")]
+            [StringLength(25, ErrorMessage = "No information entered for First name.", MinimumLength = 1)]
             public string FirstName { get; set; }
             [Required]
+            [Display(Name = "Last Name")]
+            [StringLength(25, ErrorMessage = "No information entered for Last name.", MinimumLength = 1)]
             public string LastName { get; set; }
         }
+
         public void OnGet(bool isMailing)
         {
             _isMailing = isMailing;
+        }
+
+        public bool PostalCodeValidation(string postalCode)
+        {
+            Regex pattern = new Regex(@"^([ABCEGHJKLMNPRSTVXY]\d[ABCEGHJKLMNPRSTVWXYZ])\ {0,1}(\d[ABCEGHJKLMNPRSTVWXYZ]\d)$",
+                RegexOptions.IgnoreCase);
+            if (postalCode == null || postalCode == "" || pattern.IsMatch(postalCode.ToString()))
+                return true;
+            else
+                return false;
         }
 
         public async Task<IActionResult> OnPostAsync(bool isMailing)
@@ -65,6 +87,11 @@ namespace CVGS.Areas.Identity.Pages.Account.Manage
             _isMailing = isMailing;
             if (!ModelState.IsValid)
             {
+                return Page();
+            }
+            if (!PostalCodeValidation(Input.PostalCode))
+            {
+                ModelState.AddModelError("Input.PostalCode", "Invalid Postal Code.");
                 return Page();
             }
             var user = await _userManager.GetUserAsync(User);
@@ -94,7 +121,7 @@ namespace CVGS.Areas.Identity.Pages.Account.Manage
             {
                 AddressShipping newAddress = new AddressShipping
                 {
-                    ShippingId = _context.AddressMailing.Count() + 1,
+                    ShippingId = _context.AddressShipping.Count() + 1,
                     FirstName = Input.FirstName,
                     LastName = Input.LastName,
                     City = Input.City,
