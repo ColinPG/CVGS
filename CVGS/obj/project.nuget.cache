@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "Ujoh6YXNuC4UwdqWDpJakGqqIwpdjcypmpYwYtwtPrad2zlPDhaJc74X1DD612Jij5B1Y9wJIUFITkh46i1bvw==",
+  "dgSpecHash": "M+pCkBcQz9UuY7eICtSB8S0Fk7ULuvt9Z08Pty/w5oNxhwUU/ovjH6uPCng7lzJSUu0UDKFh5KdOV9kmvDg0YQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\colin\\source\\repos\\CVGS\\CVGS\\CVGS.csproj",
   "expectedPackageFiles": [
@@ -177,6 +177,7 @@
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\microsoft.netcore.dotnethostresolver\\2.2.0\\microsoft.netcore.dotnethostresolver.2.2.0.nupkg.sha512",
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\microsoft.netcore.platforms\\2.2.0\\microsoft.netcore.platforms.2.2.0.nupkg.sha512",
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\microsoft.netcore.targets\\2.0.0\\microsoft.netcore.targets.2.0.0.nupkg.sha512",
+    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\microsoft.visualstudio.web.browserlink\\2.2.0\\microsoft.visualstudio.web.browserlink.2.2.0.nupkg.sha512",
     "C:\\Users\\colin\\.nuget\\packages\\microsoft.visualstudio.web.codegeneration\\2.2.4\\microsoft.visualstudio.web.codegeneration.2.2.4.nupkg.sha512",
     "C:\\Users\\colin\\.nuget\\packages\\microsoft.visualstudio.web.codegeneration.contracts\\2.2.4\\microsoft.visualstudio.web.codegeneration.contracts.2.2.4.nupkg.sha512",
     "C:\\Users\\colin\\.nuget\\packages\\microsoft.visualstudio.web.codegeneration.core\\2.2.4\\microsoft.visualstudio.web.codegeneration.core.2.2.4.nupkg.sha512",

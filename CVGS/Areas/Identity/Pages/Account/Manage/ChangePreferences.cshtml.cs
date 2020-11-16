@@ -57,26 +57,30 @@ namespace CVGS.Areas.Identity.Pages.Account.Manage
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
 
-            preferenceInputModel = new PreferenceInputModel();
-
-            preferenceInputModel.platformSelected = await _context.PlatformPreference
-                .Include(g => g.PlatformCodeNavigation)
-                .Where(g => g.UserId == user.Id)
-                .ToListAsync();
-            preferenceInputModel.platforms = await _context.Platform
-                .ToListAsync();
-            preferenceInputModel.categorySelected = await _context.CategoryPreference
-                .Include(g => g.Gamecategory)
-                .Where(g => g.UserId == user.Id)
-                .ToListAsync();
-            preferenceInputModel.categories = await _context.GameCategory
-                .ToListAsync();
-            preferenceInputModel.subCategorySelected = await _context.SubCategoryPreference
-                .Include(g => g.GameSubcategory)
-                .Where(g => g.UserId == user.Id)
-                .ToListAsync();
-            preferenceInputModel.subCategories = await _context.GameSubCategory
-                .ToListAsync();
+            preferenceInputModel = new PreferenceInputModel
+            {
+                platformSelected = await _context.PlatformPreference
+                    .Include(g => g.PlatformCodeNavigation)
+                    .Where(g => g.UserId == user.Id)
+                    .OrderBy(a => a.LastModified)
+                    .ToListAsync(),
+                platforms = await _context.Platform
+                    .ToListAsync(),
+                categorySelected = await _context.CategoryPreference
+                    .Include(g => g.Gamecategory)
+                    .Where(g => g.UserId == user.Id)
+                    .OrderBy(a => a.LastModified)
+                    .ToListAsync(),
+                categories = await _context.GameCategory
+                    .ToListAsync(),
+                subCategorySelected = await _context.SubCategoryPreference
+                    .Include(g => g.GameSubcategory)
+                    .Where(g => g.UserId == user.Id)
+                    .OrderBy(a => a.LastModified)
+                    .ToListAsync(),
+                subCategories = await _context.GameSubCategory
+                    .ToListAsync()
+            };
             if (preferenceInputModel.categories.Count == preferenceInputModel.categorySelected.Count &&
                 preferenceInputModel.platforms.Count == preferenceInputModel.platformSelected.Count &&
                 preferenceInputModel.subCategories.Count == preferenceInputModel.subCategorySelected.Count)

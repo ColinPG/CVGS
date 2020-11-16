@@ -53,20 +53,25 @@ namespace CVGS.Areas.Identity.Pages.Account.Manage
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
 
-            //Prefrences info
-            preferenceModel = new PreferenceModel();
-            preferenceModel.platformPreferences = await _context.PlatformPreference
-                .Include(g => g.PlatformCodeNavigation)
-                .Where(g =>g.UserId==user.Id)
-                .ToListAsync();
-            preferenceModel.categoryPreferences = await _context.CategoryPreference
-                .Include(g => g.Gamecategory)
-                .Where(g => g.UserId == user.Id)
-                .ToListAsync();
-            preferenceModel.subCategoryPreferences = await _context.SubCategoryPreference
-                .Include(g => g.GameSubcategory)
-                .Where(g => g.UserId == user.Id)
-                .ToListAsync();
+            //Preferences info
+            preferenceModel = new PreferenceModel
+            {
+                platformPreferences = await _context.PlatformPreference
+                    .Include(g => g.PlatformCodeNavigation)
+                    .Where(g => g.UserId == user.Id)
+                    .OrderBy(a => a.LastModified)
+                    .ToListAsync(),
+                categoryPreferences = await _context.CategoryPreference
+                    .Include(g => g.Gamecategory)
+                    .Where(g => g.UserId == user.Id)
+                    .OrderBy(a => a.LastModified)
+                    .ToListAsync(),
+                subCategoryPreferences = await _context.SubCategoryPreference
+                    .Include(g => g.GameSubcategory)
+                    .Where(g => g.UserId == user.Id)
+                    .OrderBy(a => a.LastModified)
+                    .ToListAsync()
+            };
             return Page();
         }
     }

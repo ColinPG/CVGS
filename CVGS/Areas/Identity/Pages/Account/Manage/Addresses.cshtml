@@ -1,0 +1,48 @@
+﻿@page
+@model CVGS.Areas.Identity.Pages.Account.Manage.AddressesModel
+@{
+    ViewData["Title"] = "Addresses";
+    ViewData["ActivePage"] = ManageNavPages.Addresses;
+}
+
+
+<h4>@ViewData["Title"]</h4>
+<partial name="_StatusMessage" for="StatusMessage" />
+<div class="row">
+    <div class="col-md-6">
+        <div>
+            <hr />
+            <h6>Mailing Addresss</h6>
+            <ul>
+                @foreach (var item in Model.Input.addressMailings)
+                {
+                    <li>
+                        @Model.AddressSummary(item.MailingId, true)
+                        <a asp-page="AddressEdit" asp-route-id="@item.MailingId" asp-route-isMailing="true">Edit</a>
+                        <a asp-page="AddressDelete" asp-route-id="@item.MailingId" asp-route-isMailing="true">Delete</a>
+                    </li>
+                }
+            </ul>
+            <a asp-page="AddressAdd" asp-route-isMailing="true">Add Mailing Address</a>
+        </div>
+        <div>
+            <hr />
+            <h6>Shipping Addresses</h6>
+            <ul>
+                @foreach (var item in Model.Input.addressShippings)
+                {
+                <li>
+                    @Model.AddressSummary(item.ShippingId, false)
+                    <a asp-page="AddressEdit" asp-route-id="@item.ShippingId" asp-route-isMailing="false">Edit</a>
+                    <a asp-page="AddressDelete" asp-route-id="@item.ShippingId" asp-route-isMailing="false">Delete</a>
+                </li>
+                }
+            </ul>
+            <a asp-page="AddressAdd" asp-route-isMailing="false">Add Shipping Address</a>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

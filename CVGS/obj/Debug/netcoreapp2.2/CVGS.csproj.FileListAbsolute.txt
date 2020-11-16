@@ -71,12 +71,6 @@ C:\Users\Justin\Documents\GitHub\CVGS\CVGS\obj\Debug\netcoreapp2.2\CVGS.pdb
 C:\Users\Justin\Documents\GitHub\CVGS\CVGS\obj\Debug\netcoreapp2.2\CVGS.genruntimeconfig.cache
 C:\Users\Justin\Documents\GitHub\CVGS\CVGS\obj\Debug\netcoreapp2.2\CVGS.csproj.CopyComplete
 C:\Users\Justin\Documents\GitHub\CVGS\CVGS\obj\Debug\netcoreapp2.2\Razor\Areas\Identity\Pages\Account\Manage\ChangePreferences.cshtml.g.cs
-C:\Users\colin\source\repos\CVGS\CVGS\obj\Debug\netcoreapp2.2\CVGS.csprojAssemblyReference.cache
-C:\Users\colin\source\repos\CVGS\CVGS\obj\Debug\netcoreapp2.2\CVGS.AssemblyInfoInputs.cache
-C:\Users\colin\source\repos\CVGS\CVGS\obj\Debug\netcoreapp2.2\CVGS.AssemblyInfo.cs
-C:\Users\colin\source\repos\CVGS\CVGS\obj\Debug\netcoreapp2.2\CVGS.csproj.CoreCompileInputs.cache
-C:\Users\colin\source\repos\CVGS\CVGS\obj\Debug\netcoreapp2.2\CVGS.RazorAssemblyInfo.cache
-C:\Users\colin\source\repos\CVGS\CVGS\obj\Debug\netcoreapp2.2\CVGS.RazorAssemblyInfo.cs
 C:\Users\colin\source\repos\CVGS\CVGS\bin\Debug\netcoreapp2.2\appsettings.Development.json
 C:\Users\colin\source\repos\CVGS\CVGS\bin\Debug\netcoreapp2.2\appsettings.json
 C:\Users\colin\source\repos\CVGS\CVGS\bin\Debug\netcoreapp2.2\CVGS.deps.json
@@ -86,6 +80,11 @@ C:\Users\colin\source\repos\CVGS\CVGS\bin\Debug\netcoreapp2.2\CVGS.dll
 C:\Users\colin\source\repos\CVGS\CVGS\bin\Debug\netcoreapp2.2\CVGS.pdb
 C:\Users\colin\source\repos\CVGS\CVGS\bin\Debug\netcoreapp2.2\CVGS.Views.dll
 C:\Users\colin\source\repos\CVGS\CVGS\bin\Debug\netcoreapp2.2\CVGS.Views.pdb
+C:\Users\colin\source\repos\CVGS\CVGS\obj\Debug\netcoreapp2.2\CVGS.AssemblyInfoInputs.cache
+C:\Users\colin\source\repos\CVGS\CVGS\obj\Debug\netcoreapp2.2\CVGS.AssemblyInfo.cs
+C:\Users\colin\source\repos\CVGS\CVGS\obj\Debug\netcoreapp2.2\CVGS.csproj.CoreCompileInputs.cache
+C:\Users\colin\source\repos\CVGS\CVGS\obj\Debug\netcoreapp2.2\CVGS.RazorAssemblyInfo.cache
+C:\Users\colin\source\repos\CVGS\CVGS\obj\Debug\netcoreapp2.2\CVGS.RazorAssemblyInfo.cs
 C:\Users\colin\source\repos\CVGS\CVGS\obj\Debug\netcoreapp2.2\CVGS.TagHelpers.input.cache
 C:\Users\colin\source\repos\CVGS\CVGS\obj\Debug\netcoreapp2.2\CVGS.TagHelpers.output.cache
 C:\Users\colin\source\repos\CVGS\CVGS\obj\Debug\netcoreapp2.2\CVGS.RazorCoreGenerate.cache
@@ -141,3 +140,8 @@ C:\Users\colin\source\repos\CVGS\CVGS\obj\Debug\netcoreapp2.2\CVGS.dll
 C:\Users\colin\source\repos\CVGS\CVGS\obj\Debug\netcoreapp2.2\CVGS.pdb
 C:\Users\colin\source\repos\CVGS\CVGS\obj\Debug\netcoreapp2.2\CVGS.genruntimeconfig.cache
 C:\Users\colin\source\repos\CVGS\CVGS\obj\Debug\netcoreapp2.2\CVGS.csproj.CopyComplete
+C:\Users\colin\source\repos\CVGS\CVGS\obj\Debug\netcoreapp2.2\CVGS.csprojAssemblyReference.cache
+C:\Users\colin\source\repos\CVGS\CVGS\obj\Debug\netcoreapp2.2\Razor\Areas\Identity\Pages\Account\Manage\Addresses.cshtml.g.cs
+C:\Users\colin\source\repos\CVGS\CVGS\obj\Debug\netcoreapp2.2\Razor\Areas\Identity\Pages\Account\Manage\AddressDelete.cshtml.g.cs
+C:\Users\colin\source\repos\CVGS\CVGS\obj\Debug\netcoreapp2.2\Razor\Areas\Identity\Pages\Account\Manage\AddressEdit.cshtml.g.cs
+C:\Users\colin\source\repos\CVGS\CVGS\obj\Debug\netcoreapp2.2\Razor\Areas\Identity\Pages\Account\Manage\AddressAdd.cshtml.g.cs

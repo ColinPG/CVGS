@@ -71,7 +71,6 @@ namespace CVGS.Areas.Identity.Pages.Account.Manage
             var email = await _userManager.GetEmailAsync(user);
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
             var gamerTag = user.GamerTag;
-            //var bio = user.Bio;
             var promotionalEmail = user.PromoEmailEnabled;
 
             Input = new InputModel
@@ -101,11 +100,6 @@ namespace CVGS.Areas.Identity.Pages.Account.Manage
             {
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
-            //var userName = user.UserName;
-            //if (Input.UserName != userName)
-            //{
-            //    user.UserName = Input.UserName;
-            //}
             var email = await _userManager.GetEmailAsync(user);
             if (Input.Email != email)
             {
@@ -133,11 +127,6 @@ namespace CVGS.Areas.Identity.Pages.Account.Manage
                 user.GamerTag = Input.GamerTag;
             }
 
-            //var bio = user.Bio;
-            //if(Input.Bio !=bio)
-            //{
-            //user.Bio = Input.Bio;
-            //}
             var promotionalEmail = user.PromoEmailEnabled;
             if (Input.PromotionalEmail !=promotionalEmail)
             {
@@ -149,7 +138,6 @@ namespace CVGS.Areas.Identity.Pages.Account.Manage
             await _userManager.UpdateAsync(user);
             await _signInManager.RefreshSignInAsync(user);
             StatusMessage = "Your profile has been updated";
-            TempData["message"] = $"Profile updated.";
             return RedirectToPage();
         }
 
