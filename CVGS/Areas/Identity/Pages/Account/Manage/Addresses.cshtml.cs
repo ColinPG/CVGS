@@ -49,8 +49,8 @@ namespace CVGS.Areas.Identity.Pages.Account.Manage
             }
             Input = new InputModel
             {
-                addressMailings = _context.AddressMailing.ToList(),
-                addressShippings = _context.AddressShipping.ToList()
+                addressMailings = _context.AddressMailing.Where(a => a.UserId == user.Id).ToList(),
+                addressShippings = _context.AddressShipping.Where(a => a.UserId == user.Id).ToList()
             };
             return Page();
         }
