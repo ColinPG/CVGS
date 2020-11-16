@@ -103,7 +103,7 @@ namespace CVGS.Areas.Identity.Pages.Account.Manage
             {
                 AddressMailing newAddress = new AddressMailing
                 {
-                    MailingId = _context.AddressMailing.Count() + 1,
+                    MailingId = Guid.NewGuid(),
                     FirstName = Input.FirstName,
                     LastName = Input.LastName,
                     City = Input.City,
@@ -121,7 +121,7 @@ namespace CVGS.Areas.Identity.Pages.Account.Manage
             {
                 AddressShipping newAddress = new AddressShipping
                 {
-                    ShippingId = _context.AddressShipping.Count() + 1,
+                    ShippingId = Guid.NewGuid(),
                     FirstName = Input.FirstName,
                     LastName = Input.LastName,
                     City = Input.City,

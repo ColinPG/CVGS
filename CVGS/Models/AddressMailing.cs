@@ -5,7 +5,7 @@ namespace CVGS.Models
 {
     public partial class AddressMailing
     {
-        public int MailingId { get; set; }
+        public Guid MailingId { get; set; }
         public string Street { get; set; }
         public string PostalCode { get; set; }
         public string City { get; set; }

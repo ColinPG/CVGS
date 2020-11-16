@@ -38,7 +38,7 @@ namespace CVGS.Areas.Identity.Pages.Account.Manage
 
         public class InputModel
         {
-            public int Id { get; set; }
+            public string Id { get; set; }
             public string Street { get; set; }
             public string PostalCode { get; set; }
             public string City { get; set; }
@@ -48,7 +48,7 @@ namespace CVGS.Areas.Identity.Pages.Account.Manage
             public string LastName { get; set; }
         }
 
-        public async Task<IActionResult> OnGet(bool isMailing, int id)
+        public async Task<IActionResult> OnGet(bool isMailing, string id)
         {
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
@@ -58,7 +58,7 @@ namespace CVGS.Areas.Identity.Pages.Account.Manage
             _isMailing = isMailing;
             if (_isMailing)
             {
-                var address = _context.AddressMailing.Where(a => a.MailingId == id).FirstOrDefault();
+                var address = _context.AddressMailing.Where(a => a.MailingId.ToString() == id).FirstOrDefault();
                 if (address.UserId != user.Id)
                 {
                     StatusMessage = "Unauthorized to delete this address.";
@@ -66,7 +66,7 @@ namespace CVGS.Areas.Identity.Pages.Account.Manage
                 }
                 Input = new InputModel
                 {
-                    Id = address.MailingId,
+                    Id = address.MailingId.ToString(),
                     FirstName = address.FirstName,
                     LastName = address.LastName,
                     City = address.City,
@@ -78,7 +78,7 @@ namespace CVGS.Areas.Identity.Pages.Account.Manage
             }
             else
             {
-                var address = _context.AddressShipping.Where(a => a.ShippingId == id).FirstOrDefault();
+                var address = _context.AddressShipping.Where(a => a.ShippingId.ToString() == id).FirstOrDefault();
                 if (address.UserId != user.Id)
                 {
                     StatusMessage = "Unauthorized to delete this address.";
@@ -86,7 +86,7 @@ namespace CVGS.Areas.Identity.Pages.Account.Manage
                 }
                 Input = new InputModel
                 {
-                    Id = address.ShippingId,
+                    Id = address.ShippingId.ToString(),
                     FirstName = address.FirstName,
                     LastName = address.LastName,
                     City = address.City,
@@ -100,7 +100,7 @@ namespace CVGS.Areas.Identity.Pages.Account.Manage
         }
 
 
-        public async Task<IActionResult> OnPostAsync(bool isMailing, int id)
+        public async Task<IActionResult> OnPostAsync(bool isMailing, string id)
         {
             _isMailing = isMailing;
             if (!ModelState.IsValid)
@@ -114,13 +114,13 @@ namespace CVGS.Areas.Identity.Pages.Account.Manage
             }
             if (_isMailing)
             {
-                var address = _context.AddressMailing.Where(a => a.MailingId == id).FirstOrDefault();
+                var address = _context.AddressMailing.Where(a => a.MailingId.ToString() == id).FirstOrDefault();
                 _context.Remove(address);
                 StatusMessage = "Mailing Address deleted.";
             }
             else
             {
-                var address = _context.AddressShipping.Where(a => a.ShippingId == id).FirstOrDefault();
+                var address = _context.AddressShipping.Where(a => a.ShippingId.ToString() == id).FirstOrDefault();
                 _context.Remove(address);
                 StatusMessage = "Shipping Address deleted.";
             }
