@@ -9,18 +9,17 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+
 namespace CVGS.Areas.Identity.Pages.Account.Manage
 {
-    public class PreferencesIndexPageModel : PageModel
+    public class PreferencesModel : PageModel
     {
-        
-      
         private readonly CVGSContext _context;
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
         private readonly IEmailSender _emailSender;
 
-        public PreferencesIndexPageModel(CVGSContext context,
+        public PreferencesModel(CVGSContext context,
             UserManager<User> userManager,
             SignInManager<User> signInManager,
             IEmailSender emailSender)
@@ -40,7 +39,7 @@ namespace CVGS.Areas.Identity.Pages.Account.Manage
 
         public class PreferenceModel
         {
-            public List<PlatformPreference> platformPreferences {get; set;}
+            public List<PlatformPreference> platformPreferences { get; set; }
             public List<CategoryPreference> categoryPreferences { get; set; }
             public List<SubCategoryPreference> subCategoryPreferences { get; set; }
         }
