@@ -48,14 +48,14 @@ namespace CVGS.Tests
         [TestCase("t")]
         [TestCase("tttttttttttttttttttttttttttttttttttttttttttttttttttttttt")]
         [Test]
-        public void PersonalInformation_AttemptUpdateWithInvalidData_UpdateFailed(string a)
+        public void PersonalInformation_AttemptUpdateWithInvalidData_UpdateFailed(string fName)
         {
             driver.Navigate().GoToUrl(homeURL + personalInformationURL);
             //Input_FirstName
             string firstNameId = "Input_FirstName";
             IWebElement firstName = driver.FindElement(By.Id(firstNameId));
             firstName.Clear();
-            firstName.SendKeys(a);
+            firstName.SendKeys(fName);
             //updateButton
             IWebElement updateButton = driver.FindElement(By.Id("update-button"));
             updateButton.Click();
