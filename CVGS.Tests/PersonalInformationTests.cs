@@ -28,21 +28,21 @@ namespace CVGS.Tests
         [TestCase("First Name")]
         [TestCase("")]
         [Test]
-        public void PersonalInformation_UpdateFirstName_FirstNameUpdated(string a)
+        public void PersonalInformation_UpdateFirstName_FirstNameUpdated(string fName)
         {
             driver.Navigate().GoToUrl(homeURL + personalInformationURL);
             //Input_FirstName
             string firstNameId = "Input_FirstName";
             IWebElement firstName = driver.FindElement(By.Id(firstNameId));
             firstName.Clear();
-            firstName.SendKeys(a);
+            firstName.SendKeys(fName);
             //updateButton
             IWebElement updateButton = driver.FindElement(By.Id("update-button"));
             updateButton.Click();
             //Refresh Page
             driver.Navigate().GoToUrl(homeURL + personalInformationURL);
             //Check for changed first Name
-            Assert.AreEqual(a, driver.FindElement(By.Id(firstNameId)).GetAttribute("value"));
+            Assert.AreEqual(fName, driver.FindElement(By.Id(firstNameId)).GetAttribute("value"));
         }
 
         [TestCase("t")]
