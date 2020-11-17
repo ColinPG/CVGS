@@ -79,6 +79,11 @@ namespace CVGS.Areas.Identity.Pages.Account.Manage
             if (_isMailing)
             {
                 var address = _context.AddressMailing.Where(a => a.MailingId.ToString() == id).FirstOrDefault();
+                if (address == null)
+                {
+                    StatusMessage = "Address not found.";
+                    return RedirectToPage("Addresses");
+                }
                 if (address.UserId != user.Id)
                 {
                     StatusMessage = "Unauthorized to edit this address.";
@@ -99,6 +104,11 @@ namespace CVGS.Areas.Identity.Pages.Account.Manage
             else
             {
                 var address = _context.AddressShipping.Where(a => a.ShippingId.ToString() == id).FirstOrDefault();
+                if (address == null)
+                {
+                    StatusMessage = "Address not found.";
+                    return RedirectToPage("Addresses");
+                }
                 if (address.UserId != user.Id)
                 {
                     StatusMessage = "Unauthorized to edit this address.";

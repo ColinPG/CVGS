@@ -55,17 +55,17 @@ namespace CVGS.Areas.Identity.Pages.Account.Manage
             return Page();
         }
 
-        public string AddressSummary(string id, bool isMailing)
+        public string AddressSummary(Guid id, bool isMailing)
         {
             string result = "";
             if (isMailing)
             {
-                var address = _context.AddressMailing.Where(a => a.MailingId.ToString() == id).FirstOrDefault();
+                var address = _context.AddressMailing.Where(a => a.MailingId == id).FirstOrDefault();
                 result = address.Street + " " + address.City + " " + address.Province + " " + address.PostalCode;
             }
             else // Shipping
             {
-                var address = _context.AddressShipping.Where(a => a.ShippingId.ToString() == id).FirstOrDefault();
+                var address = _context.AddressShipping.Where(a => a.ShippingId == id).FirstOrDefault();
                 result = address.Street + " " + address.City + " " + address.Province + " " + address.PostalCode;
             }
             return result;
