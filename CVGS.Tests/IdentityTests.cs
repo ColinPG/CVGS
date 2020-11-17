@@ -103,12 +103,10 @@ namespace CVGS.Tests
         [Test, Order(6)]
         public void IdentityIndex_ChangeProfile_ProfileUpdated()
         {
-            Logout();
-            Login(userUsername, newUserPassword);
             driver.Navigate().GoToUrl(homeURL + profileUrl);
             //Input_GamerTag
             IWebElement gamerTag = driver.FindElement(By.Id("Input_GamerTag"));
-            string newTag = userGamerTag.Substring(0, userGamerTag.Length - 2);
+            string newTag = userGamerTag.Substring(0, userGamerTag.Length - 1);
             gamerTag.Clear();
             gamerTag.SendKeys(newTag);
             //updateButton
@@ -120,6 +118,16 @@ namespace CVGS.Tests
             Assert.AreEqual("Profile updated.", tempMessage.Text);
             //Check for changed gamerTag
             Assert.AreEqual(newTag, driver.FindElement(By.Id("Input_GamerTag")).GetAttribute("value"));
+
+            //Add another letter to the tag for future tests.
+            //Input_GamerTag
+            gamerTag = driver.FindElement(By.Id("Input_GamerTag"));
+            newTag = userGamerTag + "g";
+            gamerTag.Clear();
+            gamerTag.SendKeys(newTag);
+            //updateButton
+            updateButton = driver.FindElement(By.Id("update-profile-button"));
+            updateButton.Click();
         }
 
         [Test, Order(7)]
@@ -129,7 +137,6 @@ namespace CVGS.Tests
             Login(userUsername, newUserPassword);
             driver.Navigate().GoToUrl(homeURL + profileUrl);
             driver.FindElement(By.Id("personal-data")).Click();
-            driver.FindElement(By.Id("delete")).Click();
             IWebElement passwordTextBox = driver.FindElement(By.Id("Input_Password"));
             passwordTextBox.Clear();
             passwordTextBox.SendKeys(newUserPassword);

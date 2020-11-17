@@ -79,7 +79,6 @@ namespace CVGS.Areas.Identity.Pages.Account.Manage
                 Email = email,
                 PhoneNumber = phoneNumber,
                 GamerTag = gamerTag,
-                //Bio = bio,
                 PromotionalEmail = promotionalEmail
             };
 
@@ -137,6 +136,8 @@ namespace CVGS.Areas.Identity.Pages.Account.Manage
 
             await _userManager.UpdateAsync(user);
             await _signInManager.RefreshSignInAsync(user);
+            if (User.IsInRole("administrators"))
+                TempData["message"] = "Profile updated.";
             StatusMessage = "Your profile has been updated";
             return RedirectToPage();
         }

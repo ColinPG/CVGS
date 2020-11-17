@@ -58,15 +58,22 @@ namespace CVGS.Areas.Identity.Pages.Account.Manage
         public string AddressSummary(Guid id, bool isMailing)
         {
             string result = "";
+           
+
             if (isMailing)
             {
                 var address = _context.AddressMailing.Where(a => a.MailingId == id).FirstOrDefault();
-                result = address.Street + " " + address.City + " " + address.Province + " " + address.PostalCode;
+                result = "<b> Street </b> <br/>" +address.Street + "<br/> <b>City</b> <br/>" + address.City + "<br/> <b>Province</b> <br/> "
+                    + address.Province + " <br/> <b>Postal Code</b> <br/>" + address.PostalCode;
+            
+
             }
             else // Shipping
             {
                 var address = _context.AddressShipping.Where(a => a.ShippingId == id).FirstOrDefault();
-                result = address.Street + " " + address.City + " " + address.Province + " " + address.PostalCode;
+                result = "<b> Street </b> <br/>" + address.Street + "<br/> <b>City</b> <br/>" + address.City + "<br/> <b>Province</b> <br/> "
+                     + address.Province + " <br/> <b>Postal Code</b> <br/>" + address.PostalCode;
+
             }
             return result;
         }

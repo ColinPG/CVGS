@@ -5,7 +5,7 @@ using System.Text;
 
 namespace CVGS.Tests
 {
-    class PreferenceTests : CVGSTestContainer
+    public class PreferenceTests : CVGSTestContainer
     {
         private string preferenceUrl;
         public PreferenceTests()

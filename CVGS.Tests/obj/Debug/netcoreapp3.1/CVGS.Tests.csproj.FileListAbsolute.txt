@@ -88,7 +88,6 @@ C:\Users\colin\source\repos\CVGS\CVGS.Tests\bin\Debug\netcoreapp3.1\zh-Hans\Micr
 C:\Users\colin\source\repos\CVGS\CVGS.Tests\bin\Debug\netcoreapp3.1\zh-Hant\Microsoft.TestPlatform.CommunicationUtilities.resources.dll
 C:\Users\colin\source\repos\CVGS\CVGS.Tests\bin\Debug\netcoreapp3.1\zh-Hant\Microsoft.TestPlatform.CrossPlatEngine.resources.dll
 C:\Users\colin\source\repos\CVGS\CVGS.Tests\bin\Debug\netcoreapp3.1\zh-Hant\Microsoft.VisualStudio.TestPlatform.Common.resources.dll
-C:\Users\colin\source\repos\CVGS\CVGS.Tests\obj\Debug\netcoreapp3.1\CVGS.Tests.csprojAssemblyReference.cache
 C:\Users\colin\source\repos\CVGS\CVGS.Tests\obj\Debug\netcoreapp3.1\CVGS.Tests.AssemblyInfoInputs.cache
 C:\Users\colin\source\repos\CVGS\CVGS.Tests\obj\Debug\netcoreapp3.1\CVGS.Tests.AssemblyInfo.cs
 C:\Users\colin\source\repos\CVGS\CVGS.Tests\obj\Debug\netcoreapp3.1\CVGS.Tests.csproj.CoreCompileInputs.cache
@@ -96,3 +95,4 @@ C:\Users\colin\source\repos\CVGS\CVGS.Tests\obj\Debug\netcoreapp3.1\CVGS.Tests.c
 C:\Users\colin\source\repos\CVGS\CVGS.Tests\obj\Debug\netcoreapp3.1\CVGS.Tests.dll
 C:\Users\colin\source\repos\CVGS\CVGS.Tests\obj\Debug\netcoreapp3.1\CVGS.Tests.pdb
 C:\Users\colin\source\repos\CVGS\CVGS.Tests\obj\Debug\netcoreapp3.1\CVGS.Tests.genruntimeconfig.cache
+C:\Users\colin\source\repos\CVGS\CVGS.Tests\obj\Debug\netcoreapp3.1\CVGS.Tests.csprojAssemblyReference.cache
