@@ -15,8 +15,6 @@ namespace CVGS.Areas.Identity.Pages.Account.Manage
 
         public static string DeletePersonalData => "DeletePersonalData";
 
-        public static string PersonalInformation => "PersonalInformation";
-
         public static string IndexNavClass(ViewContext viewContext) => PageNavClass(viewContext, Index);
 
         public static string ChangePasswordNavClass(ViewContext viewContext) => PageNavClass(viewContext, ChangePassword);
@@ -26,8 +24,6 @@ namespace CVGS.Areas.Identity.Pages.Account.Manage
         public static string PreferencesNavClass(ViewContext viewContext) => PageNavClass(viewContext, Preferences);
 
         public static string DeletePersonalDataNavClass(ViewContext viewContext) => PageNavClass(viewContext, DeletePersonalData);
-
-        public static string PersonalInformationNavClass(ViewContext viewContext) => PageNavClass(viewContext, PersonalInformation);
 
         private static string PageNavClass(ViewContext viewContext, string page)
         {

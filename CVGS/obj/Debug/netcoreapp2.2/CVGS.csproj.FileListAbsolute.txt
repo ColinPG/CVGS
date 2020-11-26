@@ -95,7 +95,6 @@ C:\Users\colin\source\repos\CVGS\CVGS\obj\Debug\netcoreapp2.2\Razor\Areas\Identi
 C:\Users\colin\source\repos\CVGS\CVGS\obj\Debug\netcoreapp2.2\Razor\Areas\Identity\Pages\Account\Manage\ChangePreferences.cshtml.g.cs
 C:\Users\colin\source\repos\CVGS\CVGS\obj\Debug\netcoreapp2.2\Razor\Areas\Identity\Pages\Account\Manage\DeletePersonalData.cshtml.g.cs
 C:\Users\colin\source\repos\CVGS\CVGS\obj\Debug\netcoreapp2.2\Razor\Areas\Identity\Pages\Account\Manage\Index.cshtml.g.cs
-C:\Users\colin\source\repos\CVGS\CVGS\obj\Debug\netcoreapp2.2\Razor\Areas\Identity\Pages\Account\Manage\PersonalInformation.cshtml.g.cs
 C:\Users\colin\source\repos\CVGS\CVGS\obj\Debug\netcoreapp2.2\Razor\Areas\Identity\Pages\Account\Manage\Preferences.cshtml.g.cs
 C:\Users\colin\source\repos\CVGS\CVGS\obj\Debug\netcoreapp2.2\Razor\Areas\Identity\Pages\Account\Manage\SetPassword.cshtml.g.cs
 C:\Users\colin\source\repos\CVGS\CVGS\obj\Debug\netcoreapp2.2\Razor\Areas\Identity\Pages\Account\Manage\_Layout.cshtml.g.cs
