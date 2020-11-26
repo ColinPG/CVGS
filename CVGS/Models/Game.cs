@@ -7,8 +7,6 @@ namespace CVGS.Models
     {
         public Game()
         {
-            GameEsrbContentDescriptor = new HashSet<GameEsrbContentDescriptor>();
-            Product = new HashSet<Product>();
         }
 
         public Guid Guid { get; set; }
@@ -36,7 +34,5 @@ namespace CVGS.Models
         public virtual GamePerspective GamePerspectiveCodeNavigation { get; set; }
         public virtual GameStatus GameStatusCodeNavigation { get; set; }
         public virtual GameSubCategory GameSubCategory { get; set; }
-        public virtual ICollection<GameEsrbContentDescriptor> GameEsrbContentDescriptor { get; set; }
-        public virtual ICollection<Product> Product { get; set; }
     }
 }

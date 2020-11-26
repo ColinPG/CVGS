@@ -62,7 +62,7 @@ namespace CVGS.Tests
             //Refresh Page
             driver.Navigate().GoToUrl(homeURL + personalInformationURL);
             //Check for changed first Name
-            Assert.AreNotEqual(a, driver.FindElement(By.Id(firstNameId)).GetAttribute("value"));
+            Assert.AreNotEqual(fName, driver.FindElement(By.Id(firstNameId)).GetAttribute("value"));
         }
     }
 }

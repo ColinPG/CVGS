@@ -7,10 +7,8 @@ namespace CVGS.Models
     {
         public Province()
         {
-            Location = new HashSet<Location>();
-            Person = new HashSet<Person>();
-            Population = new HashSet<Population>();
-            Supplier = new HashSet<Supplier>();
+            AddressMailing = new HashSet<AddressMailing>();
+            AddressShipping = new HashSet<AddressShipping>();
         }
 
         public string Code { get; set; }
@@ -23,9 +21,7 @@ namespace CVGS.Models
         public string ProvincialTaxAcronym { get; set; }
         public bool? PstOnGst { get; set; }
 
-        public virtual ICollection<Location> Location { get; set; }
-        public virtual ICollection<Person> Person { get; set; }
-        public virtual ICollection<Population> Population { get; set; }
-        public virtual ICollection<Supplier> Supplier { get; set; }
+        public virtual ICollection<AddressMailing> AddressMailing { get; set; }
+        public virtual ICollection<AddressShipping> AddressShipping { get; set; }
     }
 }

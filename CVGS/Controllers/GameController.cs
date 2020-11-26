@@ -27,7 +27,8 @@ namespace CVGS.Controllers
                 .Include(g => g.GameCategory)
                 .Include(g => g.GamePerspectiveCodeNavigation)
                 .Include(g => g.GameStatusCodeNavigation)
-                .Include(g => g.GameSubCategory);
+                .Include(g => g.GameSubCategory)
+                .OrderByDescending(g => g.LastModified);
             return View(await cVGSContext.ToListAsync());
         }
 
@@ -60,8 +61,8 @@ namespace CVGS.Controllers
         {
             ViewData["EsrbRatingCode"] = new SelectList(_context.EsrbRating, "Code", "Code");
             ViewData["GameCategoryId"] = new SelectList(_context.GameCategory, "Id", "EnglishCategory");
-            ViewData["GamePerspectiveCode"] = new SelectList(_context.GamePerspective, "Code", "Code");
-            ViewData["GameStatusCode"] = new SelectList(_context.GameStatus, "Code", "Code");
+            ViewData["GamePerspectiveCode"] = new SelectList(_context.GamePerspective, "Code", "EnglishPerspectiveName");
+            ViewData["GameStatusCode"] = new SelectList(_context.GameStatus, "Code", "EnglishCategory");
             ViewData["GameSubCategoryId"] = new SelectList(_context.GameSubCategory, "Id", "EnglishCategory");
             return View();
         }
@@ -85,6 +86,7 @@ namespace CVGS.Controllers
                 game.FrenchPlayerCount = "";
                 game.FrenchTrailer = "";
                 game.FrenchVersion = false;
+                game.LastModified = DateTime.Now;
                 _context.Add(game);
                 await _context.SaveChangesAsync();
                 if (User.IsInRole("administrators"))
@@ -95,8 +97,8 @@ namespace CVGS.Controllers
             }
             ViewData["EsrbRatingCode"] = new SelectList(_context.EsrbRating, "Code", "Code", game.EsrbRatingCode);
             ViewData["GameCategoryId"] = new SelectList(_context.GameCategory, "Id", "EnglishCategory", game.GameCategoryId);
-            ViewData["GamePerspectiveCode"] = new SelectList(_context.GamePerspective, "Code", "Code", game.GamePerspectiveCode);
-            ViewData["GameStatusCode"] = new SelectList(_context.GameStatus, "Code", "Code", game.GameStatusCode);
+            ViewData["GamePerspectiveCode"] = new SelectList(_context.GamePerspective, "Code", "EnglishPerspectiveName", game.GamePerspectiveCode);
+            ViewData["GameStatusCode"] = new SelectList(_context.GameStatus, "Code", "EnglishCategory", game.GameStatusCode);
             ViewData["GameSubCategoryId"] = new SelectList(_context.GameSubCategory, "Id", "EnglishCategory", game.GameSubCategoryId);
             return View(game);
         }
@@ -117,8 +119,8 @@ namespace CVGS.Controllers
             }
             ViewData["EsrbRatingCode"] = new SelectList(_context.EsrbRating, "Code", "Code", game.EsrbRatingCode);
             ViewData["GameCategoryId"] = new SelectList(_context.GameCategory, "Id", "EnglishCategory", game.GameCategoryId);
-            ViewData["GamePerspectiveCode"] = new SelectList(_context.GamePerspective, "Code", "Code", game.GamePerspectiveCode);
-            ViewData["GameStatusCode"] = new SelectList(_context.GameStatus, "Code", "Code", game.GameStatusCode);
+            ViewData["GamePerspectiveCode"] = new SelectList(_context.GamePerspective, "Code", "EnglishPerspectiveName", game.GamePerspectiveCode);
+            ViewData["GameStatusCode"] = new SelectList(_context.GameStatus, "Code", "EnglishCategory", game.GameStatusCode);
             ViewData["GameSubCategoryId"] = new SelectList(_context.GameSubCategory, "Id", "EnglishCategory", game.GameSubCategoryId);
             return View(game);
         }
@@ -145,6 +147,7 @@ namespace CVGS.Controllers
                     game.FrenchPlayerCount = "";
                     game.FrenchTrailer = "";
                     game.FrenchVersion = false;
+                    game.LastModified = DateTime.Now;
                     _context.Update(game);
                     await _context.SaveChangesAsync();
                     if (User.IsInRole("administrators"))
@@ -167,8 +170,8 @@ namespace CVGS.Controllers
             }
             ViewData["EsrbRatingCode"] = new SelectList(_context.EsrbRating, "Code", "Code", game.EsrbRatingCode);
             ViewData["GameCategoryId"] = new SelectList(_context.GameCategory, "Id", "EnglishCategory", game.GameCategoryId);
-            ViewData["GamePerspectiveCode"] = new SelectList(_context.GamePerspective, "Code", "Code", game.GamePerspectiveCode);
-            ViewData["GameStatusCode"] = new SelectList(_context.GameStatus, "Code", "Code", game.GameStatusCode);
+            ViewData["GamePerspectiveCode"] = new SelectList(_context.GamePerspective, "Code", "EnglishPerspectiveName", game.GamePerspectiveCode);
+            ViewData["GameStatusCode"] = new SelectList(_context.GameStatus, "Code", "EnglishCategory", game.GameStatusCode);
             ViewData["GameSubCategoryId"] = new SelectList(_context.GameSubCategory, "Id", "EnglishCategory", game.GameSubCategoryId);
             return View(game);
         }

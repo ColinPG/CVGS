@@ -17,17 +17,12 @@ namespace CVGS.Models
             if (EnglishName == null || EnglishName.Trim() == "")
                 yield return new ValidationResult("English Name cannot be blank.", new[] { nameof(EnglishName) });
             else
-                EnglishName = ModelValidations.Capitilize(EnglishName).Trim();
+                EnglishName = EnglishName.Trim();
             //Player Count (must not be blank and be a number)
             if (EnglishPlayerCount == null || EnglishPlayerCount.Trim() == "")
                 yield return new ValidationResult("Player Count cannot be blank.", new[] { nameof(EnglishPlayerCount) });
             else if (ModelValidations.IsStringNumeric(EnglishPlayerCount))
                 EnglishPlayerCount = EnglishPlayerCount.Trim();
-            //ESRB Rating code (must not be blank)
-            if (EsrbRatingCode == null || EsrbRatingCode.Trim() == "")
-                yield return new ValidationResult("Esrb Rating Code cannot be blank.", new[] { nameof(EsrbRatingCode) });
-            else
-                EsrbRatingCode = EsrbRatingCode.Trim();
             //Category is an int, does not need to be validated.
             //Perspective Code (must not be blank)
             if (GamePerspectiveCode == null || GamePerspectiveCode.Trim() == "")
@@ -57,7 +52,7 @@ namespace CVGS.Models
     public class GameMetaData
     {
         public Guid Guid { get; set; }
-        [Display(Name = "Status Code")]
+        [Display(Name = "Status")]
         public string GameStatusCode { get; set; }
         [Display(Name = "Category")]
         public int GameCategoryId { get; set; }
@@ -75,7 +70,7 @@ namespace CVGS.Models
         public string EnglishPlayerCount { get; set; }
         [Display(Name = "French Player Count")]
         public string FrenchPlayerCount { get; set; }
-        [Display(Name = "Perspective Code")]
+        [Display(Name = "Perspective")]
         public string GamePerspectiveCode { get; set; }
         [Display(Name = "Trailer")]
         public string EnglishTrailer { get; set; }

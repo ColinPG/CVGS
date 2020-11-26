@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace CVGS.Areas.Identity.Pages.Account.Manage
 {
@@ -41,35 +42,36 @@ namespace CVGS.Areas.Identity.Pages.Account.Manage
         public class InputModel
         {
             [Required]
-            [StringLength(25, ErrorMessage = "No information entered for Street.", MinimumLength = 1)]
+            [StringLength(20, ErrorMessage = "No information entered for Street.", MinimumLength = 1)]
             public string Street { get; set; }
             [Required]
             [Display(Name = "Postal Code")]
             [StringLength(6, ErrorMessage = "Postal code must be 6 characters long.", MinimumLength = 6)]
             public string PostalCode { get; set; }
             [Required]
-            [StringLength(25, ErrorMessage = "No information entered for City.", MinimumLength = 1)]
+            [StringLength(20, ErrorMessage = "No information entered for City.", MinimumLength = 1)]
             public string City { get; set; }
-            [Required]
             [Display(Name = "Apartment Number")]
-            [StringLength(25, ErrorMessage = "No information entered for Apartment Number.", MinimumLength = 1)]
+            [StringLength(20, ErrorMessage = "No information entered for Apartment Number.")]
             public string ApartmentNumber { get; set; }
             [Required]
-            [StringLength(25, ErrorMessage = "No information entered for Province.", MinimumLength = 1)]
+            [StringLength(20, ErrorMessage = "No information entered for Province.", MinimumLength = 1)]
             public string Province { get; set; }
             [Required]
             [Display(Name = "First Name")]
-            [StringLength(25, ErrorMessage = "No information entered for First name.", MinimumLength = 1)]
+            [StringLength(20, ErrorMessage = "No information entered for First name.", MinimumLength = 1)]
             public string FirstName { get; set; }
             [Required]
             [Display(Name = "Last Name")]
-            [StringLength(25, ErrorMessage = "No information entered for Last name.", MinimumLength = 1)]
+            [StringLength(20, ErrorMessage = "No information entered for Last name.", MinimumLength = 1)]
             public string LastName { get; set; }
+            public string CountryCode { get; set; }
         }
 
         public void OnGet(bool isMailing)
         {
             _isMailing = isMailing;
+            ViewData["CountryCode"] = new SelectList(_context.Country, "Code", "EnglishName");
         }
 
         public bool PostalCodeValidation(string postalCode)
@@ -111,9 +113,12 @@ namespace CVGS.Areas.Identity.Pages.Account.Manage
                     PostalCode = Input.PostalCode,
                     Province = Input.Province,
                     Street = Input.Street,
+                    CountryCode = Input.CountryCode,
                     LastModified = DateTime.Now,
                     UserId = user.Id
                 };
+                if (newAddress.ApartmentNumber == null)
+                    newAddress.ApartmentNumber = "";
                 _context.Add(newAddress);
                 StatusMessage = "New Mailing Address added.";
             }
@@ -129,9 +134,12 @@ namespace CVGS.Areas.Identity.Pages.Account.Manage
                     PostalCode = Input.PostalCode,
                     Province = Input.Province,
                     Street = Input.Street,
+                    CountryCode = Input.CountryCode,
                     LastModified = DateTime.Now,
                     UserId = user.Id
                 };
+                if (newAddress.ApartmentNumber == null)
+                    newAddress.ApartmentNumber = "";
                 _context.Add(newAddress);
                 StatusMessage = "New Shipping Address added.";
             }

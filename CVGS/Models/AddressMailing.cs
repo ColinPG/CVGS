@@ -13,9 +13,11 @@ namespace CVGS.Models
         public string Province { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        public string CountryCode { get; set; }
         public DateTime? LastModified { get; set; }
         public string UserId { get; set; }
 
         public virtual AspNetUsers User { get; set; }
+        public virtual Country CountryCodeNavigation { get; set; }
     }
 }

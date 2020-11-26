@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 
 namespace CVGS.Areas.Identity.Pages.Account.Manage
 {
@@ -62,17 +63,17 @@ namespace CVGS.Areas.Identity.Pages.Account.Manage
 
             if (isMailing)
             {
-                var address = _context.AddressMailing.Where(a => a.MailingId == id).FirstOrDefault();
+                var address = _context.AddressMailing.Include(a => a.CountryCodeNavigation).Where(a => a.MailingId == id).FirstOrDefault();
                 result = "<b> Street </b> <br/>" +address.Street + "<br/> <b>City</b> <br/>" + address.City + "<br/> <b>Province</b> <br/> "
-                    + address.Province + " <br/> <b>Postal Code</b> <br/>" + address.PostalCode;
+                    + address.Province + " <br/> <b>Postal Code</b> <br/>" + address.PostalCode + " <br/> <b>Country</b> <br/>" + address.CountryCodeNavigation.EnglishName;
             
 
             }
             else // Shipping
             {
-                var address = _context.AddressShipping.Where(a => a.ShippingId == id).FirstOrDefault();
+                var address = _context.AddressShipping.Include(a => a.CountryCodeNavigation).Where(a => a.ShippingId == id).FirstOrDefault();
                 result = "<b> Street </b> <br/>" + address.Street + "<br/> <b>City</b> <br/>" + address.City + "<br/> <b>Province</b> <br/> "
-                     + address.Province + " <br/> <b>Postal Code</b> <br/>" + address.PostalCode;
+                     + address.Province + " <br/> <b>Postal Code</b> <br/>" + address.PostalCode + " <br/> <b>Country</b> <br/>" + address.CountryCodeNavigation.EnglishName;
 
             }
             return result;

@@ -143,3 +143,4 @@ C:\Users\colin\source\repos\CVGS\CVGS\bin\Debug\netcoreapp2.2\CVGS.Views.pdb
 C:\Users\colin\source\repos\CVGS\CVGS\obj\Debug\netcoreapp2.2\CVGS.Views.pdb
 C:\Users\colin\source\repos\CVGS\CVGS\obj\Debug\netcoreapp2.2\CVGS.genruntimeconfig.cache
 C:\Users\colin\source\repos\CVGS\CVGS\obj\Debug\netcoreapp2.2\CVGS.csproj.CopyComplete
+C:\Users\colin\source\repos\CVGS\CVGS\obj\Debug\netcoreapp2.2\CVGS.csprojAssemblyReference.cache

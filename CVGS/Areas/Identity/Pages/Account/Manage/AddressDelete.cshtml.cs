@@ -46,6 +46,8 @@ namespace CVGS.Areas.Identity.Pages.Account.Manage
             public string Province { get; set; }
             public string FirstName { get; set; }
             public string LastName { get; set; }
+            public string CountryCode { get; set; }
+            public virtual Country CountryNavigation { get; set; }
         }
 
         public async Task<IActionResult> OnGet(bool isMailing, string id)
@@ -78,8 +80,10 @@ namespace CVGS.Areas.Identity.Pages.Account.Manage
                     ApartmentNumber = address.ApartmentNumber,
                     PostalCode = address.PostalCode,
                     Province = address.Province,
-                    Street = address.Street
+                    Street = address.Street,
+                    CountryCode = address.CountryCode
                 };
+                Input.CountryNavigation = _context.Country.Where(a => a.Code == address.CountryCode).FirstOrDefault();
             }
             else
             {
@@ -103,8 +107,10 @@ namespace CVGS.Areas.Identity.Pages.Account.Manage
                     ApartmentNumber = address.ApartmentNumber,
                     PostalCode = address.PostalCode,
                     Province = address.Province,
-                    Street = address.Street
+                    Street = address.Street,
+                    CountryCode = address.CountryCode
                 };
+                Input.CountryNavigation = _context.Country.Where(a => a.Code == address.CountryCode).FirstOrDefault();
             }
             return Page();
         }

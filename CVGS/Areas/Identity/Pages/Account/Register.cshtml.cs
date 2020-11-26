@@ -94,6 +94,8 @@ namespace CVGS.Areas.Identity.Pages.Account
                     GamerTag = Input.GamerTag, 
                     Bio = "", 
                     PromoEmailEnabled = Input.PromoEmailEnabled};
+                if (user.GamerTag == null)
+                    user.GamerTag = "";
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {
