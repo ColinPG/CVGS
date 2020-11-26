@@ -9,48 +9,7 @@
 <partial name="_StatusMessage" for="StatusMessage" />
 <div class="row">
     <div class="col-md-6">
-        <form method="post">
-            @if (Model.preferenceInputModel.AllSelected)
-            {
-                <div id="AllSelected">All Preferences selected.</div>
-            }
-            else
-            {
-            <select asp-for="@Model.preferenceInputModel.AddValue">
-                <optgroup label="Platforms">
-                    @foreach (var item in Model.preferenceInputModel.platforms)
-                    {
-                        if (!Model.PlatformPrefExists(item.EnglishName))
-                        {
-                            <option value="@item.EnglishName">@item.EnglishName</option>
-                        }
-                    }
-                </optgroup>
-                <optgroup label="Categories">
-                    @foreach (var item in Model.preferenceInputModel.categories)
-                    {
-                        if (!Model.CategoryPrefExists(item.EnglishCategory))
-                        {
-                            <option value="@item.EnglishCategory">@item.EnglishCategory</option>
-                        }
-                    }
-                </optgroup>
-                <optgroup label="SubCategories">
-                    @foreach (var item in Model.preferenceInputModel.subCategories)
-                    {
-                        if (!Model.SubCategoryPrefExists(item.EnglishCategory))
-                        {
-                            <option value="@item.EnglishCategory">@item.EnglishCategory</option>
-                        }
-                    }
-                </optgroup>
-            </select>
-            <button id="add" type="submit" class="btn btn-primary">Add</button>
-            }
-        </form>
-
         <div>
-            <hr />
             <h6>Platform Preferences</h6>
             <ul>
                 @foreach (var item in Model.preferenceInputModel.platformSelected)
@@ -62,9 +21,31 @@
                     </li>
                 }
             </ul>
+            @if (Model.preferenceInputModel.AllPlatformsSelected)
+            {
+                <hr />
+                <div id="AllPlatformsSelected">All Platforms selected.</div>
+            }
+            else
+            {
+                <form method="post">
+                    <select asp-for="@Model.preferenceInputModel.AddValue">
+                        <optgroup label="Platforms">
+                            @foreach (var item in Model.preferenceInputModel.platforms)
+                            {
+                                if (!Model.PlatformPrefExists(item.EnglishName))
+                                {
+                                    <option value="@item.EnglishName">@item.EnglishName</option>
+                                }
+                            }
+                        </optgroup>
+                    </select>
+                    <button id="addPlatform" type="submit" class="btn btn-primary">Add</button>
+                </form>
+            }
+            <hr />
         </div>
         <div>
-            <hr />
             <h6>Category Preferences</h6>
             <ul>
                 @foreach (var item in Model.preferenceInputModel.categorySelected)
@@ -76,10 +57,31 @@
                     </li>
                 }
             </ul>
+            @if (Model.preferenceInputModel.AllCategoriesSelected)
+            {
+                <hr />
+                <div id="AllCategoriesSelected">All Categories selected.</div>
+            }
+            else
+            {
+                <form method="post">
+                    <select asp-for="@Model.preferenceInputModel.AddValue">
+                        <optgroup label="Categories">
+                            @foreach (var item in Model.preferenceInputModel.categories)
+                            {
+                                if (!Model.CategoryPrefExists(item.EnglishCategory))
+                                {
+                                    <option value="@item.EnglishCategory">@item.EnglishCategory</option>
+                                }
+                            }
+                        </optgroup>
+                    </select>
+                    <button id="addCategory" type="submit" class="btn btn-primary">Add</button>
+                </form>
+            }
+            <hr />
         </div>
         <div>
-            <hr />
-
             <h6>Subcategory Preferences</h6>
             <ul>
                 @foreach (var item in Model.preferenceInputModel.subCategorySelected)
@@ -91,6 +93,29 @@
                     </li>
                 }
             </ul>
+            @if (Model.preferenceInputModel.AllSubcategoriesSelected)
+            {
+                <hr />
+                <div id="AllSubcategoriesSelected">All SubCategories selected.</div>
+                <hr />
+            }
+            else
+            {
+                <form method="post">
+                    <select asp-for="@Model.preferenceInputModel.AddValue">
+                        <optgroup label="SubCategories">
+                            @foreach (var item in Model.preferenceInputModel.subCategories)
+                            {
+                                if (!Model.SubCategoryPrefExists(item.EnglishCategory))
+                                {
+                                    <option value="@item.EnglishCategory">@item.EnglishCategory</option>
+                                }
+                            }
+                        </optgroup>
+                    </select>
+                    <button id="addSubcategory" type="submit" class="btn btn-primary">Add</button>
+                </form>
+            }
         </div>
     </div>
 </div>

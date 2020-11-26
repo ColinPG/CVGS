@@ -40,7 +40,9 @@ namespace CVGS.Areas.Identity.Pages.Account.Manage
         public class PreferenceInputModel
         {
             public string AddValue { get; set; }
-            public bool AllSelected { get; set; }
+            public bool AllPlatformsSelected { get; set; }
+            public bool AllCategoriesSelected { get; set; }
+            public bool AllSubcategoriesSelected { get; set; }
             public List<PlatformPreference> platformSelected { get; set; }
             public List<CategoryPreference> categorySelected { get; set; }
             public List<SubCategoryPreference> subCategorySelected { get; set; }
@@ -81,12 +83,21 @@ namespace CVGS.Areas.Identity.Pages.Account.Manage
                 subCategories = await _context.GameSubCategory
                     .ToListAsync()
             };
-            if (preferenceInputModel.categories.Count == preferenceInputModel.categorySelected.Count &&
-                preferenceInputModel.platforms.Count == preferenceInputModel.platformSelected.Count &&
-                preferenceInputModel.subCategories.Count == preferenceInputModel.subCategorySelected.Count)
-                preferenceInputModel.AllSelected = true;
+            // Check if number of platforms matches number of selected platforms
+            if (preferenceInputModel.platforms.Count == preferenceInputModel.platformSelected.Count)
+                preferenceInputModel.AllPlatformsSelected = true;
             else
-                preferenceInputModel.AllSelected = false;
+                preferenceInputModel.AllPlatformsSelected = false;
+            // Check if number of categories matches number of selected categories
+            if (preferenceInputModel.categories.Count == preferenceInputModel.categorySelected.Count)
+                preferenceInputModel.AllCategoriesSelected = true;
+            else
+                preferenceInputModel.AllCategoriesSelected = false;
+            // Check if number of subcategories matches number of selected subcategories
+            if (preferenceInputModel.subCategories.Count == preferenceInputModel.subCategorySelected.Count)
+                preferenceInputModel.AllSubcategoriesSelected = true;
+            else
+                preferenceInputModel.AllSubcategoriesSelected = false;
             return Page();
         }
 
