@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using CVGS.Models;
@@ -41,12 +42,17 @@ namespace CVGS.Areas.Identity.Pages.Account.Manage
         {
             public string Id { get; set; }
             public string Street { get; set; }
+            [Display(Name = "Postal Code")]
             public string PostalCode { get; set; }
             public string City { get; set; }
+            [Display(Name = "Apartment Number")]
             public string ApartmentNumber { get; set; }
             public string Province { get; set; }
+            [Display(Name = "First Name")]
             public string FirstName { get; set; }
+            [Display(Name = "Last Name")]
             public string LastName { get; set; }
+            [Display(Name = "Country")]
             public string CountryCode { get; set; }
             public virtual Country CountryNavigation { get; set; }
         }
@@ -80,11 +86,16 @@ namespace CVGS.Areas.Identity.Pages.Account.Manage
                     City = address.City,
                     ApartmentNumber = address.ApartmentNumber,
                     PostalCode = address.PostalCode,
-                    Province = address.ProvinceCodeNavigation.EnglishName,
                     Street = address.Street,
                     CountryCode = address.CountryCode
                 };
-                Input.CountryNavigation = _context.Country.Where(a => a.Code == address.CountryCode).FirstOrDefault();
+                if (String.IsNullOrWhiteSpace(address.ApartmentNumber))
+                    Input.ApartmentNumber = "N/A";
+                if (!String.IsNullOrEmpty(address.ProvinceCode))
+                    Input.Province = ModelValidations.Capitilize(address.ProvinceCodeNavigation.EnglishName);
+                else
+                    Input.Province = "N/A";
+                Input.CountryCode = ModelValidations.Capitilize(_context.Country.Where(a => a.Code == address.CountryCode).FirstOrDefault().EnglishName);
             }
             else
             {
@@ -107,11 +118,16 @@ namespace CVGS.Areas.Identity.Pages.Account.Manage
                     City = address.City,
                     ApartmentNumber = address.ApartmentNumber,
                     PostalCode = address.PostalCode,
-                    Province = address.ProvinceCodeNavigation.EnglishName,
                     Street = address.Street,
                     CountryCode = address.CountryCode
                 };
-                Input.CountryNavigation = _context.Country.Where(a => a.Code == address.CountryCode).FirstOrDefault();
+                if (String.IsNullOrWhiteSpace(address.ApartmentNumber))
+                    Input.ApartmentNumber = "N/A";
+                if (!String.IsNullOrWhiteSpace(address.ProvinceCode))
+                    Input.Province = ModelValidations.Capitilize(address.ProvinceCodeNavigation.EnglishName);
+                else
+                    Input.Province = "N/A";
+                Input.CountryCode = ModelValidations.Capitilize(_context.Country.Where(a => a.Code == address.CountryCode).FirstOrDefault().EnglishName);
             }
             return Page();
         }

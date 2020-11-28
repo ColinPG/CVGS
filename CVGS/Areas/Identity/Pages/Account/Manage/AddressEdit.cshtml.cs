@@ -43,29 +43,19 @@ namespace CVGS.Areas.Identity.Pages.Account.Manage
         public class InputModel
         {
             public string Id { get; set; }
-            [Required]
-            [StringLength(20, ErrorMessage = "No information entered for Street.", MinimumLength = 1)]
             public string Street { get; set; }
-            [Required]
             [Display(Name = "Postal Code")]
-            [StringLength(6, ErrorMessage = "Postal code must be 6 characters long.", MinimumLength = 6)]
             public string PostalCode { get; set; }
-            [Required]
-            [StringLength(20, ErrorMessage = "No information entered for City.", MinimumLength = 1)]
             public string City { get; set; }
             [Display(Name = "Apartment Number")]
-            [StringLength(20, ErrorMessage = "No information entered for Apartment Number.")]
             public string ApartmentNumber { get; set; }
             [Display(Name = "Province")]
             public string ProvinceCode { get; set; }
-            [Required]
             [Display(Name = "First Name")]
-            [StringLength(20, ErrorMessage = "No information entered for First name.", MinimumLength = 1)]
             public string FirstName { get; set; }
-            [Required]
             [Display(Name = "Last Name")]
-            [StringLength(20, ErrorMessage = "No information entered for Last name.", MinimumLength = 1)]
             public string LastName { get; set; }
+            [Display (Name = "Country")]
             public string CountryCode { get; set; }
         }
         public async Task<IActionResult> OnGet(bool isMailing, string id)
@@ -133,17 +123,57 @@ namespace CVGS.Areas.Identity.Pages.Account.Manage
             {
                 i.Text = ModelValidations.Capitilize(i.Text);
             }
+            SelectList provinces = new SelectList(_context.Province.Where(a => a.CountryCode == Input.CountryCode).OrderBy(a => a.EnglishName), "Code", "EnglishName");
+            foreach (SelectListItem i in provinces)
+            {
+                i.Text = ModelValidations.Capitilize(i.Text);
+            }
             ViewData["CountryCode"] = countries;
+            ViewData["ProvinceCode"] = provinces;
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync(bool isMailing)
         {
             _isMailing = isMailing;
-            if (!ModelValidations.PostalCodeValidation(Input.PostalCode))
-            {
+            //Street 
+            if (String.IsNullOrEmpty(Input.Street))
+                ModelState.AddModelError("Input.Street", "Street is required.");
+            else if (Input.Street.Length > 20)
+                ModelState.AddModelError("Input.Street", "Street must be 20 or less characters");
+            else if (Input.Street.Length < 2)
+                ModelState.AddModelError("Input.Street", "Street must be 2 or more characters");
+            //Postal Code
+            if (String.IsNullOrWhiteSpace(Input.PostalCode))
+                ModelState.AddModelError("Input.PostalCode", "Postal Code required.");
+            else if (!ModelValidations.PostalCodeValidation(Input.PostalCode))
                 ModelState.AddModelError("Input.PostalCode", "Invalid Postal Code.");
-            }
+            //City 
+            if (String.IsNullOrEmpty(Input.City))
+                ModelState.AddModelError("Input.City", "City is required.");
+            else if (Input.City.Length > 20)
+                ModelState.AddModelError("Input.City", "City must be 20 or less characters");
+            else if (Input.City.Length < 2)
+                ModelState.AddModelError("Input.City", "City must be 2 or more characters");
+            //Apartment Number
+            if (Input.ApartmentNumber.Length > 20)
+                ModelState.AddModelError("Input.ApartmentNumber", "Apartment Number must be 20 or less characters");
+            else if (Input.ApartmentNumber.Length < 2)
+                ModelState.AddModelError("Input.ApartmentNumber", "Apartment Number must be 2 or more characters");
+            //First Name
+            if (String.IsNullOrEmpty(Input.FirstName))
+                ModelState.AddModelError("Input.FirstName", "First Name is required.");
+            else if (Input.FirstName.Length > 20)
+                ModelState.AddModelError("Input.FirstName", "First Name must be 20 or less characters");
+            else if (Input.FirstName.Length < 2)
+                ModelState.AddModelError("Input.FirstName", "First Name must be 2 or more characters");
+            //Last Name
+            if (String.IsNullOrEmpty(Input.LastName))
+                ModelState.AddModelError("Input.LastName", "LastName is required.");
+            else if (Input.LastName.Length > 20)
+                ModelState.AddModelError("Input.LastName", "LastName must be 20 or less characters");
+            else if (Input.LastName.Length < 2)
+                ModelState.AddModelError("Input.LastName", "LastName must be 2 or more characters");
             if (!ModelState.IsValid)
             {
                 return Page();

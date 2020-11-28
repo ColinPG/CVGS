@@ -40,39 +40,26 @@ namespace CVGS.Areas.Identity.Pages.Account
 
         public class InputModel
         {
-            [Required]
-            [EmailAddress]
             [Display(Name = "Email")]
             public string Email { get; set; }
 
-            [Required]
-            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
             [DataType(DataType.Password)]
             [Display(Name = "Password")]
             public string Password { get; set; }
 
             [DataType(DataType.Password)]
             [Display(Name = "Confirm password")]
-            [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
 
-            [Required]
-            [StringLength(25, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 3)]
             [Display(Name = "User Name")]
             public string UserName { get; set; }
 
-            [StringLength(25, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 3)]
             [Display(Name = "Gamer Tag")]
             public string GamerTag { get; set; }
 
-            //[Display(Name = "Bio")]
-            //public string Bio { get; set; }
-
-            [Phone]
             [Display(Name = "Phone number")]
             public string PhoneNumber { get; set; }
 
-            [Required]
             [Display(Name = "Receive Promotional Emails?")]
             public bool PromoEmailEnabled { get; set; }
         }
@@ -85,6 +72,40 @@ namespace CVGS.Areas.Identity.Pages.Account
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
             returnUrl = returnUrl ?? Url.Content("~/");
+            //UserName
+            if (String.IsNullOrEmpty(Input.UserName))
+                ModelState.AddModelError("Input.UserName", "User Name is required.");
+            if (Input.UserName.Length > 25)
+                ModelState.AddModelError("Input.UserName", "User Name must be 25 or less characters");
+            else if (Input.UserName.Length < 3)
+                ModelState.AddModelError("Input.UserName", "User Name must be 3 or more characters");
+            //Email
+            if (String.IsNullOrEmpty(Input.Email))
+                ModelState.AddModelError("Input.Email", "Email is required.");
+            else if (!ModelValidations.ValidEmail(Input.Email))
+                ModelState.AddModelError("Input.Email", "Invalid Email. Ex. email@address.com");
+            //Phone Number
+            if (String.IsNullOrEmpty(Input.PhoneNumber))
+                ModelState.AddModelError("Input.PhoneNumber", "Phone Number is required.");
+            else if (!ModelValidations.ValidPhoneNumber(Input.PhoneNumber))
+                ModelState.AddModelError("Input.PhoneNumber", "Invalid Phone Number. Ex. 000-000-0000");
+            //Password
+            if(String.IsNullOrEmpty(Input.Password))
+                ModelState.AddModelError("Input.Password", "Password is required.");
+            if (Input.Password.Length > 100)
+                ModelState.AddModelError("Input.Password", "Password must be 100 or less characters");
+            else if (Input.Password.Length < 6)
+                ModelState.AddModelError("Input.Password", "Password must be 6 or more characters");
+            //Confirm Password
+            if (Input.ConfirmPassword != Input.Password)
+                ModelState.AddModelError("Input.ConfirmPassword", "The password and confirmation password do not match.");
+            //GamerTag
+            if (String.IsNullOrEmpty(Input.GamerTag))
+                ModelState.AddModelError("Input.GamerTag", "Gamer Tag is required.");
+            if (Input.GamerTag.Length > 25)
+                ModelState.AddModelError("Input.GamerTag", "Gamer Tag must be 25 or less characters");
+            else if (Input.GamerTag.Length < 3)
+                ModelState.AddModelError("Input.GamerTag", "Gamer Tag must be 3 or more characters");
             if (ModelState.IsValid)
             {
                 var user = new User { 

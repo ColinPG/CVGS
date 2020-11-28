@@ -17,9 +17,10 @@
                 @foreach (var item in Model.Input.addressMailings)
                 {
                     @Html.Raw(@Model.AddressSummary(item.MailingId, true))
-                    <br/>
+                    <br />
                     <a id="EditM_@item.MailingId" asp-page="AddressEdit" asp-route-id="@item.MailingId" asp-route-isMailing="true">Edit</a>
                     <a id="DeleteM_@item.MailingId" asp-page="AddressDelete" asp-route-id="@item.MailingId" asp-route-isMailing="true">Delete</a>
+                    <br />
                 }
             </ul>
             <a asp-page="AddressAdd" asp-route-isMailing="true">Add Mailing Address</a>
@@ -30,12 +31,11 @@
             <ul>
                 @foreach (var item in Model.Input.addressShippings)
                 {
-                
                     @Html.Raw(@Model.AddressSummary(item.ShippingId, false))
-                <br/>
+                    <br />
                     <a id="EditS_@item.ShippingId" asp-page="AddressEdit" asp-route-id="@item.ShippingId" asp-route-isMailing="false">Edit</a>
                     <a id="DeleteS_@item.ShippingId" asp-page="AddressDelete" asp-route-id="@item.ShippingId" asp-route-isMailing="false">Delete</a>
-                
+                    <br />
                 }
             </ul>
             <a asp-page="AddressAdd" asp-route-isMailing="false">Add Shipping Address</a>

@@ -66,9 +66,9 @@ namespace CVGS.Areas.Identity.Pages.Account.Manage
                 var address = _context.AddressMailing.Include(a => a.CountryCodeNavigation).Include(a => a.ProvinceCodeNavigation).Where(a => a.MailingId == id).FirstOrDefault();
                 string province = "";
                 if(!String.IsNullOrEmpty(address.ProvinceCode))
-                    province = ModelValidations.Capitilize(address.ProvinceCodeNavigation.EnglishName);
-                result = "<b> Street </b> <br/>" +address.Street + "<br/> <b>City</b> <br/>" + address.City + "<br/> <b>Province</b> <br/> "
-                    + province + " <br/> <b>Postal Code</b> <br/>" + address.PostalCode + " <br/> <b>Country</b> <br/>" + ModelValidations.Capitilize(address.CountryCodeNavigation.EnglishName);
+                    province = "<br/> <b>Province</b> <br/> " + ModelValidations.Capitilize(address.ProvinceCodeNavigation.EnglishName);
+                result = "<b> Street </b> <br/>" +address.Street + "<br/> <b>City</b> <br/>" + address.City 
+                     + " <br/> <b>Postal Code</b> <br/>" + address.PostalCode + " <br/> <b>Country</b> <br/>" + ModelValidations.Capitilize(address.CountryCodeNavigation.EnglishName) + province;
             
 
             }
@@ -77,9 +77,9 @@ namespace CVGS.Areas.Identity.Pages.Account.Manage
                 var address = _context.AddressShipping.Include(a => a.CountryCodeNavigation).Include(a => a.ProvinceCodeNavigation).Where(a => a.ShippingId == id).FirstOrDefault();
                 string province = "";
                 if (!String.IsNullOrEmpty(address.ProvinceCode))
-                    province = ModelValidations.Capitilize(address.ProvinceCodeNavigation.EnglishName);
-                result = "<b> Street </b> <br/>" + address.Street + "<br/> <b>City</b> <br/>" + address.City + "<br/> <b>Province</b> <br/> "
-                     + province + " <br/> <b>Postal Code</b> <br/>" + address.PostalCode + " <br/> <b>Country</b> <br/>" + ModelValidations.Capitilize(address.CountryCodeNavigation.EnglishName);
+                    province = "<br/> <b>Province</b> <br/> " + ModelValidations.Capitilize(address.ProvinceCodeNavigation.EnglishName);
+                result = "<b> Street </b> <br/>" + address.Street + "<br/> <b>City</b> <br/>" + address.City 
+                     + " <br/> <b>Postal Code</b> <br/>" + address.PostalCode + " <br/> <b>Country</b> <br/>" + ModelValidations.Capitilize(address.CountryCodeNavigation.EnglishName) + province;
 
             }
             return result;
