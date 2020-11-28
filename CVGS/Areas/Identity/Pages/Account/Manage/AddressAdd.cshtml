@@ -49,15 +49,18 @@
                 <span asp-validation-for="Input.PostalCode" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Input.Province"></label>
-                <input asp-for="Input.Province" class="form-control" />
-                <span asp-validation-for="Input.Province" class="text-danger"></span>
-            </div>
-            <div class="form-group">
                 <label asp-for="Input.CountryCode" class="control-label"></label>
-                <select asp-for="Input.CountryCode" class="form-control" asp-items="ViewBag.CountryCode"></select>
+                @Html.DropDownList("Input.CountryCode", (SelectList)ViewBag.CountryCode, new { onchange = "this.form.submit();", @class = "form-control" })
                 <span asp-validation-for="Input.CountryCode" class="text-danger"></span>
             </div>
+            @if (Model.ValidCountry(Model.Input.CountryCode))
+            {
+                <div class="form-group">
+                    <label asp-for="Input.ProvinceCode" class="control-label"></label>
+                    <select asp-for="Input.ProvinceCode" class="form-control" asp-items="ViewBag.ProvinceCode"></select>
+                    <span asp-validation-for="Input.ProvinceCode" class="text-danger"></span>
+                </div>
+            }
             <button id="add-address" type="submit" class="btn btn-primary">Add</button>
         </form>
     </div>

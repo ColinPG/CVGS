@@ -9,6 +9,7 @@ namespace CVGS.Models
         {
             AddressMailing = new HashSet<AddressMailing>();
             AddressShipping = new HashSet<AddressShipping>();
+            AspNetUsers = new HashSet<AspNetUsers>();
         }
 
         public string Code { get; set; }
@@ -23,5 +24,6 @@ namespace CVGS.Models
 
         public virtual ICollection<AddressMailing> AddressMailing { get; set; }
         public virtual ICollection<AddressShipping> AddressShipping { get; set; }
+        public virtual ICollection<AspNetUsers> AspNetUsers { get; set; }
     }
 }

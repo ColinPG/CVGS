@@ -1,7 +1,7 @@
 ﻿@model CVGS.Models.Game
 
 @{
-    ViewData["Title"] = "Delete Game";
+    ViewData["Title"] = $"Delete {Model.EnglishName}";
 }
 
 <h1>@ViewData["Title"]</h1>
@@ -17,54 +17,6 @@
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.EnglishName)
         </dd>
-        @*<dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.FrenchName)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.FrenchName)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.FrenchVersion)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.FrenchVersion)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.FrenchPlayerCount)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.FrenchPlayerCount)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.EnglishTrailer)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.EnglishTrailer)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.FrenchTrailer)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.FrenchTrailer)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.FrenchDescription)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.FrenchDescription)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.FrenchDetail)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.FrenchDetail)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.UserName)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.UserName)
-        </dd>*@
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.EnglishPlayerCount)
         </dt>
@@ -87,13 +39,13 @@
             @Html.DisplayNameFor(model => model.GamePerspectiveCode)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.GamePerspectiveCodeNavigation.Code)
+            @Html.DisplayFor(model => model.GamePerspectiveCodeNavigation.EnglishPerspectiveName)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.GameStatusCode)
+            @Html.DisplayNameFor(model => model.GameFormatCode)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.GameStatusCodeNavigation.Code)
+            @Html.DisplayFor(model => model.GameFormatCodeNavigation.EnglishCategory)
         </dd>
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.GameSubCategoryId)

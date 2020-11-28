@@ -30,10 +30,10 @@ namespace CVGS.Models
             else
                 GamePerspectiveCode = GamePerspectiveCode.Trim();
             //Status Code (must not be blank)
-            if (GameStatusCode == null || GameStatusCode.Trim() == "")
-                yield return new ValidationResult("Status Code cannot be blank.", new[] { nameof(GameStatusCode) });
+            if (GameFormatCode == null || GameFormatCode.Trim() == "")
+                yield return new ValidationResult("Status Code cannot be blank.", new[] { nameof(GameFormatCode) });
             else
-                GameStatusCode = GameStatusCode.Trim();
+                GameFormatCode = GameFormatCode.Trim();
             //Subcategory is an int, does not need to be validated.
             //Description (must not be blank)
             if (EnglishDescription == null || EnglishDescription.Trim() == "")
@@ -52,8 +52,8 @@ namespace CVGS.Models
     public class GameMetaData
     {
         public Guid Guid { get; set; }
-        [Display(Name = "Status")]
-        public string GameStatusCode { get; set; }
+        [Display(Name = "Format")]
+        public string GameFormatCode { get; set; }
         [Display(Name = "Category")]
         public int GameCategoryId { get; set; }
         [Display(Name = "Subcategory")]

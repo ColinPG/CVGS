@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 
 namespace CVGS.Areas.Identity.Pages.Account.Manage
 {
@@ -60,7 +61,7 @@ namespace CVGS.Areas.Identity.Pages.Account.Manage
             _isMailing = isMailing;
             if (_isMailing)
             {
-                var address = _context.AddressMailing.Where(a => a.MailingId.ToString() == id).FirstOrDefault();
+                var address = _context.AddressMailing.Include(a => a.ProvinceCodeNavigation).Where(a => a.MailingId.ToString() == id).FirstOrDefault();
                 if (address == null)
                 {
                     StatusMessage = "Address not found.";
@@ -79,7 +80,7 @@ namespace CVGS.Areas.Identity.Pages.Account.Manage
                     City = address.City,
                     ApartmentNumber = address.ApartmentNumber,
                     PostalCode = address.PostalCode,
-                    Province = address.Province,
+                    Province = address.ProvinceCodeNavigation.EnglishName,
                     Street = address.Street,
                     CountryCode = address.CountryCode
                 };
@@ -87,7 +88,7 @@ namespace CVGS.Areas.Identity.Pages.Account.Manage
             }
             else
             {
-                var address = _context.AddressShipping.Where(a => a.ShippingId.ToString() == id).FirstOrDefault();
+                var address = _context.AddressShipping.Include(a => a.ProvinceCodeNavigation).Where(a => a.ShippingId.ToString() == id).FirstOrDefault();
                 if (address == null)
                 {
                     StatusMessage = "Address not found.";
@@ -106,7 +107,7 @@ namespace CVGS.Areas.Identity.Pages.Account.Manage
                     City = address.City,
                     ApartmentNumber = address.ApartmentNumber,
                     PostalCode = address.PostalCode,
-                    Province = address.Province,
+                    Province = address.ProvinceCodeNavigation.EnglishName,
                     Street = address.Street,
                     CountryCode = address.CountryCode
                 };

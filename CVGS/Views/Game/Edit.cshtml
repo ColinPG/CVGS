@@ -1,7 +1,7 @@
 ﻿@model CVGS.Models.Game
 
 @{
-    ViewData["Title"] = "Edit Game";
+    ViewData["Title"] = $"Edit {Model.EnglishName}";
 }
 
 <h1>@ViewData["Title"]</h1>
@@ -39,9 +39,9 @@
                 <span asp-validation-for="GamePerspectiveCode" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="GameStatusCode" class="control-label"></label>
-                <select asp-for="GameStatusCode" class="form-control" asp-items="ViewBag.GameStatusCode"></select>
-                <span asp-validation-for="GameStatusCode" class="text-danger"></span>
+                <label asp-for="GameFormatCode" class="control-label"></label>
+                <select asp-for="GameFormatCode" class="form-control" asp-items="ViewBag.GameFormatCode"></select>
+                <span asp-validation-for="GameFormatCode" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="GameSubCategoryId" class="control-label"></label>

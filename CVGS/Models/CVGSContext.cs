@@ -24,20 +24,23 @@ namespace CVGS.Models
         public virtual DbSet<AspNetUserRoles> AspNetUserRoles { get; set; }
         public virtual DbSet<AspNetUserTokens> AspNetUserTokens { get; set; }
         public virtual DbSet<AspNetUsers> AspNetUsers { get; set; }
+        public virtual DbSet<CartItems> CartItems { get; set; }
         public virtual DbSet<CategoryPreference> CategoryPreference { get; set; }
         public virtual DbSet<Country> Country { get; set; }
         public virtual DbSet<EsrbRating> EsrbRating { get; set; }
         public virtual DbSet<Game> Game { get; set; }
         public virtual DbSet<GameCategory> GameCategory { get; set; }
+        public virtual DbSet<GameFormat> GameFormat { get; set; }
         public virtual DbSet<GamePerspective> GamePerspective { get; set; }
-        public virtual DbSet<GameStatus> GameStatus { get; set; }
         public virtual DbSet<GameSubCategory> GameSubCategory { get; set; }
+        public virtual DbSet<OrderItems> OrderItems { get; set; }
+        public virtual DbSet<Orders> Orders { get; set; }
         public virtual DbSet<Platform> Platform { get; set; }
         public virtual DbSet<PlatformPreference> PlatformPreference { get; set; }
         public virtual DbSet<Province> Province { get; set; }
         public virtual DbSet<SubCategoryPreference> SubCategoryPreference { get; set; }
-
-        // Unable to generate entity type for table 'dbo.Sku'. Please see the warning messages.
+        public virtual DbSet<UserGameLibrary> UserGameLibrary { get; set; }
+        public virtual DbSet<WishList> WishList { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -57,6 +60,12 @@ namespace CVGS.Models
                 entity.HasKey(e => e.MailingId)
                     .HasName("PK__AddressM__4E8DFD561DD20E0B");
 
+                entity.HasIndex(e => e.CountryCode);
+
+                entity.HasIndex(e => e.ProvinceCode);
+
+                entity.HasIndex(e => e.UserId);
+
                 entity.Property(e => e.MailingId)
                     .HasColumnName("mailingId")
                     .ValueGeneratedNever();
@@ -70,6 +79,8 @@ namespace CVGS.Models
                     .IsRequired()
                     .HasColumnName("city")
                     .HasMaxLength(20);
+
+                entity.Property(e => e.CountryCode).HasMaxLength(3);
 
                 entity.Property(e => e.FirstName)
                     .IsRequired()
@@ -91,10 +102,7 @@ namespace CVGS.Models
                     .HasColumnName("postalCode")
                     .HasMaxLength(6);
 
-                entity.Property(e => e.Province)
-                    .IsRequired()
-                    .HasColumnName("province")
-                    .HasMaxLength(20);
+                entity.Property(e => e.ProvinceCode).HasMaxLength(2);
 
                 entity.Property(e => e.Street)
                     .IsRequired()
@@ -103,8 +111,15 @@ namespace CVGS.Models
 
                 entity.Property(e => e.UserId)
                     .IsRequired()
-                    .HasColumnName("userId")
-                    .HasMaxLength(450);
+                    .HasColumnName("userId");
+
+                entity.HasOne(d => d.CountryCodeNavigation)
+                    .WithMany(p => p.AddressMailing)
+                    .HasForeignKey(d => d.CountryCode);
+
+                entity.HasOne(d => d.ProvinceCodeNavigation)
+                    .WithMany(p => p.AddressMailing)
+                    .HasForeignKey(d => d.ProvinceCode);
 
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.AddressMailing)
@@ -117,6 +132,12 @@ namespace CVGS.Models
             {
                 entity.HasKey(e => e.ShippingId)
                     .HasName("PK__AddressS__EDF80BCA6656726E");
+
+                entity.HasIndex(e => e.CountryCode);
+
+                entity.HasIndex(e => e.ProvinceCode);
+
+                entity.HasIndex(e => e.UserId);
 
                 entity.Property(e => e.ShippingId)
                     .HasColumnName("shippingId")
@@ -132,6 +153,8 @@ namespace CVGS.Models
                     .HasColumnName("city")
                     .HasMaxLength(20);
 
+                entity.Property(e => e.CountryCode).HasMaxLength(3);
+
                 entity.Property(e => e.FirstName)
                     .IsRequired()
                     .HasColumnName("firstName")
@@ -152,10 +175,7 @@ namespace CVGS.Models
                     .HasColumnName("postalCode")
                     .HasMaxLength(6);
 
-                entity.Property(e => e.Province)
-                    .IsRequired()
-                    .HasColumnName("province")
-                    .HasMaxLength(20);
+                entity.Property(e => e.ProvinceCode).HasMaxLength(2);
 
                 entity.Property(e => e.Street)
                     .IsRequired()
@@ -164,8 +184,15 @@ namespace CVGS.Models
 
                 entity.Property(e => e.UserId)
                     .IsRequired()
-                    .HasColumnName("userId")
-                    .HasMaxLength(450);
+                    .HasColumnName("userId");
+
+                entity.HasOne(d => d.CountryCodeNavigation)
+                    .WithMany(p => p.AddressShipping)
+                    .HasForeignKey(d => d.CountryCode);
+
+                entity.HasOne(d => d.ProvinceCodeNavigation)
+                    .WithMany(p => p.AddressShipping)
+                    .HasForeignKey(d => d.ProvinceCode);
 
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.AddressShipping)
@@ -275,9 +302,10 @@ namespace CVGS.Models
                     .HasColumnName("city")
                     .HasMaxLength(450);
 
-                entity.Property(e => e.Country)
-                    .HasColumnName("country")
-                    .HasMaxLength(450);
+                entity.Property(e => e.CountryCode)
+                    .HasColumnName("countryCode")
+                    .HasMaxLength(3)
+                    .HasDefaultValueSql("('CAN')");
 
                 entity.Property(e => e.DateOfBirth)
                     .HasColumnName("dateOfBirth")
@@ -309,17 +337,58 @@ namespace CVGS.Models
                     .IsRequired()
                     .HasDefaultValueSql("((1))");
 
-                entity.Property(e => e.ProvinceState)
-                    .HasColumnName("provinceState")
-                    .HasMaxLength(450);
+                entity.Property(e => e.ProvinceCode)
+                    .HasColumnName("provinceCode")
+                    .HasMaxLength(2);
 
                 entity.Property(e => e.UserName).HasMaxLength(256);
+
+                entity.HasOne(d => d.CountryCodeNavigation)
+                    .WithMany(p => p.AspNetUsers)
+                    .HasForeignKey(d => d.CountryCode)
+                    .HasConstraintName("FK__AspNetUse__count__02FC7413");
+
+                entity.HasOne(d => d.ProvinceCodeNavigation)
+                    .WithMany(p => p.AspNetUsers)
+                    .HasForeignKey(d => d.ProvinceCode)
+                    .HasConstraintName("FK__AspNetUse__provi__03F0984C");
+            });
+
+            modelBuilder.Entity<CartItems>(entity =>
+            {
+                entity.HasKey(e => new { e.UserId, e.GameId })
+                    .HasName("PK__CartItem__F63317BA69A2DF94");
+
+                entity.Property(e => e.UserId).HasColumnName("userId");
+
+                entity.Property(e => e.GameId).HasColumnName("gameId");
+
+                entity.Property(e => e.LastModified)
+                    .HasColumnName("lastModified")
+                    .HasColumnType("datetime")
+                    .HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.Quantity).HasColumnName("quantity");
+
+                entity.HasOne(d => d.Game)
+                    .WithMany(p => p.CartItems)
+                    .HasForeignKey(d => d.GameId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__CartItems__gameI__0B91BA14");
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.CartItems)
+                    .HasForeignKey(d => d.UserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__CartItems__userI__0A9D95DB");
             });
 
             modelBuilder.Entity<CategoryPreference>(entity =>
             {
                 entity.HasKey(e => new { e.UserId, e.GamecategoryId })
                     .HasName("PK__Category__5503CE5E31DD18C6");
+
+                entity.HasIndex(e => e.GamecategoryId);
 
                 entity.Property(e => e.UserId).HasColumnName("userId");
 
@@ -388,6 +457,17 @@ namespace CVGS.Models
                 entity.HasKey(e => e.Guid)
                     .HasName("Game_PK");
 
+                entity.HasIndex(e => e.EsrbRatingCode);
+
+                entity.HasIndex(e => e.GameCategoryId);
+
+                entity.HasIndex(e => e.GameFormatCode)
+                    .HasName("IX_Game_GameStatusCode");
+
+                entity.HasIndex(e => e.GamePerspectiveCode);
+
+                entity.HasIndex(e => e.GameSubCategoryId);
+
                 entity.Property(e => e.Guid).ValueGeneratedNever();
 
                 entity.Property(e => e.EnglishDescription).HasMaxLength(4000);
@@ -418,11 +498,11 @@ namespace CVGS.Models
 
                 entity.Property(e => e.FrenchTrailer).HasMaxLength(4000);
 
-                entity.Property(e => e.GamePerspectiveCode).HasMaxLength(1);
-
-                entity.Property(e => e.GameStatusCode)
+                entity.Property(e => e.GameFormatCode)
                     .IsRequired()
                     .HasMaxLength(1);
+
+                entity.Property(e => e.GamePerspectiveCode).HasMaxLength(1);
 
                 entity.Property(e => e.LastModified)
                     .HasColumnName("lastModified")
@@ -446,16 +526,16 @@ namespace CVGS.Models
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("Game_GameCategory_FK");
 
+                entity.HasOne(d => d.GameFormatCodeNavigation)
+                    .WithMany(p => p.Game)
+                    .HasForeignKey(d => d.GameFormatCode)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("Game_GameFormat_FK");
+
                 entity.HasOne(d => d.GamePerspectiveCodeNavigation)
                     .WithMany(p => p.Game)
                     .HasForeignKey(d => d.GamePerspectiveCode)
                     .HasConstraintName("Game_GamePerspective_FK");
-
-                entity.HasOne(d => d.GameStatusCodeNavigation)
-                    .WithMany(p => p.Game)
-                    .HasForeignKey(d => d.GameStatusCode)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("Game_GameStatus_FK");
 
                 entity.HasOne(d => d.GameSubCategory)
                     .WithMany(p => p.Game)
@@ -472,6 +552,24 @@ namespace CVGS.Models
                 entity.Property(e => e.FrenchCategory)
                     .IsRequired()
                     .HasMaxLength(20);
+            });
+
+            modelBuilder.Entity<GameFormat>(entity =>
+            {
+                entity.HasKey(e => e.Code)
+                    .HasName("GameStatus_PK");
+
+                entity.Property(e => e.Code)
+                    .HasMaxLength(1)
+                    .ValueGeneratedNever();
+
+                entity.Property(e => e.EnglishCategory)
+                    .IsRequired()
+                    .HasMaxLength(15);
+
+                entity.Property(e => e.FrenchCategory)
+                    .IsRequired()
+                    .HasMaxLength(15);
             });
 
             modelBuilder.Entity<GamePerspective>(entity =>
@@ -492,24 +590,6 @@ namespace CVGS.Models
                     .HasMaxLength(15);
             });
 
-            modelBuilder.Entity<GameStatus>(entity =>
-            {
-                entity.HasKey(e => e.Code)
-                    .HasName("GameStatus_PK");
-
-                entity.Property(e => e.Code)
-                    .HasMaxLength(1)
-                    .ValueGeneratedNever();
-
-                entity.Property(e => e.EnglishCategory)
-                    .IsRequired()
-                    .HasMaxLength(15);
-
-                entity.Property(e => e.FrenchCategory)
-                    .IsRequired()
-                    .HasMaxLength(15);
-            });
-
             modelBuilder.Entity<GameSubCategory>(entity =>
             {
                 entity.Property(e => e.EnglishCategory)
@@ -519,6 +599,72 @@ namespace CVGS.Models
                 entity.Property(e => e.FrenchCategory)
                     .IsRequired()
                     .HasMaxLength(20);
+            });
+
+            modelBuilder.Entity<OrderItems>(entity =>
+            {
+                entity.HasKey(e => new { e.OrderId, e.GameId })
+                    .HasName("PK__OrderIte__35A03818CBAF26B7");
+
+                entity.Property(e => e.OrderId).HasColumnName("orderId");
+
+                entity.Property(e => e.GameId).HasColumnName("gameId");
+
+                entity.Property(e => e.LastModified)
+                    .HasColumnName("lastModified")
+                    .HasColumnType("datetime")
+                    .HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.Quantity).HasColumnName("quantity");
+
+                entity.HasOne(d => d.Game)
+                    .WithMany(p => p.OrderItems)
+                    .HasForeignKey(d => d.GameId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__OrderItem__gameI__1F98B2C1");
+
+                entity.HasOne(d => d.Order)
+                    .WithMany(p => p.OrderItems)
+                    .HasForeignKey(d => d.OrderId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__OrderItem__order__1EA48E88");
+            });
+
+            modelBuilder.Entity<Orders>(entity =>
+            {
+                entity.Property(e => e.Id).ValueGeneratedNever();
+
+                entity.Property(e => e.DateCreated)
+                    .HasColumnName("dateCreated")
+                    .HasColumnType("datetime")
+                    .HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.IsShipped).HasColumnName("isShipped");
+
+                entity.Property(e => e.MailingId).HasColumnName("mailingId");
+
+                entity.Property(e => e.ShippingId).HasColumnName("shippingId");
+
+                entity.Property(e => e.UserId)
+                    .IsRequired()
+                    .HasColumnName("userId")
+                    .HasMaxLength(450);
+
+                entity.HasOne(d => d.Mailing)
+                    .WithMany(p => p.Orders)
+                    .HasForeignKey(d => d.MailingId)
+                    .HasConstraintName("FK__Orders__mailingI__1AD3FDA4");
+
+                entity.HasOne(d => d.Shipping)
+                    .WithMany(p => p.Orders)
+                    .HasForeignKey(d => d.ShippingId)
+                    .HasConstraintName("FK__Orders__shipping__19DFD96B");
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.Orders)
+                    .HasForeignKey(d => d.UserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__Orders__userId__18EBB532");
             });
 
             modelBuilder.Entity<Platform>(entity =>
@@ -543,6 +689,8 @@ namespace CVGS.Models
             {
                 entity.HasKey(e => new { e.UserId, e.PlatformCode })
                     .HasName("PK__Platform__A669FBFE92BE477D");
+
+                entity.HasIndex(e => e.PlatformCode);
 
                 entity.Property(e => e.UserId).HasColumnName("userId");
 
@@ -605,6 +753,8 @@ namespace CVGS.Models
                 entity.HasKey(e => new { e.UserId, e.GameSubcategoryId })
                     .HasName("PK__SubCateg__AEDF96AEA68DA694");
 
+                entity.HasIndex(e => e.GameSubcategoryId);
+
                 entity.Property(e => e.UserId).HasColumnName("userId");
 
                 entity.Property(e => e.GameSubcategoryId).HasColumnName("gameSubcategoryId");
@@ -625,6 +775,60 @@ namespace CVGS.Models
                     .HasForeignKey(d => d.UserId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK__SubCatego__userI__6501FCD8");
+            });
+
+            modelBuilder.Entity<UserGameLibrary>(entity =>
+            {
+                entity.HasKey(e => new { e.UserId, e.GameId })
+                    .HasName("PK__UserGame__F63317BA5CC51CDC");
+
+                entity.Property(e => e.UserId).HasColumnName("userId");
+
+                entity.Property(e => e.GameId).HasColumnName("gameId");
+
+                entity.Property(e => e.DatePurchased)
+                    .HasColumnName("datePurchased")
+                    .HasColumnType("datetime")
+                    .HasDefaultValueSql("(getdate())");
+
+                entity.HasOne(d => d.Game)
+                    .WithMany(p => p.UserGameLibrary)
+                    .HasForeignKey(d => d.GameId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__UserGameL__gameI__151B244E");
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.UserGameLibrary)
+                    .HasForeignKey(d => d.UserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__UserGameL__userI__14270015");
+            });
+
+            modelBuilder.Entity<WishList>(entity =>
+            {
+                entity.HasKey(e => new { e.UserId, e.GameId })
+                    .HasName("PK__WishList__F63317BA05A4165C");
+
+                entity.Property(e => e.UserId).HasColumnName("userId");
+
+                entity.Property(e => e.GameId).HasColumnName("gameId");
+
+                entity.Property(e => e.DateCreated)
+                    .HasColumnName("dateCreated")
+                    .HasColumnType("datetime")
+                    .HasDefaultValueSql("(getdate())");
+
+                entity.HasOne(d => d.Game)
+                    .WithMany(p => p.WishList)
+                    .HasForeignKey(d => d.GameId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__WishList__gameId__10566F31");
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.WishList)
+                    .HasForeignKey(d => d.UserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__WishList__userId__0F624AF8");
             });
         }
     }

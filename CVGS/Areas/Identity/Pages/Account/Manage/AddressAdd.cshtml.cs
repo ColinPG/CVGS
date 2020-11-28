@@ -54,9 +54,8 @@ namespace CVGS.Areas.Identity.Pages.Account.Manage
             [Display(Name = "Apartment Number")]
             [StringLength(20, ErrorMessage = "No information entered for Apartment Number.")]
             public string ApartmentNumber { get; set; }
-            [Required]
-            [StringLength(20, ErrorMessage = "No information entered for Province.", MinimumLength = 1)]
-            public string Province { get; set; }
+            [Display(Name = "Province")]
+            public string ProvinceCode { get; set; }
             [Required]
             [Display(Name = "First Name")]
             [StringLength(20, ErrorMessage = "No information entered for First name.", MinimumLength = 1)]
@@ -65,23 +64,39 @@ namespace CVGS.Areas.Identity.Pages.Account.Manage
             [Display(Name = "Last Name")]
             [StringLength(20, ErrorMessage = "No information entered for Last name.", MinimumLength = 1)]
             public string LastName { get; set; }
+            [Display(Name = "Country")]
             public string CountryCode { get; set; }
         }
 
         public void OnGet(bool isMailing)
         {
             _isMailing = isMailing;
-            ViewData["CountryCode"] = new SelectList(_context.Country, "Code", "EnglishName");
+            SelectList countries = new SelectList(_context.Country.OrderBy(a => a.EnglishName), "Code", "EnglishName");
+            foreach (SelectListItem i in countries)
+            {
+                i.Text = ModelValidations.Capitilize(i.Text);
+            }
+            Input = new InputModel
+            {
+                CountryCode = null
+            };
+            ViewData["CountryCode"] = countries;
         }
 
-        public bool PostalCodeValidation(string postalCode)
+        public void OnGet(bool isMailing, string code)
         {
-            Regex pattern = new Regex(@"^([ABCEGHJKLMNPRSTVXY]\d[ABCEGHJKLMNPRSTVWXYZ])\ {0,1}(\d[ABCEGHJKLMNPRSTVWXYZ]\d)$",
-                RegexOptions.IgnoreCase);
-            if (postalCode == null || postalCode == "" || pattern.IsMatch(postalCode.ToString()))
-                return true;
-            else
-                return false;
+            SelectList countries = new SelectList(_context.Country.OrderBy(a => a.EnglishName), "Code", "EnglishName");
+            foreach (SelectListItem i in countries)
+            {
+                i.Text = ModelValidations.Capitilize(i.Text);
+            }
+            SelectList provinces = new SelectList(_context.Province.Where(a => a.CountryCode == Input.CountryCode).OrderBy(a => a.EnglishName), "Code", "EnglishName");
+            foreach (SelectListItem i in provinces)
+            {
+                i.Text = ModelValidations.Capitilize(i.Text);
+            }
+            ViewData["CountryCode"] = countries;
+            ViewData["ProvinceCode"] = provinces;
         }
 
         public async Task<IActionResult> OnPostAsync(bool isMailing)
@@ -91,7 +106,7 @@ namespace CVGS.Areas.Identity.Pages.Account.Manage
             {
                 return Page();
             }
-            if (!PostalCodeValidation(Input.PostalCode))
+            if (!ModelValidations.PostalCodeValidation(Input.PostalCode))
             {
                 ModelState.AddModelError("Input.PostalCode", "Invalid Postal Code.");
                 return Page();
@@ -111,12 +126,16 @@ namespace CVGS.Areas.Identity.Pages.Account.Manage
                     City = Input.City,
                     ApartmentNumber = Input.ApartmentNumber,
                     PostalCode = Input.PostalCode,
-                    Province = Input.Province,
+                    ProvinceCode = Input.ProvinceCode,
                     Street = Input.Street,
                     CountryCode = Input.CountryCode,
                     LastModified = DateTime.Now,
                     UserId = user.Id
                 };
+                if (!ValidCountry(Input.CountryCode))
+                {
+                    newAddress.ProvinceCode = null;
+                }
                 if (newAddress.ApartmentNumber == null)
                     newAddress.ApartmentNumber = "";
                 _context.Add(newAddress);
@@ -132,12 +151,16 @@ namespace CVGS.Areas.Identity.Pages.Account.Manage
                     City = Input.City,
                     ApartmentNumber = Input.ApartmentNumber,
                     PostalCode = Input.PostalCode,
-                    Province = Input.Province,
+                    ProvinceCode = Input.ProvinceCode,
                     Street = Input.Street,
                     CountryCode = Input.CountryCode,
                     LastModified = DateTime.Now,
                     UserId = user.Id
                 };
+                if (!ValidCountry(Input.CountryCode))
+                {
+                    newAddress.ProvinceCode = null;
+                }
                 if (newAddress.ApartmentNumber == null)
                     newAddress.ApartmentNumber = "";
                 _context.Add(newAddress);
@@ -145,6 +168,14 @@ namespace CVGS.Areas.Identity.Pages.Account.Manage
             }
             await _context.SaveChangesAsync();
             return RedirectToPage("Addresses");
+        }
+
+        public bool ValidCountry(string countryCode)
+        {
+            if (_context.Province.Where(a => a.CountryCode == countryCode).Any())
+                return true;
+            else
+                return false;
         }
     }
 }

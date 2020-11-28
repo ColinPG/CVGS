@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace CVGS.Models
 {
-    public partial class GameStatus
+    public partial class GameFormat
     {
-        public GameStatus()
+        public GameFormat()
         {
             Game = new HashSet<Game>();
         }

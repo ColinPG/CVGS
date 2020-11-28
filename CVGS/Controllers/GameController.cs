@@ -26,7 +26,7 @@ namespace CVGS.Controllers
                 .Include(g => g.EsrbRatingCodeNavigation)
                 .Include(g => g.GameCategory)
                 .Include(g => g.GamePerspectiveCodeNavigation)
-                .Include(g => g.GameStatusCodeNavigation)
+                .Include(g => g.GameFormatCodeNavigation)
                 .Include(g => g.GameSubCategory)
                 .OrderByDescending(g => g.LastModified);
             return View(await cVGSContext.ToListAsync());
@@ -43,7 +43,7 @@ namespace CVGS.Controllers
                 .Include(g => g.EsrbRatingCodeNavigation)
                 .Include(g => g.GameCategory)
                 .Include(g => g.GamePerspectiveCodeNavigation)
-                .Include(g => g.GameStatusCodeNavigation)
+                .Include(g => g.GameFormatCodeNavigation)
                 .Include(g => g.GameSubCategory)
                 .FirstOrDefaultAsync(m => m.Guid == id);
             if (game == null)
@@ -62,7 +62,7 @@ namespace CVGS.Controllers
             ViewData["EsrbRatingCode"] = new SelectList(_context.EsrbRating, "Code", "Code");
             ViewData["GameCategoryId"] = new SelectList(_context.GameCategory, "Id", "EnglishCategory");
             ViewData["GamePerspectiveCode"] = new SelectList(_context.GamePerspective, "Code", "EnglishPerspectiveName");
-            ViewData["GameStatusCode"] = new SelectList(_context.GameStatus, "Code", "EnglishCategory");
+            ViewData["GameFormatCode"] = new SelectList(_context.GameFormat, "Code", "EnglishCategory");
             ViewData["GameSubCategoryId"] = new SelectList(_context.GameSubCategory, "Id", "EnglishCategory");
             return View();
         }
@@ -72,7 +72,7 @@ namespace CVGS.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Guid,GameStatusCode,GameCategoryId,GameSubCategoryId,EsrbRatingCode,EnglishName,FrenchName,FrenchVersion,EnglishPlayerCount,FrenchPlayerCount,GamePerspectiveCode,EnglishTrailer,FrenchTrailer,EnglishDescription,FrenchDescription,EnglishDetail,FrenchDetail,UserName")] Game game)
+        public async Task<IActionResult> Create([Bind("Guid,GameFormatCode,GameCategoryId,GameSubCategoryId,EsrbRatingCode,EnglishName,FrenchName,FrenchVersion,EnglishPlayerCount,FrenchPlayerCount,GamePerspectiveCode,EnglishTrailer,FrenchTrailer,EnglishDescription,FrenchDescription,EnglishDetail,FrenchDetail,UserName")] Game game)
         {
             if (ModelState.IsValid)
             {
@@ -98,7 +98,7 @@ namespace CVGS.Controllers
             ViewData["EsrbRatingCode"] = new SelectList(_context.EsrbRating, "Code", "Code", game.EsrbRatingCode);
             ViewData["GameCategoryId"] = new SelectList(_context.GameCategory, "Id", "EnglishCategory", game.GameCategoryId);
             ViewData["GamePerspectiveCode"] = new SelectList(_context.GamePerspective, "Code", "EnglishPerspectiveName", game.GamePerspectiveCode);
-            ViewData["GameStatusCode"] = new SelectList(_context.GameStatus, "Code", "EnglishCategory", game.GameStatusCode);
+            ViewData["GameFormatCode"] = new SelectList(_context.GameFormat, "Code", "EnglishCategory", game.GameFormatCode);
             ViewData["GameSubCategoryId"] = new SelectList(_context.GameSubCategory, "Id", "EnglishCategory", game.GameSubCategoryId);
             return View(game);
         }
@@ -120,7 +120,7 @@ namespace CVGS.Controllers
             ViewData["EsrbRatingCode"] = new SelectList(_context.EsrbRating, "Code", "Code", game.EsrbRatingCode);
             ViewData["GameCategoryId"] = new SelectList(_context.GameCategory, "Id", "EnglishCategory", game.GameCategoryId);
             ViewData["GamePerspectiveCode"] = new SelectList(_context.GamePerspective, "Code", "EnglishPerspectiveName", game.GamePerspectiveCode);
-            ViewData["GameStatusCode"] = new SelectList(_context.GameStatus, "Code", "EnglishCategory", game.GameStatusCode);
+            ViewData["GameFormatCode"] = new SelectList(_context.GameFormat, "Code", "EnglishCategory", game.GameFormatCode);
             ViewData["GameSubCategoryId"] = new SelectList(_context.GameSubCategory, "Id", "EnglishCategory", game.GameSubCategoryId);
             return View(game);
         }
@@ -130,7 +130,7 @@ namespace CVGS.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Guid,GameStatusCode,GameCategoryId,GameSubCategoryId,EsrbRatingCode,EnglishName,FrenchName,FrenchVersion,EnglishPlayerCount,FrenchPlayerCount,GamePerspectiveCode,EnglishTrailer,FrenchTrailer,EnglishDescription,FrenchDescription,EnglishDetail,FrenchDetail,UserName")] Game game)
+        public async Task<IActionResult> Edit(Guid id, [Bind("Guid,GameFormatCode,GameCategoryId,GameSubCategoryId,EsrbRatingCode,EnglishName,FrenchName,FrenchVersion,EnglishPlayerCount,FrenchPlayerCount,GamePerspectiveCode,EnglishTrailer,FrenchTrailer,EnglishDescription,FrenchDescription,EnglishDetail,FrenchDetail,UserName")] Game game)
         {
             if (id != game.Guid)
             {
@@ -171,7 +171,7 @@ namespace CVGS.Controllers
             ViewData["EsrbRatingCode"] = new SelectList(_context.EsrbRating, "Code", "Code", game.EsrbRatingCode);
             ViewData["GameCategoryId"] = new SelectList(_context.GameCategory, "Id", "EnglishCategory", game.GameCategoryId);
             ViewData["GamePerspectiveCode"] = new SelectList(_context.GamePerspective, "Code", "EnglishPerspectiveName", game.GamePerspectiveCode);
-            ViewData["GameStatusCode"] = new SelectList(_context.GameStatus, "Code", "EnglishCategory", game.GameStatusCode);
+            ViewData["GameFormatCode"] = new SelectList(_context.GameFormat, "Code", "EnglishCategory", game.GameFormatCode);
             ViewData["GameSubCategoryId"] = new SelectList(_context.GameSubCategory, "Id", "EnglishCategory", game.GameSubCategoryId);
             return View(game);
         }
@@ -189,7 +189,7 @@ namespace CVGS.Controllers
                 .Include(g => g.EsrbRatingCodeNavigation)
                 .Include(g => g.GameCategory)
                 .Include(g => g.GamePerspectiveCodeNavigation)
-                .Include(g => g.GameStatusCodeNavigation)
+                .Include(g => g.GameFormatCodeNavigation)
                 .Include(g => g.GameSubCategory)
                 .FirstOrDefaultAsync(m => m.Guid == id);
             if (game == null)

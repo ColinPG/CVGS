@@ -13,9 +13,13 @@ namespace CVGS.Models
             AspNetUserLogins = new HashSet<AspNetUserLogins>();
             AspNetUserRoles = new HashSet<AspNetUserRoles>();
             AspNetUserTokens = new HashSet<AspNetUserTokens>();
+            CartItems = new HashSet<CartItems>();
             CategoryPreference = new HashSet<CategoryPreference>();
+            Orders = new HashSet<Orders>();
             PlatformPreference = new HashSet<PlatformPreference>();
             SubCategoryPreference = new HashSet<SubCategoryPreference>();
+            UserGameLibrary = new HashSet<UserGameLibrary>();
+            WishList = new HashSet<WishList>();
         }
 
         public string Id { get; set; }
@@ -40,18 +44,24 @@ namespace CVGS.Models
         public string LastName { get; set; }
         public DateTime? DateOfBirth { get; set; }
         public string Gender { get; set; }
-        public string Country { get; set; }
-        public string ProvinceState { get; set; }
         public string City { get; set; }
+        public string CountryCode { get; set; }
+        public string ProvinceCode { get; set; }
 
+        public virtual Country CountryCodeNavigation { get; set; }
+        public virtual Province ProvinceCodeNavigation { get; set; }
         public virtual ICollection<AddressMailing> AddressMailing { get; set; }
         public virtual ICollection<AddressShipping> AddressShipping { get; set; }
         public virtual ICollection<AspNetUserClaims> AspNetUserClaims { get; set; }
         public virtual ICollection<AspNetUserLogins> AspNetUserLogins { get; set; }
         public virtual ICollection<AspNetUserRoles> AspNetUserRoles { get; set; }
         public virtual ICollection<AspNetUserTokens> AspNetUserTokens { get; set; }
+        public virtual ICollection<CartItems> CartItems { get; set; }
         public virtual ICollection<CategoryPreference> CategoryPreference { get; set; }
+        public virtual ICollection<Orders> Orders { get; set; }
         public virtual ICollection<PlatformPreference> PlatformPreference { get; set; }
         public virtual ICollection<SubCategoryPreference> SubCategoryPreference { get; set; }
+        public virtual ICollection<UserGameLibrary> UserGameLibrary { get; set; }
+        public virtual ICollection<WishList> WishList { get; set; }
     }
 }

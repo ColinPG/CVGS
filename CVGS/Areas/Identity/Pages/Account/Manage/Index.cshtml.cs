@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace CVGS.Areas.Identity.Pages.Account.Manage
 {
@@ -17,15 +18,18 @@ namespace CVGS.Areas.Identity.Pages.Account.Manage
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
         private readonly IEmailSender _emailSender;
+        private readonly CVGSContext _context;
 
         public IndexModel(
             UserManager<User> userManager,
             SignInManager<User> signInManager,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            CVGSContext context)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _emailSender = emailSender;
+            _context = context;
         }
 
         public bool IsEmailConfirmed { get; set; }
@@ -38,47 +42,30 @@ namespace CVGS.Areas.Identity.Pages.Account.Manage
 
         public class InputModel
         {
-            [StringLength(25, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 3)]
             [Display(Name = "User Name")]
             public string UserName { get; set; }
-
-            [Required]
             [EmailAddress]
             public string Email { get; set; }
-
-            [Phone]
             [Display(Name = "Phone number")]
             public string PhoneNumber { get; set; }
-
-            [Required]
-            [StringLength(25, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 3)]
             [Display(Name = "Gamer Tag")]
             public string GamerTag { get; set; }
-
             [Display(Name  = "Recieving Promotional Emails")]
             public bool PromotionalEmail { get; set; }
-
             [Display(Name = "Bio")]
             public string Bio { get; set; }
-            [StringLength(25, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 3)]
             [Display(Name = "First Name")]
             public string FirstName { get; set; }
-            [StringLength(25, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 3)]
             [Display(Name = "Last Name")]
             public string LastName { get; set; }
-            //[Range(typeof(DateTime), "1/1/1900", "11/11/2020", ErrorMessage = "Date of Birth cannot be in the future.")]
             [Display(Name = "Date Of Birth")]
             public DateTime? DateOfBirth { get; set; }
-            [StringLength(25, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 3)]
             [Display(Name = "Gender")]
             public string Gender { get; set; }
-            [StringLength(25, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 3)]
             [Display(Name = "Country")]
-            public string Country { get; set; }
-            [StringLength(25, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 3)]
-            [Display(Name = "Province/State")]
-            public string ProvinceState { get; set; }
-            [StringLength(25, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 3)]
+            public string CountryCode { get; set; }
+            [Display(Name = "Province")]
+            public string ProvinceCode { get; set; }
             [Display(Name = "City")]
             public string City { get; set; }
         }
@@ -106,30 +93,110 @@ namespace CVGS.Areas.Identity.Pages.Account.Manage
                 PromotionalEmail = promotionalEmail,
                 Bio = user.Bio,
                 City = user.City,
-                Country = user.Country,
+                CountryCode = user.CountryCode,
                 DateOfBirth = user.DateOfBirth,
                 FirstName = user.FirstName,
                 Gender = user.Gender,
                 LastName = user.LastName,
-                ProvinceState = user.ProvinceState
+                ProvinceCode = user.ProvinceCode
             };
 
             IsEmailConfirmed = await _userManager.IsEmailConfirmedAsync(user);
-
+            FillViewData();
             return Page();
+        }
+
+        private void FillViewData()
+        {
+            SelectList countries = new SelectList(_context.Country.OrderBy(a => a.EnglishName), "Code", "EnglishName");
+            foreach (SelectListItem i in countries)
+            {
+                i.Text = ModelValidations.Capitilize(i.Text);
+            }
+            SelectList provinces = new SelectList(_context.Province.Where(a => a.CountryCode == Input.CountryCode).OrderBy(a => a.EnglishName), "Code", "EnglishName");
+            foreach (SelectListItem i in provinces)
+            {
+                i.Text = ModelValidations.Capitilize(i.Text);
+            }
+            ViewData["Countries"] = countries;
+            ViewData["Provinces"] = provinces;
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
-
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+            }
+            //Email
+            if (!ModelValidations.ValidEmail(Input.Email))
+                ModelState.AddModelError("Input.Email", "Invalid Email. Ex. email@address.com");
+            //Phone Number
+            if (!ModelValidations.ValidPhoneNumber(Input.PhoneNumber))
+                ModelState.AddModelError("Input.PhoneNumber", "Invalid Phone Number. Ex. 000-000-0000");
+            //Bio
+            user.Bio = Input.Bio;
+            if (String.IsNullOrEmpty(user.Bio))
+                user.Bio = "";
+            //First Name
+            if (String.IsNullOrEmpty(Input.FirstName))
+                user.FirstName = "";
+            else if (Input.FirstName.Length > 25)
+                ModelState.AddModelError("Input.FirstName", "First Name must be less than 25 characters");
+            else
+                user.FirstName = Input.FirstName;
+            //Last Name
+            if (String.IsNullOrEmpty(Input.LastName))
+                user.LastName = "";
+            else if (Input.LastName.Length > 25)
+                ModelState.AddModelError("Input.LastName", "Last Name must be less than 25 characters");
+            else
+                user.LastName = Input.LastName;
+            //City
+            if (String.IsNullOrEmpty(Input.City))
+                user.City = "";
+            else if (Input.City.Length > 25)
+                ModelState.AddModelError("Input.City", "City must be less than 25 characters");
+            else
+                user.City = Input.City;
+            //Gender
+            if (String.IsNullOrEmpty(Input.Gender))
+                user.Gender = "";
+            else if (Input.Gender.Length > 25)
+                ModelState.AddModelError("Input.Gender", "Gender must be less than 25 characters");
+            else
+                user.Gender = Input.Gender;
+            //GamerTag
+            if (String.IsNullOrEmpty(Input.GamerTag))
+                user.GamerTag = "";
+            else if (Input.GamerTag.Length > 25)
+                ModelState.AddModelError("Input.GamerTag", "GamerTag must be less than 25 characters");
+            else
+                user.GamerTag = Input.GamerTag;
+            //Date of Birth
+            if (Input.DateOfBirth > DateTime.Now)
+                ModelState.AddModelError("Input.DateOfBirth", "Date of Birth can not be past current date.");
+            else
+                user.DateOfBirth = Input.DateOfBirth;
+            //CountryCode
+            bool hideStatusMessage = false;
+            if (Input.CountryCode != user.CountryCode)
+            {
+                hideStatusMessage = true;
+            }
+            user.CountryCode = Input.CountryCode;
+            //ProvinceCode
+            if (!ValidCountry(Input.CountryCode))
+            {
+                user.ProvinceCode = null;
+            }
+            else
+                user.ProvinceCode = Input.ProvinceCode;
+            if (!ModelState.IsValid)
+            {
+                FillViewData();
+                return Page();
             }
             var email = await _userManager.GetEmailAsync(user);
             if (Input.Email != email)
@@ -152,11 +219,6 @@ namespace CVGS.Areas.Identity.Pages.Account.Manage
                     throw new InvalidOperationException($"Unexpected error occurred setting phone number for user with ID '{userId}'.");
                 }
             }
-            var gamerTag = user.GamerTag;
-            if(Input.GamerTag != gamerTag)
-            {
-                user.GamerTag = Input.GamerTag;
-            }
 
             var promotionalEmail = user.PromoEmailEnabled;
             if (Input.PromotionalEmail != promotionalEmail)
@@ -164,21 +226,13 @@ namespace CVGS.Areas.Identity.Pages.Account.Manage
                 user.PromoEmailEnabled = Input.PromotionalEmail;
             }
 
-            user.Bio = Input.Bio;
-            user.City = Input.City;
-            user.Country = Input.Country;
-            user.DateOfBirth = Input.DateOfBirth;
-            user.Gender = Input.Gender;
-            user.ProvinceState = Input.ProvinceState;
-            user.FirstName = Input.FirstName;
-            user.LastName = Input.LastName;
-
 
             await _userManager.UpdateAsync(user);
             await _signInManager.RefreshSignInAsync(user);
             if (User.IsInRole("administrators"))
                 TempData["message"] = "Profile updated.";
-            StatusMessage = "Your profile has been updated";
+            if (!hideStatusMessage)
+                StatusMessage = "Your profile has been updated";
             return RedirectToPage();
         }
 
@@ -186,7 +240,7 @@ namespace CVGS.Areas.Identity.Pages.Account.Manage
         {
             if (!ModelState.IsValid)
             {
-                return Page();
+                return RedirectToPage();
             }
 
             var user = await _userManager.GetUserAsync(User);
@@ -211,6 +265,14 @@ namespace CVGS.Areas.Identity.Pages.Account.Manage
 
             StatusMessage = "Verification email sent. Please check your email.";
             return RedirectToPage();
+        }
+
+        public bool ValidCountry(string countryCode)
+        {
+            if (_context.Province.Where(a => a.CountryCode == countryCode).Any())
+                return true;
+            else
+                return false;
         }
     }
 }
