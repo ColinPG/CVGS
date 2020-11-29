@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Net;
+using System.Net.Mail;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using CVGS.Models;
@@ -9,6 +11,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.Extensions.Configuration;
 
 namespace CVGS.Areas.Identity.Pages.Account
 {
@@ -16,12 +19,10 @@ namespace CVGS.Areas.Identity.Pages.Account
     public class ForgotPasswordModel : PageModel
     {
         private readonly UserManager<User> _userManager;
-        private readonly IEmailSender _emailSender;
 
-        public ForgotPasswordModel(UserManager<User> userManager, IEmailSender emailSender)
+        public ForgotPasswordModel(UserManager<User> userManager)
         {
             _userManager = userManager;
-            _emailSender = emailSender;
         }
 
         [BindProperty]
@@ -54,10 +55,21 @@ namespace CVGS.Areas.Identity.Pages.Account
                     values: new { code },
                     protocol: Request.Scheme);
 
-                await _emailSender.SendEmailAsync(
+                var builder = new ConfigurationBuilder()
+                    .AddJsonFile("appsettings.json");
+                var config = builder.Build();
+
+                var smtpClient = new SmtpClient(config["Smtp:Host"])
+                {
+                    Port = int.Parse(config["Smtp:Port"]),
+                    Credentials = new NetworkCredential(config["Smtp:Username"], config["Smtp:Password"]),
+                    EnableSsl = true,
+                };
+
+                smtpClient.Send(config["Smtp:Username"],
                     Input.Email,
                     "Reset Password",
-                    $"Please reset your password by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                    $"Please reset your password by clicking here: {callbackUrl}");
 
                 return RedirectToPage("./ForgotPasswordConfirmation");
             }

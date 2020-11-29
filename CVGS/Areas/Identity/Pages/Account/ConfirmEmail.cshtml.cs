@@ -24,7 +24,8 @@ namespace CVGS.Areas.Identity.Pages.Account
         {
             if (userId == null || code == null)
             {
-                return RedirectToPage("/Index");
+                TempData["message"] = "Invalid confirm email link.";
+                return RedirectToAction("Index", "Home");
             }
 
             var user = await _userManager.FindByIdAsync(userId);
