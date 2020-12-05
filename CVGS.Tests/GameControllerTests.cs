@@ -16,10 +16,8 @@ namespace CVGS.Tests
         private string gameEditUrl;
         private string gameDetailsUrl;
         private string gameDeleteUrl;
+        
         //Game Test Data
-        private string gamePlayerData;
-        private string gameDescriptionData;
-        private string gameDetailData;
         private string gameTitleData;
         private string gameEdittedTitleData;
 
@@ -34,9 +32,6 @@ namespace CVGS.Tests
             gameDeleteUrl = "Game/Delete/";
 
             gameTitleData = "Selenium Test Game";
-            gamePlayerData = "1";
-            gameDescriptionData = "Selenium Test Description";
-            gameDetailData = "Selenium Test Detail"; 
             gameEdittedTitleData = "Selenium Editted Test Game";
         }
 
@@ -48,9 +43,9 @@ namespace CVGS.Tests
             Assert.AreEqual(driver.Url, createUrl);
         }
 
-
+        [TestCase("15", "1", "Selenium Test Description", "Selenium Test Detail")]
         [Test, Order(2)]
-        public void GameController_CreateNewGame_GameIsCreated()
+        public void GameController_CreateNewGame_GameIsCreated(string price, string player, string desc, string det)
         {
             string createUrl = homeURL + gameCreateUrl;
             driver.Navigate().GoToUrl(createUrl);
@@ -59,15 +54,18 @@ namespace CVGS.Tests
             //EnglishName
             IWebElement title = driver.FindElement(By.Id("EnglishName"));
             title.SendKeys(gameTitleData);
+            //Price
+            IWebElement priceBox = driver.FindElement(By.Id("Price"));
+            priceBox.SendKeys(price);
             //EnglishPlayerCount
             IWebElement players = driver.FindElement(By.Id("EnglishPlayerCount"));
-            players.SendKeys(gamePlayerData);
+            players.SendKeys(player);
             //EnglishDescription
             IWebElement description = driver.FindElement(By.Id("EnglishDescription"));
-            description.SendKeys(gameDescriptionData);
+            description.SendKeys(desc);
             //EnglishDetail
             IWebElement detail = driver.FindElement(By.Id("EnglishDetail"));
-            detail.SendKeys(gameDetailData);
+            detail.SendKeys(det);
 
             //SubmitButton
             IWebElement submitButton = driver.FindElement(By.Id("submit"));

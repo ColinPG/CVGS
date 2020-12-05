@@ -18,6 +18,11 @@ namespace CVGS.Models
                 yield return new ValidationResult("English Name cannot be blank.", new[] { nameof(EnglishName) });
             else
                 EnglishName = EnglishName.Trim();
+            //Price
+            if (Price == null)
+                yield return new ValidationResult("Price can not be blank.", new[] { nameof(Price) });
+            else if (Price < 0)
+                yield return new ValidationResult("Price can not be less than 0.", new[] { nameof(Price) });
             //Player Count (must not be blank and be a number)
             if (EnglishPlayerCount == null || EnglishPlayerCount.Trim() == "")
                 yield return new ValidationResult("Player Count cannot be blank.", new[] { nameof(EnglishPlayerCount) });
@@ -45,7 +50,6 @@ namespace CVGS.Models
                 yield return new ValidationResult("Detail cannot be blank.", new[] { nameof(EnglishDetail) });
             else
                 EnglishDetail = EnglishDetail.Trim();
-
             yield return ValidationResult.Success;
         }
     }
@@ -86,6 +90,8 @@ namespace CVGS.Models
         public string FrenchDetail { get; set; }
         [Display(Name = "")]
         public string UserName { get; set; }
-
+        [DataType(DataType.Currency)]
+        [Display(Name = "Price")]
+        public double Price { get; set; }
     }
 }

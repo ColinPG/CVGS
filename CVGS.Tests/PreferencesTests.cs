@@ -15,9 +15,15 @@ namespace CVGS.Tests
         private const string categoryTestData = "Action";
         private const string subcategoryTestData = "Adventure";
 
-        private const string addButtonId = "add";
-        private const string preferenceDropDownId = "preferenceInputModel_AddValue";
-        private const string testLogin = "Employee@test.com";
+        private const string platformDropDownId = "listPlatform";
+        private const string categoryDropDownId = "listCategory";
+        private const string subCategoryDropDownId = "listSubcategory";
+
+        private const string addPlatformButtonId = "addPlatform";
+        private const string addCategoryButtonId = "addCategory";
+        private const string addSubCategoryButtonId = "addSubcategory";
+
+        private const string testLogin = "TestEmployee1";
 
         public PreferenceTests()
         {
@@ -63,9 +69,9 @@ namespace CVGS.Tests
         public void Preferences_AddPlatformPref_PlatformIsAdded()
         {
             driver.Navigate().GoToUrl(homeURL + changePreferenceUrl);
-            SelectElement preferenceDropDown = new SelectElement(driver.FindElement(By.Id(preferenceDropDownId)));
+            SelectElement preferenceDropDown = new SelectElement(driver.FindElement(By.Id(platformDropDownId)));
             preferenceDropDown.SelectByValue(platformTestData);
-            IWebElement addButton = driver.FindElement(By.Id(addButtonId));
+            IWebElement addButton = driver.FindElement(By.Id(addPlatformButtonId));
             addButton.Click();
             IWebElement removeButton = driver.FindElement(By.Id(platformTestData));
             //If there exists a remove button for the value just added, then it was added successfully.
@@ -79,7 +85,7 @@ namespace CVGS.Tests
             IWebElement removeButton = driver.FindElement(By.Id(platformTestData));
             // Make sure that element is already selected
             Assert.IsNotNull(removeButton);
-            SelectElement preferenceDropDown = new SelectElement(driver.FindElement(By.Id(preferenceDropDownId)));
+            SelectElement preferenceDropDown = new SelectElement(driver.FindElement(By.Id(platformDropDownId)));
             try { 
                 preferenceDropDown.SelectByValue(platformTestData); //Should throw exception here
                 Assert.Fail("Found already existing platform preference in dropdown.");
@@ -94,9 +100,9 @@ namespace CVGS.Tests
         public void Preferences_AddCategoryPref_CategoryIsAdded()
         {
             driver.Navigate().GoToUrl(homeURL + changePreferenceUrl);
-            SelectElement preferenceDropDown = new SelectElement(driver.FindElement(By.Id(preferenceDropDownId)));
+            SelectElement preferenceDropDown = new SelectElement(driver.FindElement(By.Id(categoryDropDownId)));
             preferenceDropDown.SelectByValue(categoryTestData);
-            IWebElement addButton = driver.FindElement(By.Id(addButtonId));
+            IWebElement addButton = driver.FindElement(By.Id(addCategoryButtonId));
             addButton.Click();
             IWebElement removeButton = driver.FindElement(By.Id(categoryTestData));
             //If there exists a remove button for the value just added, then it was added successfully.
@@ -107,9 +113,9 @@ namespace CVGS.Tests
         public void Preferences_AddSubcategoryPref_SubCategoryIsAdded()
         {
             driver.Navigate().GoToUrl(homeURL + changePreferenceUrl);
-            SelectElement preferenceDropDown = new SelectElement(driver.FindElement(By.Id(preferenceDropDownId)));
+            SelectElement preferenceDropDown = new SelectElement(driver.FindElement(By.Id(subCategoryDropDownId)));
             preferenceDropDown.SelectByValue(subcategoryTestData);
-            IWebElement addButton = driver.FindElement(By.Id(addButtonId));
+            IWebElement addButton = driver.FindElement(By.Id(addSubCategoryButtonId));
             addButton.Click();
             IWebElement removeButton = driver.FindElement(By.Id(subcategoryTestData));
             //If there exists a remove button for the value just added, then it was added successfully.
@@ -169,7 +175,31 @@ namespace CVGS.Tests
             Login(user: testLogin);
             driver.Navigate().GoToUrl(homeURL + changePreferenceUrl);
             IWebElement addButton = null;
-            try { addButton = driver.FindElement(By.Id(addButtonId)); ; } catch { }
+            while (true)
+            {
+                addButton = null;
+                try { 
+                    addButton = driver.FindElement(By.Id(addCategoryButtonId));
+                    addButton.Click();
+                } catch { }
+                try {
+                    addButton = driver.FindElement(By.Id(addPlatformButtonId));
+                    addButton.Click();
+                } catch { }
+                try {
+                    addButton = driver.FindElement(By.Id(addSubCategoryButtonId));
+                    addButton.Click();
+                } catch { }
+                if (addButton == null)
+                {
+                    break;
+                }
+            }
+            try { addButton = driver.FindElement(By.Id(addCategoryButtonId)); } catch { }
+            Assert.IsNull(addButton);
+            try { addButton = driver.FindElement(By.Id(addPlatformButtonId)); } catch { }
+            Assert.IsNull(addButton);
+            try { addButton = driver.FindElement(By.Id(addSubCategoryButtonId)); } catch { }
             Assert.IsNull(addButton);
         }
     }

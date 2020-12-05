@@ -13,7 +13,7 @@ namespace CVGS.Models
             AspNetUserLogins = new HashSet<AspNetUserLogins>();
             AspNetUserRoles = new HashSet<AspNetUserRoles>();
             AspNetUserTokens = new HashSet<AspNetUserTokens>();
-            CartItems = new HashSet<CartItems>();
+            CartItem = new HashSet<CartItem>();
             CategoryPreference = new HashSet<CategoryPreference>();
             Orders = new HashSet<Orders>();
             PlatformPreference = new HashSet<PlatformPreference>();
@@ -56,7 +56,7 @@ namespace CVGS.Models
         public virtual ICollection<AspNetUserLogins> AspNetUserLogins { get; set; }
         public virtual ICollection<AspNetUserRoles> AspNetUserRoles { get; set; }
         public virtual ICollection<AspNetUserTokens> AspNetUserTokens { get; set; }
-        public virtual ICollection<CartItems> CartItems { get; set; }
+        public virtual ICollection<CartItem> CartItem { get; set; }
         public virtual ICollection<CategoryPreference> CategoryPreference { get; set; }
         public virtual ICollection<Orders> Orders { get; set; }
         public virtual ICollection<PlatformPreference> PlatformPreference { get; set; }

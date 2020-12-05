@@ -19,6 +19,11 @@
                 <span asp-validation-for="EnglishName" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="Price" class="control-label"></label>
+                <input asp-for="Price" class="form-control" />
+                <span asp-validation-for="Price" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="EnglishPlayerCount" class="control-label"></label>
                 <input asp-for="EnglishPlayerCount" class="form-control" />
                 <span asp-validation-for="EnglishPlayerCount" class="text-danger"></span>
@@ -96,16 +101,16 @@
             </div>
             <input type="hidden" asp-for="FrenchDetail" />
             @*<div class="form-group">
-                <label asp-for="FrenchDetail" class="control-label"></label>
-                <input asp-for="FrenchDetail" class="form-control" />
-                <span asp-validation-for="FrenchDetail" class="text-danger"></span>
-            </div>*@
+            <label asp-for="FrenchDetail" class="control-label"></label>
+            <input asp-for="FrenchDetail" class="form-control" />
+            <span asp-validation-for="FrenchDetail" class="text-danger"></span>
+        </div>*@
             <input type="hidden" asp-for="UserName" />
             @*<div class="form-group">
-                <label asp-for="UserName" class="control-label"></label>
-                <input asp-for="UserName" class="form-control" />
-                <span asp-validation-for="UserName" class="text-danger"></span>
-            </div>*@
+            <label asp-for="UserName" class="control-label"></label>
+            <input asp-for="UserName" class="form-control" />
+            <span asp-validation-for="UserName" class="text-danger"></span>
+        </div>*@
             <div class="form-group">
                 <input id="save" type="submit" value="Save" class="btn btn-primary" />
             </div>

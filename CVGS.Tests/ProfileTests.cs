@@ -8,19 +8,21 @@ using System.Text;
 
 namespace CVGS.Tests
 {
-    public class PersonalInformationTests : CVGSTestContainer
+    public class ProfileTests : CVGSTestContainer
     {
         private string personalInformationURL;
 
-        public PersonalInformationTests()
+        public ProfileTests()
         {
-            personalInformationURL = "Identity/Account/Manage/PersonalInformation";
+            personalInformationURL = "Identity/Account/Manage";
         }
 
         [Test]
         public void PersonalInformation_NavigateToPage_URLIsPageURL()
         {
-            driver.Navigate().GoToUrl(homeURL + personalInformationURL);
+            driver.Navigate().GoToUrl(homeURL);
+            IWebElement profile = driver.FindElement(By.LinkText("Profile"));
+            profile.Click();
             Assert.AreEqual(driver.Url, homeURL + personalInformationURL);
         }
 
@@ -37,7 +39,7 @@ namespace CVGS.Tests
             firstName.Clear();
             firstName.SendKeys(fName);
             //updateButton
-            IWebElement updateButton = driver.FindElement(By.Id("update-button"));
+            IWebElement updateButton = driver.FindElement(By.Id("update-profile-button"));
             updateButton.Click();
             //Refresh Page
             driver.Navigate().GoToUrl(homeURL + personalInformationURL);
@@ -45,7 +47,6 @@ namespace CVGS.Tests
             Assert.AreEqual(fName, driver.FindElement(By.Id(firstNameId)).GetAttribute("value"));
         }
 
-        [TestCase("t")]
         [TestCase("tttttttttttttttttttttttttttttttttttttttttttttttttttttttt")]
         [Test]
         public void PersonalInformation_AttemptUpdateWithInvalidData_UpdateFailed(string fName)
@@ -57,7 +58,7 @@ namespace CVGS.Tests
             firstName.Clear();
             firstName.SendKeys(fName);
             //updateButton
-            IWebElement updateButton = driver.FindElement(By.Id("update-button"));
+            IWebElement updateButton = driver.FindElement(By.Id("update-profile-button"));
             updateButton.Click();
             //Refresh Page
             driver.Navigate().GoToUrl(homeURL + personalInformationURL);

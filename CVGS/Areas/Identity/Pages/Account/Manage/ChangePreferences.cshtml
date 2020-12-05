@@ -29,7 +29,7 @@
             else
             {
                 <form method="post">
-                    <select asp-for="@Model.preferenceInputModel.AddValue">
+                    <select id="listPlatform" asp-for="@Model.preferenceInputModel.AddValue">
                         <optgroup label="Platforms">
                             @foreach (var item in Model.preferenceInputModel.platforms)
                             {
@@ -65,7 +65,7 @@
             else
             {
                 <form method="post">
-                    <select asp-for="@Model.preferenceInputModel.AddValue">
+                    <select id="listCategory" asp-for="@Model.preferenceInputModel.AddValue">
                         <optgroup label="Categories">
                             @foreach (var item in Model.preferenceInputModel.categories)
                             {
@@ -102,7 +102,7 @@
             else
             {
                 <form method="post">
-                    <select asp-for="@Model.preferenceInputModel.AddValue">
+                    <select id="listSubcategory" asp-for="@Model.preferenceInputModel.AddValue">
                         <optgroup label="SubCategories">
                             @foreach (var item in Model.preferenceInputModel.subCategories)
                             {

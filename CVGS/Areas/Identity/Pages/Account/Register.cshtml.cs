@@ -75,7 +75,7 @@ namespace CVGS.Areas.Identity.Pages.Account
             //UserName
             if (String.IsNullOrEmpty(Input.UserName))
                 ModelState.AddModelError("Input.UserName", "User Name is required.");
-            if (Input.UserName.Length > 25)
+            else if (Input.UserName.Length > 25)
                 ModelState.AddModelError("Input.UserName", "User Name must be 25 or less characters");
             else if (Input.UserName.Length < 3)
                 ModelState.AddModelError("Input.UserName", "User Name must be 3 or more characters");
@@ -92,7 +92,7 @@ namespace CVGS.Areas.Identity.Pages.Account
             //Password
             if(String.IsNullOrEmpty(Input.Password))
                 ModelState.AddModelError("Input.Password", "Password is required.");
-            if (Input.Password.Length > 100)
+            else if (Input.Password.Length > 100)
                 ModelState.AddModelError("Input.Password", "Password must be 100 or less characters");
             else if (Input.Password.Length < 6)
                 ModelState.AddModelError("Input.Password", "Password must be 6 or more characters");
@@ -102,7 +102,7 @@ namespace CVGS.Areas.Identity.Pages.Account
             //GamerTag
             if (String.IsNullOrEmpty(Input.GamerTag))
                 ModelState.AddModelError("Input.GamerTag", "Gamer Tag is required.");
-            if (Input.GamerTag.Length > 25)
+            else if (Input.GamerTag.Length > 25)
                 ModelState.AddModelError("Input.GamerTag", "Gamer Tag must be 25 or less characters");
             else if (Input.GamerTag.Length < 3)
                 ModelState.AddModelError("Input.GamerTag", "Gamer Tag must be 3 or more characters");

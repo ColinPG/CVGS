@@ -13,13 +13,13 @@ namespace CVGS.Areas.Identity.Pages.Account.Manage
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Rendering;
     using Microsoft.AspNetCore.Mvc.ViewFeatures;
-#line 2 "C:\Users\colin\source\repos\CVGS\CVGS\Areas\Identity\Pages\_ViewImports.cshtml"
-using CVGS.Areas.Identity;
+#line 1 "C:\Users\colin\source\repos\CVGS\CVGS\Areas\Identity\Pages\_ViewImports.cshtml"
+using Microsoft.AspNetCore.Identity;
 
 #line default
 #line hidden
-#line 3 "C:\Users\colin\source\repos\CVGS\CVGS\Areas\Identity\Pages\_ViewImports.cshtml"
-using Microsoft.AspNetCore.Identity;
+#line 2 "C:\Users\colin\source\repos\CVGS\CVGS\Areas\Identity\Pages\_ViewImports.cshtml"
+using CVGS.Areas.Identity;
 
 #line default
 #line hidden
@@ -34,7 +34,7 @@ using CVGS.Areas.Identity.Pages.Account.Manage;
 #line default
 #line hidden
     [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"1cf44c1b50a846d537be6f5e4f905e95598f1941", @"/Areas/Identity/Pages/Account/Manage/Index.cshtml")]
-    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"94cde57a9f3df0c26abb41e24de7230a243a5456", @"/Areas/Identity/Pages/_ViewImports.cshtml")]
+    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"8ec254ac22887cf9afc1e984ebacccb3adf29650", @"/Areas/Identity/Pages/_ViewImports.cshtml")]
     [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"422ea8cb3dc27f1e8318c7e5cfc1d14b039574a3", @"/Areas/Identity/Pages/Account/_ViewImports.cshtml")]
     [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"be23a28f8d569fbee60a2c8f288cd34ee9cd8840", @"/Areas/Identity/Pages/Account/Manage/_ViewImports.cshtml")]
     public class Areas_Identity_Pages_Account_Manage_Index : global::Microsoft.AspNetCore.Mvc.RazorPages.Page

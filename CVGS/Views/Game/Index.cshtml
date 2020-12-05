@@ -46,15 +46,31 @@
                 @Html.DisplayFor(modelItem => item.EsrbRatingCodeNavigation.Code)
             </td>
             <td>
-                @if (User.IsInRole("administrators") || User.IsInRole("Employees"))
-                {
-                    <a asp-action="Edit" asp-route-id="@item.Guid">Edit</a>
-                }
-                <a asp-action="Details" asp-route-id="@item.Guid">Details</a>
-                @if (User.IsInRole("administrators") || User.IsInRole("Employees"))
-                {
-                    <a asp-action="Delete" asp-route-id="@item.Guid">Delete</a>
-                }
+                <div class="row">
+                    @if (User.IsInRole("members") || User.IsInRole("administrators") || User.IsInRole("Employees"))
+                    {
+                        <form asp-area="Identity" asp-page="/Account/CartIndex" asp-page-handler="Add" asp-route-id="@item.Guid" method="post">
+                            <button class="btn btn-link">Add To Cart</button>
+                        </form>
+                    }
+                    @if (User.IsInRole("members") || User.IsInRole("administrators") || User.IsInRole("Employees"))
+                    {
+                        <form asp-area="Identity" asp-page="/Account/WishList" asp-page-handler="Add" asp-route-id="@item.Guid" method="post">
+                            <button class="btn btn-link">Add To Wishlist</button>
+                        </form>
+                    }
+                </div>
+                <div class="flex-xl-row">
+                    @if (User.IsInRole("administrators") || User.IsInRole("Employees"))
+                    {
+                        <a class="btn btn-link" asp-action="Edit" asp-route-id="@item.Guid">Edit</a>
+                    }
+                    <a class="btn btn-link" asp-action="Details" asp-route-id="@item.Guid">Details</a>
+                    @if (User.IsInRole("administrators") || User.IsInRole("Employees"))
+                    {
+                        <a class="btn btn-link" asp-action="Delete" asp-route-id="@item.Guid">Delete</a>
+                    }
+                </div>
             </td>
         </tr>
 }

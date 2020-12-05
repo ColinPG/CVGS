@@ -11,12 +11,14 @@ namespace CVGS.Tests
         private string userUsername;
         private string newUserPassword;
         private string userGamerTag;
+        private string userPhoneNumber;
 
         public IdentityTests()
         {
             userUsername = "test@test.com";
             newUserPassword = "Aa!123";
             userGamerTag = "SeleniumGamerTag";
+            userPhoneNumber = "123-123-1234";
         }
 
         [Test, Order(1)]
@@ -66,6 +68,9 @@ namespace CVGS.Tests
             //Input_GamerTag
             IWebElement gamerTag = driver.FindElement(By.Id("Input_GamerTag"));
             gamerTag.SendKeys(userGamerTag);
+            //Input_PhoneNumber
+            IWebElement phoneNumber = driver.FindElement(By.Id("Input_PhoneNumber"));
+            phoneNumber.SendKeys(userPhoneNumber);
             //registerButton
             IWebElement registerButton = driver.FindElement(By.Id("register"));
             registerButton.Click();
@@ -76,6 +81,16 @@ namespace CVGS.Tests
         }
 
         [Test, Order(5)]
+        public void IdentityLogin_LoginNewTestAccount_LoggedIn()
+        {
+            Logout();
+            Login(userUsername, password);
+            IWebElement logoutLink = driver.FindElement(By.Id("logout"));
+            //If login succeeds, logoutlink will be present.
+            Assert.IsNotNull(logoutLink);
+        }
+
+        [Test, Order(6)]
         public void IdentityChangePassword_ChangePassword_PasswordChanged()
         {
             Logout();
@@ -100,37 +115,36 @@ namespace CVGS.Tests
             Assert.AreEqual("Password changed successfully.", tempMessage.Text);
         }
 
-        [Test, Order(6)]
-        public void IdentityIndex_ChangeProfile_ProfileUpdated()
+        [TestCase("TagBefore", "TagBefor")]
+        [TestCase("TagBe", "TagB")]
+        [TestCase("Taggggggg", "Tagggggg")]
+        [Test, Order(7)]
+        public void IdentityIndex_ChangeProfile_ProfileUpdated(string before, string after)
         {
             driver.Navigate().GoToUrl(homeURL + profileUrl);
             //Input_GamerTag
             IWebElement gamerTag = driver.FindElement(By.Id("Input_GamerTag"));
-            string newTag = userGamerTag.Substring(0, userGamerTag.Length - 1);
             gamerTag.Clear();
-            gamerTag.SendKeys(newTag);
-            //updateButton
+            gamerTag.SendKeys(before);
+            //update to Test GameTag value
             IWebElement updateButton = driver.FindElement(By.Id("update-profile-button"));
             updateButton.Click();
-
-            //Check for update message
-            IWebElement tempMessage = driver.FindElement(By.Id("TempMessage"));
-            Assert.AreEqual("Profile updated.", tempMessage.Text);
-            //Check for changed gamerTag
-            Assert.AreEqual(newTag, driver.FindElement(By.Id("Input_GamerTag")).GetAttribute("value"));
-
-            //Add another letter to the tag for future tests.
             //Input_GamerTag
             gamerTag = driver.FindElement(By.Id("Input_GamerTag"));
-            newTag = userGamerTag + "g";
+            string newTag = gamerTag.GetAttribute("value").Substring(0, gamerTag.GetAttribute("value").Length - 1);
             gamerTag.Clear();
             gamerTag.SendKeys(newTag);
             //updateButton
             updateButton = driver.FindElement(By.Id("update-profile-button"));
             updateButton.Click();
+            //Check for update message
+            IWebElement statusMessage = driver.FindElement(By.Id("statusMessage"));
+            Assert.AreEqual("Your profile has been updated", statusMessage.Text);
+            //Check for changed gamerTag
+            Assert.AreEqual(after, driver.FindElement(By.Id("Input_GamerTag")).GetAttribute("value"));
         }
 
-        [Test, Order(7)]
+        [Test, Order(8)]
         public void IdentityPersonalData_DeleteTestAccount_TestAccountDeleted()
         {
             Logout();

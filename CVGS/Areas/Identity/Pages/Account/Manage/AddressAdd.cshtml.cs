@@ -98,10 +98,13 @@ namespace CVGS.Areas.Identity.Pages.Account.Manage
             else if (Input.City.Length < 2)
                 ModelState.AddModelError("Input.City", "City must be 2 or more characters");
             //Apartment Number
-            if (Input.ApartmentNumber.Length > 20)
-                ModelState.AddModelError("Input.ApartmentNumber", "Apartment Number must be 20 or less characters");
-            else if (Input.ApartmentNumber.Length < 2)
-                ModelState.AddModelError("Input.ApartmentNumber", "Apartment Number must be 2 or more characters");
+            if (!String.IsNullOrEmpty(Input.ApartmentNumber))
+            {
+                if (Input.ApartmentNumber.Length > 20)
+                    ModelState.AddModelError("Input.ApartmentNumber", "Apartment Number must be 20 or less characters");
+                else if (Input.ApartmentNumber.Length < 2)
+                    ModelState.AddModelError("Input.ApartmentNumber", "Apartment Number must be 2 or more characters");
+            }
             //First Name
             if (String.IsNullOrEmpty(Input.FirstName))
                 ModelState.AddModelError("Input.FirstName", "First Name is required.");

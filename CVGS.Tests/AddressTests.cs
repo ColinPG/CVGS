@@ -89,9 +89,9 @@ namespace CVGS.Tests
             Assert.IsNull(deleteLink);
         }
 
-        [TestCase("TestFirstName","TestLastName","TestAptNum","TestStreet","TestCity","N2R1W2","TestProvince")]
+        [TestCase("TestFirstName","TestLastName","TestAptNum","TestStreet","TestCity","N2R1W2","CAN")]
         [Test, Order(7)]
-        public void Addresses_AddShippingAddr_ShippingAddrAdded(string fName, string lName, string aptNum, string street, string city, string postal, string province)
+        public void Addresses_AddShippingAddr_ShippingAddrAdded(string fName, string lName, string aptNum, string street, string city, string postal, string country)
         {
             driver.Navigate().GoToUrl(homeURL + addressesUrl);
             //Add Address Info
@@ -115,9 +115,9 @@ namespace CVGS.Tests
             //Input_Street
             IWebElement postalCode = driver.FindElement(By.Id("Input_PostalCode"));
             postalCode.SendKeys(postal);
-            //Input_Street
-            IWebElement provinceBox = driver.FindElement(By.Id("Input_Province"));
-            provinceBox.SendKeys(province);
+            //Input_Country
+            SelectElement countryBox = new SelectElement(driver.FindElement(By.Id("Input_CountryCode")));
+            countryBox.SelectByValue(country);
 
             //SubmitButton
             IWebElement addButton = driver.FindElement(By.Id("add-address"));
@@ -133,9 +133,9 @@ namespace CVGS.Tests
             }
         }
 
-        [TestCase("TestFirstName", "TestLastName", "TestAptNum", "TestStreet", "TestCity", "N2R1W2", "TestProvince")]
+        [TestCase("TestFirstName", "TestLastName", "TestAptNum", "TestStreet", "TestCity", "N2R1W2", "CAN")]
         [Test, Order(8)]
-        public void Addresses_AddMailingAddr_MailingAddrAdded(string fName, string lName, string aptNum, string street, string city, string postal, string province)
+        public void Addresses_AddMailingAddr_MailingAddrAdded(string fName, string lName, string aptNum, string street, string city, string postal, string country)
         {
             driver.Navigate().GoToUrl(homeURL + addressesUrl);
             //Add Address Info
@@ -159,9 +159,9 @@ namespace CVGS.Tests
             //Input_Street
             IWebElement postalCode = driver.FindElement(By.Id("Input_PostalCode"));
             postalCode.SendKeys(postal);
-            //Input_Street
-            IWebElement provinceBox = driver.FindElement(By.Id("Input_Province"));
-            provinceBox.SendKeys(province);
+            //Input_Country
+            SelectElement countryBox = new SelectElement(driver.FindElement(By.Id("Input_CountryCode")));
+            countryBox.SelectByValue(country);
 
             //SubmitButton
             IWebElement addButton = driver.FindElement(By.Id("add-address"));
@@ -178,10 +178,10 @@ namespace CVGS.Tests
             }
         }
 
-        [TestCase("", "TestLastName", "TestAptNum", "TestStreet", "TestCity", "N2R1W2", "TestProvince")]
-        [TestCase("", "", "", "", "", "", "")]
+        [TestCase("", "TestLastName", "TestAptNum", "TestStreet", "TestCity", "N2R1W2", "CAN")]
+        [TestCase("", "", "", "", "", "", "CAN")]
         [Test, Order(9)]
-        public void Addresses_AddAddrWithInvalidData_InputValidationFailed(string fName, string lName, string aptNum, string street, string city, string postal, string province)
+        public void Addresses_AddAddrWithInvalidData_InputValidationFailed(string fName, string lName, string aptNum, string street, string city, string postal, string country)
         {
             driver.Navigate().GoToUrl(homeURL + addressesUrl);
             //Add Address Info
@@ -205,9 +205,10 @@ namespace CVGS.Tests
             //Input_Street
             IWebElement postalCode = driver.FindElement(By.Id("Input_PostalCode"));
             postalCode.SendKeys(postal);
-            //Input_Street
-            IWebElement provinceBox = driver.FindElement(By.Id("Input_Province"));
-            provinceBox.SendKeys(province);
+            //Input_Country
+            SelectElement countryBox = new SelectElement(driver.FindElement(By.Id("Input_CountryCode")));
+            countryBox.SelectByValue(country);
+
             //SubmitButton
             IWebElement addButton = driver.FindElement(By.Id("add-address"));
             addButton.Click();

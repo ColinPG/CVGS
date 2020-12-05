@@ -7,7 +7,7 @@ namespace CVGS.Models
     {
         public Game()
         {
-            CartItems = new HashSet<CartItems>();
+            CartItem = new HashSet<CartItem>();
             OrderItems = new HashSet<OrderItems>();
             UserGameLibrary = new HashSet<UserGameLibrary>();
             WishList = new HashSet<WishList>();
@@ -39,7 +39,7 @@ namespace CVGS.Models
         public virtual GameFormat GameFormatCodeNavigation { get; set; }
         public virtual GamePerspective GamePerspectiveCodeNavigation { get; set; }
         public virtual GameSubCategory GameSubCategory { get; set; }
-        public virtual ICollection<CartItems> CartItems { get; set; }
+        public virtual ICollection<CartItem> CartItem { get; set; }
         public virtual ICollection<OrderItems> OrderItems { get; set; }
         public virtual ICollection<UserGameLibrary> UserGameLibrary { get; set; }
         public virtual ICollection<WishList> WishList { get; set; }

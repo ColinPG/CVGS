@@ -24,7 +24,7 @@ namespace CVGS.Models
         public virtual DbSet<AspNetUserRoles> AspNetUserRoles { get; set; }
         public virtual DbSet<AspNetUserTokens> AspNetUserTokens { get; set; }
         public virtual DbSet<AspNetUsers> AspNetUsers { get; set; }
-        public virtual DbSet<CartItems> CartItems { get; set; }
+        public virtual DbSet<CartItem> CartItem { get; set; }
         public virtual DbSet<CategoryPreference> CategoryPreference { get; set; }
         public virtual DbSet<Country> Country { get; set; }
         public virtual DbSet<EsrbRating> EsrbRating { get; set; }
@@ -46,8 +46,7 @@ namespace CVGS.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer("Server=LAPTOP-DIEU4LO3\\SQLEXPRESS;Database=CVGS;Trusted_Connection=True;");
+                //optionsBuilder.UseSqlServer("Server=LAPTOP-DIEU4LO3\\SQLEXPRESS;Database=CVGS;Trusted_Connection=True;");
             }
         }
 
@@ -354,7 +353,7 @@ namespace CVGS.Models
                     .HasConstraintName("FK__AspNetUse__provi__03F0984C");
             });
 
-            modelBuilder.Entity<CartItems>(entity =>
+            modelBuilder.Entity<CartItem>(entity =>
             {
                 entity.HasKey(e => new { e.UserId, e.GameId })
                     .HasName("PK__CartItem__F63317BA69A2DF94");
@@ -371,13 +370,13 @@ namespace CVGS.Models
                 entity.Property(e => e.Quantity).HasColumnName("quantity");
 
                 entity.HasOne(d => d.Game)
-                    .WithMany(p => p.CartItems)
+                    .WithMany(p => p.CartItem)
                     .HasForeignKey(d => d.GameId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK__CartItems__gameI__0B91BA14");
 
                 entity.HasOne(d => d.User)
-                    .WithMany(p => p.CartItems)
+                    .WithMany(p => p.CartItem)
                     .HasForeignKey(d => d.UserId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK__CartItems__userI__0A9D95DB");
