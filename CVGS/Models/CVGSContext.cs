@@ -33,20 +33,19 @@ namespace CVGS.Models
         public virtual DbSet<GameFormat> GameFormat { get; set; }
         public virtual DbSet<GamePerspective> GamePerspective { get; set; }
         public virtual DbSet<GameSubCategory> GameSubCategory { get; set; }
-        public virtual DbSet<OrderItems> OrderItems { get; set; }
-        public virtual DbSet<Orders> Orders { get; set; }
+        public virtual DbSet<Order> Order { get; set; }
+        public virtual DbSet<OrderItem> OrderItem { get; set; }
         public virtual DbSet<Platform> Platform { get; set; }
         public virtual DbSet<PlatformPreference> PlatformPreference { get; set; }
         public virtual DbSet<Province> Province { get; set; }
         public virtual DbSet<SubCategoryPreference> SubCategoryPreference { get; set; }
-        public virtual DbSet<UserGameLibrary> UserGameLibrary { get; set; }
-        public virtual DbSet<WishList> WishList { get; set; }
+        public virtual DbSet<UserGameLibraryItem> UserGameLibraryItem { get; set; }
+        public virtual DbSet<WishListItem> WishListItem { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
-                //optionsBuilder.UseSqlServer("Server=LAPTOP-DIEU4LO3\\SQLEXPRESS;Database=CVGS;Trusted_Connection=True;");
             }
         }
 
@@ -356,11 +355,15 @@ namespace CVGS.Models
             modelBuilder.Entity<CartItem>(entity =>
             {
                 entity.HasKey(e => new { e.UserId, e.GameId })
-                    .HasName("PK__CartItem__F63317BA69A2DF94");
+                    .HasName("PK__CartItem__F63317BA5D92A83D");
 
                 entity.Property(e => e.UserId).HasColumnName("userId");
 
                 entity.Property(e => e.GameId).HasColumnName("gameId");
+
+                entity.Property(e => e.GameFormatCode)
+                    .IsRequired()
+                    .HasMaxLength(1);
 
                 entity.Property(e => e.LastModified)
                     .HasColumnName("lastModified")
@@ -369,17 +372,23 @@ namespace CVGS.Models
 
                 entity.Property(e => e.Quantity).HasColumnName("quantity");
 
+                entity.HasOne(d => d.GameFormatCodeNavigation)
+                    .WithMany(p => p.CartItem)
+                    .HasForeignKey(d => d.GameFormatCode)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__CartItem__GameFo__41EDCAC5");
+
                 entity.HasOne(d => d.Game)
                     .WithMany(p => p.CartItem)
                     .HasForeignKey(d => d.GameId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__CartItems__gameI__0B91BA14");
+                    .HasConstraintName("FK__CartItem__gameId__40F9A68C");
 
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.CartItem)
                     .HasForeignKey(d => d.UserId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__CartItems__userI__0A9D95DB");
+                    .HasConstraintName("FK__CartItem__userId__40058253");
             });
 
             modelBuilder.Entity<CategoryPreference>(entity =>
@@ -600,36 +609,7 @@ namespace CVGS.Models
                     .HasMaxLength(20);
             });
 
-            modelBuilder.Entity<OrderItems>(entity =>
-            {
-                entity.HasKey(e => new { e.OrderId, e.GameId })
-                    .HasName("PK__OrderIte__35A03818CBAF26B7");
-
-                entity.Property(e => e.OrderId).HasColumnName("orderId");
-
-                entity.Property(e => e.GameId).HasColumnName("gameId");
-
-                entity.Property(e => e.LastModified)
-                    .HasColumnName("lastModified")
-                    .HasColumnType("datetime")
-                    .HasDefaultValueSql("(getdate())");
-
-                entity.Property(e => e.Quantity).HasColumnName("quantity");
-
-                entity.HasOne(d => d.Game)
-                    .WithMany(p => p.OrderItems)
-                    .HasForeignKey(d => d.GameId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__OrderItem__gameI__1F98B2C1");
-
-                entity.HasOne(d => d.Order)
-                    .WithMany(p => p.OrderItems)
-                    .HasForeignKey(d => d.OrderId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__OrderItem__order__1EA48E88");
-            });
-
-            modelBuilder.Entity<Orders>(entity =>
+            modelBuilder.Entity<Order>(entity =>
             {
                 entity.Property(e => e.Id).ValueGeneratedNever();
 
@@ -650,20 +630,59 @@ namespace CVGS.Models
                     .HasMaxLength(450);
 
                 entity.HasOne(d => d.Mailing)
-                    .WithMany(p => p.Orders)
+                    .WithMany(p => p.Order)
                     .HasForeignKey(d => d.MailingId)
-                    .HasConstraintName("FK__Orders__mailingI__1AD3FDA4");
+                    .HasConstraintName("FK__Order__mailingId__47A6A41B");
 
                 entity.HasOne(d => d.Shipping)
-                    .WithMany(p => p.Orders)
+                    .WithMany(p => p.Order)
                     .HasForeignKey(d => d.ShippingId)
-                    .HasConstraintName("FK__Orders__shipping__19DFD96B");
+                    .HasConstraintName("FK__Order__shippingI__46B27FE2");
 
                 entity.HasOne(d => d.User)
-                    .WithMany(p => p.Orders)
+                    .WithMany(p => p.Order)
                     .HasForeignKey(d => d.UserId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__Orders__userId__18EBB532");
+                    .HasConstraintName("FK__Order__userId__45BE5BA9");
+            });
+
+            modelBuilder.Entity<OrderItem>(entity =>
+            {
+                entity.HasKey(e => new { e.OrderId, e.GameId })
+                    .HasName("PK__OrderIte__35A03818F2DD497D");
+
+                entity.Property(e => e.OrderId).HasColumnName("orderId");
+
+                entity.Property(e => e.GameId).HasColumnName("gameId");
+
+                entity.Property(e => e.GameFormatCode)
+                    .IsRequired()
+                    .HasMaxLength(1);
+
+                entity.Property(e => e.LastModified)
+                    .HasColumnName("lastModified")
+                    .HasColumnType("datetime")
+                    .HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.Quantity).HasColumnName("quantity");
+
+                entity.HasOne(d => d.GameFormatCodeNavigation)
+                    .WithMany(p => p.OrderItem)
+                    .HasForeignKey(d => d.GameFormatCode)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__OrderItem__GameF__4D5F7D71");
+
+                entity.HasOne(d => d.Game)
+                    .WithMany(p => p.OrderItem)
+                    .HasForeignKey(d => d.GameId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__OrderItem__gameI__4C6B5938");
+
+                entity.HasOne(d => d.Order)
+                    .WithMany(p => p.OrderItem)
+                    .HasForeignKey(d => d.OrderId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__OrderItem__order__4B7734FF");
             });
 
             modelBuilder.Entity<Platform>(entity =>
@@ -776,10 +795,10 @@ namespace CVGS.Models
                     .HasConstraintName("FK__SubCatego__userI__6501FCD8");
             });
 
-            modelBuilder.Entity<UserGameLibrary>(entity =>
+            modelBuilder.Entity<UserGameLibraryItem>(entity =>
             {
                 entity.HasKey(e => new { e.UserId, e.GameId })
-                    .HasName("PK__UserGame__F63317BA5CC51CDC");
+                    .HasName("PK__UserGame__F63317BA96A59650");
 
                 entity.Property(e => e.UserId).HasColumnName("userId");
 
@@ -791,22 +810,22 @@ namespace CVGS.Models
                     .HasDefaultValueSql("(getdate())");
 
                 entity.HasOne(d => d.Game)
-                    .WithMany(p => p.UserGameLibrary)
+                    .WithMany(p => p.UserGameLibraryItem)
                     .HasForeignKey(d => d.GameId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__UserGameL__gameI__151B244E");
+                    .HasConstraintName("FK__UserGameL__gameI__56E8E7AB");
 
                 entity.HasOne(d => d.User)
-                    .WithMany(p => p.UserGameLibrary)
+                    .WithMany(p => p.UserGameLibraryItem)
                     .HasForeignKey(d => d.UserId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__UserGameL__userI__14270015");
+                    .HasConstraintName("FK__UserGameL__userI__55F4C372");
             });
 
-            modelBuilder.Entity<WishList>(entity =>
+            modelBuilder.Entity<WishListItem>(entity =>
             {
                 entity.HasKey(e => new { e.UserId, e.GameId })
-                    .HasName("PK__WishList__F63317BA05A4165C");
+                    .HasName("PK__WishList__F63317BA133A729F");
 
                 entity.Property(e => e.UserId).HasColumnName("userId");
 
@@ -818,16 +837,16 @@ namespace CVGS.Models
                     .HasDefaultValueSql("(getdate())");
 
                 entity.HasOne(d => d.Game)
-                    .WithMany(p => p.WishList)
+                    .WithMany(p => p.WishListItem)
                     .HasForeignKey(d => d.GameId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__WishList__gameId__10566F31");
+                    .HasConstraintName("FK__WishListI__gameI__5224328E");
 
                 entity.HasOne(d => d.User)
-                    .WithMany(p => p.WishList)
+                    .WithMany(p => p.WishListItem)
                     .HasForeignKey(d => d.UserId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__WishList__userId__0F624AF8");
+                    .HasConstraintName("FK__WishListI__userI__51300E55");
             });
         }
     }

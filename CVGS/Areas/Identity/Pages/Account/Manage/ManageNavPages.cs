@@ -7,6 +7,8 @@ namespace CVGS.Areas.Identity.Pages.Account.Manage
     {
         public static string Index => "Index";
 
+        public static string WishList => "WishList";
+
         public static string ChangePassword => "ChangePassword";
 
         public static string Addresses => "Addresses";
@@ -16,6 +18,8 @@ namespace CVGS.Areas.Identity.Pages.Account.Manage
         public static string DeletePersonalData => "DeletePersonalData";
 
         public static string IndexNavClass(ViewContext viewContext) => PageNavClass(viewContext, Index);
+
+        public static string WishListNavClass(ViewContext viewContext) => PageNavClass(viewContext, WishList);
 
         public static string ChangePasswordNavClass(ViewContext viewContext) => PageNavClass(viewContext, ChangePassword);
 

@@ -52,10 +52,7 @@
                         <form asp-area="Identity" asp-page="/Account/CartIndex" asp-page-handler="Add" asp-route-id="@item.Guid" method="post">
                             <button class="btn btn-link">Add To Cart</button>
                         </form>
-                    }
-                    @if (User.IsInRole("members") || User.IsInRole("administrators") || User.IsInRole("Employees"))
-                    {
-                        <form asp-area="Identity" asp-page="/Account/WishList" asp-page-handler="Add" asp-route-id="@item.Guid" method="post">
+                        <form asp-area="Identity" asp-page="/Account/Manage/WishList" asp-page-handler="Add" asp-route-id="@item.Guid" method="post">
                             <button class="btn btn-link">Add To Wishlist</button>
                         </form>
                     }

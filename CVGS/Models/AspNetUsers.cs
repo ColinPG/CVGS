@@ -15,11 +15,11 @@ namespace CVGS.Models
             AspNetUserTokens = new HashSet<AspNetUserTokens>();
             CartItem = new HashSet<CartItem>();
             CategoryPreference = new HashSet<CategoryPreference>();
-            Orders = new HashSet<Orders>();
+            Order = new HashSet<Order>();
             PlatformPreference = new HashSet<PlatformPreference>();
             SubCategoryPreference = new HashSet<SubCategoryPreference>();
-            UserGameLibrary = new HashSet<UserGameLibrary>();
-            WishList = new HashSet<WishList>();
+            UserGameLibraryItem = new HashSet<UserGameLibraryItem>();
+            WishListItem = new HashSet<WishListItem>();
         }
 
         public string Id { get; set; }
@@ -58,10 +58,10 @@ namespace CVGS.Models
         public virtual ICollection<AspNetUserTokens> AspNetUserTokens { get; set; }
         public virtual ICollection<CartItem> CartItem { get; set; }
         public virtual ICollection<CategoryPreference> CategoryPreference { get; set; }
-        public virtual ICollection<Orders> Orders { get; set; }
+        public virtual ICollection<Order> Order { get; set; }
         public virtual ICollection<PlatformPreference> PlatformPreference { get; set; }
         public virtual ICollection<SubCategoryPreference> SubCategoryPreference { get; set; }
-        public virtual ICollection<UserGameLibrary> UserGameLibrary { get; set; }
-        public virtual ICollection<WishList> WishList { get; set; }
+        public virtual ICollection<UserGameLibraryItem> UserGameLibraryItem { get; set; }
+        public virtual ICollection<WishListItem> WishListItem { get; set; }
     }
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace CVGS.Models
 {
-    public partial class UserGameLibrary
+    public partial class UserGameLibraryItem
     {
         public string UserId { get; set; }
         public Guid GameId { get; set; }

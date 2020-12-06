@@ -1,108 +1,133 @@
 ﻿@page
+@using CVGS.Models
 @model CVGS.Areas.Identity.Pages.Account.CartCheckoutModel
 @{
     ViewData["Title"] = "Checkout";
 }
 <partial name="Manage/_StatusMessage" for="StatusMessage" />
 <form method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-sm-6">
             <h5>Mailing Address:</h5>
+            <span asp-validation-for="@Model.Input.addressMailings" class="text-danger"></span>
             @foreach (var item in Model.Input.addressMailings)
             {
                 <div class="form-group">
-                    <input type="radio" asp-for="@item" value="@item.MailingId" />
-                    <label for="@item">@item.Street @item.PostalCode @item.CountryCodeNavigation.EnglishName</label>
+                    @Html.RadioButtonFor(m => m.Input.mailingSelected, item.MailingId)
+                    <label for="@item">@ModelValidations.Capitilize(@item.Street) |  @item.PostalCode <br />  @item.CountryCodeNavigation.EnglishName</label>
+
                 </div>
             }
             <h5>Shipping Address:</h5>
+            <span asp-validation-for="@Model.Input.addressShippings" class="text-danger"></span>
             @foreach (var item in Model.Input.addressShippings)
             {
-                <input type="radio" asp-for="@item" value="@item.ShippingId" />
-                <label for="@item">@item.Street @item.PostalCode @item.CountryCodeNavigation.EnglishName</label>
+                <div class="form-group">
+                    @Html.RadioButtonFor(m => m.Input.shipppingSelected, item.ShippingId)
+                    <label for="@item">@ModelValidations.Capitilize(@item.Street)  |  @item.PostalCode <br /> @item.CountryCodeNavigation.EnglishName</label>
+                </div>
             }
-            <h5>Credit Card Information:</h5>
-            <div class="form-row">
-                <div class="form-group">
-                    <label asp-for="@Model.Input.creditCardNumber"></label>
-                    <input placeholder="0000000000000000" asp-for="@Model.Input.creditCardNumber" class="form-control" />
-                    <span asp-validation-for="@Model.Input.creditCardNumber" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="@Model.Input.securityCode"></label>
-                    <input placeholder="000" asp-for="@Model.Input.securityCode" class="form-control" />
-                    <span asp-validation-for="@Model.Input.securityCode" class="text-danger"></span>
-                </div>
+        </div>
+        
+        <div>
+            <h6 >Credit Card Information:</h6>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+            <path fill="#0099ff" fill-opacity="1" d="M0,224L48,213.3C96,203,192,181,288,165.3C384,149,480,139,576,165.3C672,192,768,256,864,272C960,288,1056,256,1152,218.7C1248,181,1344,139,1392,117.3L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z">
+                
+                </path></svg>
+            
+            <div class="form-group">
+                <label asp-for="@Model.Input.creditCardNumber"></label>
+                <input placeholder="0000000000000000" asp-for="@Model.Input.creditCardNumber" class="form-control" />
+                <span asp-validation-for="@Model.Input.creditCardNumber" class="text-danger"></span>
             </div>
-            <div class="form-row">
-                <div class="form-group">
-                    <label asp-for="@Model.Input.month"></label>
-                    <input placeholder="00" asp-for="@Model.Input.month" class="form-control" />
-                    <span asp-validation-for="@Model.Input.month" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="@Model.Input.year"></label>
-                    <input placeholder="00" asp-for="@Model.Input.year" class="form-control" />
-                    <span asp-validation-for="@Model.Input.year" class="text-danger"></span>
-                </div>
+            <div class="form-group">
+                <label asp-for="@Model.Input.securityCode"></label>
+                <input placeholder="000" asp-for="@Model.Input.securityCode" class="form-control" />
+                <span asp-validation-for="@Model.Input.securityCode" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group">
+                <label asp-for="@Model.Input.month"></label>
+                <input placeholder="00" asp-for="@Model.Input.month" class="form-control" />
+                <span asp-validation-for="@Model.Input.month" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.Input.year"></label>
+                <input placeholder="00" asp-for="@Model.Input.year" class="form-control" />
+                <span asp-validation-for="@Model.Input.year" class="text-danger"></span>
             </div>
         </div>
     </div>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => Model.Input.cartItems.First().Game.EnglishName)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => Model.Input.cartItems.First().Game.Price)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => Model.Input.cartItems.First().Quantity)
-                </th>
-                <th>Total Price</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model.Input.cartItems)
-            {
+    </div class ="w3-panel>
+    <div class=" ">
+        <table class="table">
+            <thead>
                 <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Game.EnglishName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Game.Price)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(model => item.Quantity)
-                    </td>
-                    <td>
-                        @String.Format("{0:$0.00}", (item.Quantity * item.Game.Price))
-                    </td>
+                    <th>
+                        @Html.DisplayNameFor(model => Model.Input.cartItems.First().Game.EnglishName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => Model.Input.cartItems.First().Game.Price)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => Model.Input.cartItems.First().Game.GameFormatCode)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => Model.Input.cartItems.First().Quantity)
+                    </th>
+                    <th>Total Price</th>
                 </tr>
-            }
-            <!-- Display Subtotal here-->
-            <tr>
-                <td></td>
-                <td></td>
-                <th>@Html.DisplayNameFor(model => Model.Input.subTotal)</th>
-                <td>@String.Format("{0:$0.00}", @Model.Input.subTotal)</td>
-            </tr>
-            <!-- Display Tax here-->
-            <tr>
-                <td></td>
-                <td></td>
-                <th>@Html.DisplayNameFor(model => Model.Input.taxRate)</th>
-                <td>@String.Format("{0:0.00%}", @Model.Input.taxRate)</td>
-            </tr>
-            <!-- Display Total here-->
-            <tr>
-                <td></td>
-                <td></td>
-                <th>@Html.DisplayNameFor(model => Model.Input.finalTotal)</th>
-                <td>@String.Format("{0:$0.00}", @Model.Input.finalTotal)</td>
-            </tr>
-        </tbody>
-    </table>
-    <input type="submit" class="btn btn-success" />
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Input.cartItems)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Game.EnglishName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Game.Price)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.GameFormatCodeNavigation.EnglishCategory)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => item.Quantity)
+                        </td>
+                        <td>
+                            @String.Format("{0:$0.00}", (item.Quantity * item.Game.Price))
+                        </td>
+                    </tr>
+                }
+                <!-- Display Subtotal here-->
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <th>@Html.DisplayNameFor(model => Model.Input.subTotal)</th>
+                    <td>@String.Format("{0:$0.00}", @Model.Input.subTotal)</td>
+                </tr>
+                <!-- Display Tax here-->
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <th>@Html.DisplayNameFor(model => Model.Input.taxRate)</th>
+                    <td>@String.Format("{0:0.00%}", @Model.Input.taxRate)</td>
+                </tr>
+                <!-- Display Total here-->
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <th>@Html.DisplayNameFor(model => Model.Input.finalTotal)</th>
+                    <td>@String.Format("{0:$0.00}", @Model.Input.finalTotal)</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <input type="submit" class="btn btn-success" />
 </form>

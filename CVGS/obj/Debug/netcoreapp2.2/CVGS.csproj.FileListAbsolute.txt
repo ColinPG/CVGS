@@ -145,3 +145,4 @@ C:\Users\colin\source\repos\CVGS\CVGS\obj\Debug\netcoreapp2.2\CVGS.dll
 C:\Users\colin\source\repos\CVGS\CVGS\obj\Debug\netcoreapp2.2\CVGS.pdb
 C:\Users\colin\source\repos\CVGS\CVGS\obj\Debug\netcoreapp2.2\CVGS.genruntimeconfig.cache
 C:\Users\colin\source\repos\CVGS\CVGS\obj\Debug\netcoreapp2.2\CVGS.csproj.CopyComplete
+C:\Users\colin\source\repos\CVGS\CVGS\obj\Debug\netcoreapp2.2\Razor\Areas\Identity\Pages\Account\Manage\WishList.cshtml.g.cs

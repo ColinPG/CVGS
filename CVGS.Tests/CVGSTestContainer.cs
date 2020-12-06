@@ -15,7 +15,7 @@ namespace CVGS.Tests
         protected string profileUrl;
         protected string loginUrl;
         protected string registerUrl;
-        private const string adminUsername = "admin@test.com";
+        private const string adminUsername = "TestAdmin1";
         protected const string password = "aA!123";
 
 

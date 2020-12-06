@@ -7,7 +7,7 @@ namespace CVGS.Models
     {
         public AddressShipping()
         {
-            Orders = new HashSet<Orders>();
+            Order = new HashSet<Order>();
         }
 
         public Guid ShippingId { get; set; }
@@ -25,6 +25,6 @@ namespace CVGS.Models
         public virtual Country CountryCodeNavigation { get; set; }
         public virtual Province ProvinceCodeNavigation { get; set; }
         public virtual AspNetUsers User { get; set; }
-        public virtual ICollection<Orders> Orders { get; set; }
+        public virtual ICollection<Order> Order { get; set; }
     }
 }

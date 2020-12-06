@@ -7,18 +7,17 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
-namespace CVGS.Areas.Identity.Pages.Account
+namespace CVGS.Areas.Identity.Pages.Account.Manage
 {
-    public class CartIndexModel : PageModel
+    public class WishListModel : PageModel
     {
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
         private readonly CVGSContext _context;
 
-        public CartIndexModel(
+        public WishListModel(
             UserManager<User> userManager,
             SignInManager<User> signInManager,
             CVGSContext context)
@@ -36,10 +35,9 @@ namespace CVGS.Areas.Identity.Pages.Account
 
         public class InputModel
         {
-            public List<CartItem> cartItems { get; set; }
+            public List<WishListItem> wishListItems { get; set; }
             public bool allFormatsSelected { get; set; }
         }
-
         public async Task<IActionResult> OnGet()
         {
             var user = await _userManager.GetUserAsync(User);
@@ -49,7 +47,7 @@ namespace CVGS.Areas.Identity.Pages.Account
             }
             Input = new InputModel
             {
-                cartItems = _context.CartItem.Include(a => a.GameFormatCodeNavigation)
+                wishListItems = _context.WishListItem
                 .Include(a => a.Game)
                 .Include(g => g.Game.EsrbRatingCodeNavigation)
                 .Include(g => g.Game.GameCategory)
@@ -57,19 +55,12 @@ namespace CVGS.Areas.Identity.Pages.Account
                 .Include(g => g.Game.GameFormatCodeNavigation)
                 .Include(g => g.Game.GameSubCategory)
                 .Where(a => a.UserId == user.Id)
-                .OrderByDescending(g => g.LastModified).ToList()
+                .OrderByDescending(g => g.DateCreated).ToList()
             };
             Input.allFormatsSelected = true;
-            foreach(CartItem item in Input.cartItems)
-            {
-                if (item.GameFormatCode == "B")
-                    Input.allFormatsSelected = false;
-            }
-            var formats = _context.GameFormat;
-            ViewData["GameFormat"] = new SelectList(formats, "Code", "EnglishCategory");
+            
             return Page();
         }
-
         public async Task<IActionResult> OnPostAsync()
         {
             var user = await _userManager.GetUserAsync(User);
@@ -77,28 +68,14 @@ namespace CVGS.Areas.Identity.Pages.Account
             {
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
-            var cartItems = _context.CartItem.Include(a => a.Game)
-                .Include(a => a.GameFormatCodeNavigation)
+            var wishListItems = _context.WishListItem.Include(a => a.Game)                
                 .Include(g => g.Game.EsrbRatingCodeNavigation)
                 .Include(g => g.Game.GameCategory)
                 .Include(g => g.Game.GamePerspectiveCodeNavigation)
                 .Include(g => g.Game.GameFormatCodeNavigation)
                 .Include(g => g.Game.GameSubCategory)
                 .Where(a => a.UserId == user.Id)
-                .OrderByDescending(g => g.LastModified).ToList();
-            for (int i = 0; i < cartItems.Count; i++)
-            {
-                if (cartItems[i].Quantity != Input.cartItems[i].Quantity)
-                {
-                    cartItems[i].Quantity = Input.cartItems[i].Quantity;
-                    _context.CartItem.Update(cartItems[i]);
-                }
-                if (cartItems[i].GameFormatCode != Input.cartItems[i].GameFormatCode)
-                {
-                    cartItems[i].GameFormatCode = Input.cartItems[i].GameFormatCode;
-                    _context.CartItem.Update(cartItems[i]);
-                }
-            }
+                .OrderByDescending(g => g.DateCreated).ToList();
             await _context.SaveChangesAsync();
             StatusMessage = "";
             return RedirectToPage();
@@ -112,28 +89,20 @@ namespace CVGS.Areas.Identity.Pages.Account
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
             var game = _context.Game.Include(a => a.GameFormatCodeNavigation).Where(a => a.Guid == id).FirstOrDefault();
-            //Check if exists, if it does, add 1 to quantity 
-            var cartItem = _context.CartItem.Where(a => a.GameId == id && a.UserId == user.Id).FirstOrDefault();
-            if (cartItem != null)
+
+
+            //otherwise, add new Wish List item.
+            WishListItem newWishListItem = new WishListItem()
             {
-                cartItem.Quantity += 1;
-                _context.CartItem.Update(cartItem);
-                StatusMessage = $"Another {game.EnglishName} added to cart.";
-            }
-            else
-            {
-                //otherwise, add new cart item.
-                CartItem newCartItem = new CartItem()
-                {
-                    GameId = id,
-                    Quantity = 1,
-                    LastModified = DateTime.Now,
-                    UserId = user.Id,
-                    GameFormatCode = game.GameFormatCode
-                };
-                _context.CartItem.Add(newCartItem);
-                StatusMessage = $"{game.EnglishName} added to cart.";
-            }
+                GameId = id,
+                
+                DateCreated = DateTime.Now,
+                UserId = user.Id,
+               
+            };
+            _context.WishListItem.Add(newWishListItem);
+            StatusMessage = $"{game.EnglishName} added to cart.";
+
             await _context.SaveChangesAsync();
             return RedirectToPage();
         }
@@ -145,8 +114,8 @@ namespace CVGS.Areas.Identity.Pages.Account
             {
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
-            var cartItem =  _context.CartItem.Where(a => a.GameId == id && a.UserId == user.Id).FirstOrDefault();
-            _context.CartItem.Remove(cartItem);
+            var wishListitem = _context.WishListItem.Where(a => a.GameId == id && a.UserId == user.Id).FirstOrDefault();
+            _context.WishListItem.Remove(wishListitem);
             await _context.SaveChangesAsync();
             StatusMessage = "Item removed from cart.";
             return RedirectToPage();

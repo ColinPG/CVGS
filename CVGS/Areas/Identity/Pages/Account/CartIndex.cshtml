@@ -18,6 +18,9 @@
                     @Html.DisplayNameFor(model => Model.Input.cartItems.First().Game.EsrbRatingCode)
                 </th>
                 <th>
+                    @Html.DisplayNameFor(model => Model.Input.cartItems.First().Game.GameFormatCode)
+                </th>
+                <th>
                     @Html.DisplayNameFor(model => Model.Input.cartItems.First().Game.Price)
                 </th>
                 <th></th>
@@ -26,33 +29,53 @@
         <tbody>
             @for (int i = 0; i < Model.Input.cartItems.Count; i++)
             {
-                <tr>
-                    <td>
-                        <input type="hidden" asp-for="@Model.Input.cartItems[i].GameId" />
-                        <div>
-                            <input asp-for="@Model.Input.cartItems[i].Quantity" class="form-control" />
-                            <span asp-validation-for="@Model.Input.cartItems[i].Quantity" class="text-danger"></span>
-                        </div>
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => Model.Input.cartItems[i].Game.EnglishName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => Model.Input.cartItems[i].Game.EsrbRatingCodeNavigation.Code)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => Model.Input.cartItems[i].Game.Price)
-                    </td>
-                    <td>
-                        <button asp-page="CartIndex" asp-page-handler="Remove" asp-route-id="@Model.Input.cartItems[i].Game.Guid" class="btn btn-link">Remove</button>
-                    </td>
-                </tr>
+            <tr>
+                <td>
+                    <input type="hidden" asp-for="@Model.Input.cartItems[i].GameId" />
+                    <div>
+                        <input asp-for="@Model.Input.cartItems[i].Quantity" class="form-control" />
+                        <span asp-validation-for="@Model.Input.cartItems[i].Quantity" class="text-danger"></span>
+                    </div>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => Model.Input.cartItems[i].Game.EnglishName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => Model.Input.cartItems[i].Game.EsrbRatingCodeNavigation.Code)
+                </td>
+                <td>
+                    @if (Model.Input.cartItems[i].GameFormatCode == "B")
+                    {
+                        <select asp-for="Input.cartItems[i].GameFormatCode" class="form-control" asp-items="ViewBag.GameFormat"></select>
+                        <span asp-validation-for="Input.cartItems[i].GameFormatCode" class="text-danger"></span>
+                    }
+                    else
+                    {
+                        @Html.DisplayFor(modelItem => Model.Input.cartItems[i].GameFormatCodeNavigation.EnglishCategory)
+                    }
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => Model.Input.cartItems[i].Game.Price)
+                </td>
+                <td>
+                    <button asp-page="CartIndex" asp-page-handler="Remove" asp-route-id="@Model.Input.cartItems[i].Game.Guid" class="btn btn-link">Remove</button>
+                </td>
+            </tr>
             }
             <tr>
                 <td><button class="btn btn-primary" type="submit">Update</button></td>
                 <td></td>
                 <td></td>
-                <td><a asp-page="CartCheckout" class="btn btn-success" type="submit">Checkout</a></td>
+                <td></td>
+                <td>
+                    @if (Model.Input.allFormatsSelected)
+                    {
+                        <a asp-page="CartCheckout" class="btn btn-success" type="submit">Checkout</a>
+                    }
+                    else { 
+                    <h5> Please select game formats.</h5>
+                    }
+                </td>
             </tr>
         </tbody>
     </table>
