@@ -1,0 +1,153 @@
+﻿@page
+@model CVGS.Areas.Employee.Pages.OrderDetailsModel
+@{
+    ViewData["Title"] = "Order Details";
+}
+
+<h3>Order Details</h3>
+<partial name="_StatusMessage" for="StatusMessage" />
+<a asp-page="Orders">Back to Orders List</a>
+<!--Proccessed Table-->
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Order Tracking Id
+            </th>
+            <th>
+                @Html.DisplayNameFor(modelItem => Model.Input.UserName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(modelItem => Model.Input.IsShipped)
+            </th>
+            <th>
+                @Html.DisplayNameFor(modelItem => Model.Input.DateCreated)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => Model.Input.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => Model.Input.UserName)
+            </td>
+            <td>
+                @if (Model.Input.IsShipped)
+                {
+                    <div class="text-success">Processed</div>
+                }
+                else
+                {
+                    <div class="text-danger">Pending</div>
+                }
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => Model.Input.DateCreated)
+            </td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td>
+                @if (!Model.Input.IsShipped)
+                {
+                    <form method="post">
+                        <input type="hidden" id="id" asp-for="Input.Id" />
+                        <input type="submit" class="btn btn-primary" value="Mark as Processed" />
+                    </form>
+                }
+            </td>
+            <td></td>
+        </tr>
+    </tbody>
+</table>
+<!--Address Table-->
+<table class="table">
+    <thead>
+        <tr>
+            <th>Mailing Addresss</th>
+            <th>Shipping Addresses</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                @if (Model.Input.addressMailing != null)
+                {
+                    @Html.Raw(Model.Input.addressMailing.Summary())
+                }
+            </td>
+            <td>
+                @if (Model.Input.addressShipping != null)
+                {
+                    @Html.Raw(Model.Input.addressShipping.Summary())
+                }
+            </td>
+        </tr>
+    </tbody>
+</table>
+<!--Order Details-->
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => Model.Input.orderItems.First().Game.EnglishName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => Model.Input.orderItems.First().Game.Price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => Model.Input.orderItems.First().Game.GameFormatCode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => Model.Input.orderItems.First().Quantity)
+            </th>
+            <th>Total Price</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Input.orderItems)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Game.EnglishName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Game.Price)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.GameFormatCodeNavigation.EnglishCategory)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => item.Quantity)
+                </td>
+                <td>
+                    @String.Format("{0:$0.00}", (item.Quantity * item.Game.Price))
+                </td>
+            </tr>
+        }
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <th>@Html.DisplayNameFor(model => Model.Input.subTotal)</th>
+            <td>@String.Format("{0:$0.00}", @Model.Input.subTotal)</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <th>@Html.DisplayNameFor(model => Model.Input.taxRate)</th>
+            <td>@String.Format("{0:0.00%}", @Model.Input.taxRate)</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <th>@Html.DisplayNameFor(model => Model.Input.finalTotal)</th>
+            <td>@String.Format("{0:$0.00}", @Model.Input.finalTotal)</td>
+        </tr>
+    </tbody>
+</table>

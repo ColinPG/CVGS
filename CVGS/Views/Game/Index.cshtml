@@ -5,13 +5,18 @@
 }
 
 <h1>@ViewData["Title"]</h1>
-
+<form method="get" class="float-right">
+    <div class="form-group">
+        <input name="search" type="text" />
+        <input class="btn btn-dark" type="submit" value="Search" />
+    </div>
+</form>
 <p>
     @if (User.IsInRole("administrators") || User.IsInRole("Employees"))
     {
         <a asp-action="Create">Create New</a>
     }
-    </p>
+</p>
 <table class="table">
     <thead>
         <tr>
@@ -47,7 +52,7 @@
             </td>
             <td>
                 <div class="row">
-                    @if (User.IsInRole("members") || User.IsInRole("administrators") || User.IsInRole("Employees"))
+                    @if (User.IsInRole("members") || User.IsInRole("administrators"))
                     {
                         <form asp-area="Identity" asp-page="/Account/CartIndex" asp-page-handler="Add" asp-route-id="@item.Guid" method="post">
                             <button class="btn btn-link">Add To Cart</button>

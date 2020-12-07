@@ -35,9 +35,21 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Game" asp-action="Index">Game</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/CartIndex">Shopping Cart</a>
-                        </li>
+                        @if (User.IsInRole("administrators") || User.IsInRole("members"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/CartIndex">Cart</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/GameLibrary">Library</a>
+                            </li>
+                        }
+                        @if (User.IsInRole("Employees"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="Employee" asp-page="/Orders">Orders</a>
+                            </li>
+                        }
                         @if (User.IsInRole("administrators"))
                         {
                             <li class="nav-item">
@@ -52,6 +64,7 @@
     <div class="container">
         <partial name="_CookieConsentPartial" />
         <div id="TempMessage" class="text-danger font-weight-bold">@TempData["message"]</div>
+        <div id="TempSuccess" class="text-success font-weight-bold">@TempData["successMessage"]</div>
         <main role="main" class="pb-3">
             @RenderBody()
         </main>

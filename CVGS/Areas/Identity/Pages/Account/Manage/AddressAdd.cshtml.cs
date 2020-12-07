@@ -89,7 +89,7 @@ namespace CVGS.Areas.Identity.Pages.Account.Manage
             if (String.IsNullOrWhiteSpace(Input.PostalCode))
                 ModelState.AddModelError("Input.PostalCode", "Postal Code required.");
             else if (!ModelValidations.PostalCodeValidation(Input.PostalCode))
-                ModelState.AddModelError("Input.PostalCode", "Invalid Postal Code.");
+                ModelState.AddModelError("Input.PostalCode", "Invalid Postal Code. Ex. N2N2N2");
             //City 
             if (String.IsNullOrEmpty(Input.City))
                 ModelState.AddModelError("Input.City", "City is required.");
@@ -102,8 +102,6 @@ namespace CVGS.Areas.Identity.Pages.Account.Manage
             {
                 if (Input.ApartmentNumber.Length > 20)
                     ModelState.AddModelError("Input.ApartmentNumber", "Apartment Number must be 20 or less characters");
-                else if (Input.ApartmentNumber.Length < 2)
-                    ModelState.AddModelError("Input.ApartmentNumber", "Apartment Number must be 2 or more characters");
             }
             //First Name
             if (String.IsNullOrEmpty(Input.FirstName))

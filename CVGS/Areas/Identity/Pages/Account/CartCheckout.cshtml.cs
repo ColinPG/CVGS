@@ -64,6 +64,12 @@ namespace CVGS.Areas.Identity.Pages.Account
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
             FillInputModel(user);
+            if (Input.cartItems.Count != 0 && Input.finalTotal == 0)
+            {
+                await AddGamesToAccount(Input.cartItems, user);
+                TempData["successMessage"] = "All games in cart were free! Added to account.";
+                return RedirectToAction("Index", "Home");
+            }
             if (Input.addressMailings.Count == 0 || Input.addressShippings.Count == 0)
             {
                 TempData["message"] = "Checking out requires a shipping or mailing address.";
@@ -77,7 +83,53 @@ namespace CVGS.Areas.Identity.Pages.Account
                     return RedirectToPage("CartIndex");
                 }
             }
+
             return Page();
+        }
+
+        private async Task AddGamesToAccount(List<CartItem> cartItems, User user)
+        {
+            Order newOrder = new Order()
+            {
+                Id = Guid.NewGuid(),
+                IsShipped = true,
+                DateCreated = DateTime.Now,
+                UserId = user.Id,
+            };
+            if (!String.IsNullOrEmpty(Input.mailingSelected))
+                newOrder.MailingId = Guid.Parse(Input.mailingSelected);
+            if (!String.IsNullOrEmpty(Input.shipppingSelected))
+                newOrder.ShippingId = Guid.Parse(Input.shipppingSelected);
+            _context.Order.Add(newOrder);
+            await _context.SaveChangesAsync();
+            foreach (CartItem item in Input.cartItems)
+            {
+                OrderItem oItem = new OrderItem()
+                {
+                    GameId = item.GameId,
+                    LastModified = DateTime.Now,
+                    OrderId = newOrder.Id,
+                    Quantity = item.Quantity,
+                    GameFormatCode = item.GameFormatCode
+                };
+                var isInLibrary = _context.UserGameLibraryItem.Where(a => a.GameId == item.GameId && a.UserId == user.Id).Any();
+                if (!isInLibrary)
+                {
+                    UserGameLibraryItem newLibraryItem = new UserGameLibraryItem()
+                    {
+                        GameId = item.GameId,
+                        UserId = user.Id,
+                        DatePurchased = DateTime.Now,
+                    };
+                    _context.UserGameLibraryItem.Add(newLibraryItem);
+                }
+                if (oItem.GameFormatCode == "P")
+                    newOrder.IsShipped = false;
+                _context.OrderItem.Add(oItem);
+                _context.CartItem.Remove(item);
+            }
+            _context.Order.Update(newOrder);
+            await _context.SaveChangesAsync();
         }
 
         private void FillInputModel(User user)
@@ -93,10 +145,14 @@ namespace CVGS.Areas.Identity.Pages.Account
                     .Include(g => g.Game.GameSubCategory)
                     .Where(a => a.UserId == user.Id)
                     .OrderByDescending(g => g.LastModified).ToList(),
-                addressMailings = _context.AddressMailing.Include(a => a.ProvinceCodeNavigation)
-                    .Include(a => a.CountryCodeNavigation).ToList(),
-                addressShippings = _context.AddressShipping.Include(a => a.ProvinceCodeNavigation)
-                    .Include(a => a.CountryCodeNavigation).ToList(),
+                addressMailings = _context.AddressMailing
+                    .Include(a => a.ProvinceCodeNavigation)
+                    .Include(a => a.CountryCodeNavigation)
+                    .Where(a => a.UserId == user.Id).ToList(),
+                addressShippings = _context.AddressShipping
+                    .Include(a => a.ProvinceCodeNavigation)
+                    .Include(a => a.CountryCodeNavigation)
+                    .Where(a => a.UserId == user.Id).ToList(),
                 subTotal = 0,
                 finalTotal = 0,
                 taxRate = taxRate,
@@ -173,43 +229,8 @@ namespace CVGS.Areas.Identity.Pages.Account
                 return Page();
             }
             //Add new order to db
-            Order newOrder = new Order()
-            {
-                Id = Guid.NewGuid(),
-                IsShipped = true,
-                DateCreated = DateTime.Now,
-                MailingId = Guid.Parse(Input.mailingSelected),
-                ShippingId = Guid.Parse(Input.shipppingSelected),
-                UserId = user.Id,
-            };
-            _context.Order.Add(newOrder);
-            foreach (CartItem item in Input.cartItems)
-            {
-                OrderItem oItem = new OrderItem()
-                {
-                    GameId = item.GameId,
-                    LastModified = DateTime.Now,
-                    OrderId = newOrder.Id,
-                    Quantity = item.Quantity,
-                    GameFormatCode = item.GameFormatCode
-                };
-                if (oItem.GameFormatCode == "P")
-                    newOrder.IsShipped = false;
-                else if (oItem.GameFormatCode == "D")
-                {
-                    //TODO: Add to game library
-                }
-                else
-                {
-                    TempData["message"] = "Invalid game format information.";
-                    FillInputModel(user);
-                    return Page();
-                }
-                _context.OrderItem.Add(oItem);
-                _context.CartItem.Remove(item);
-            }
-            await _context.SaveChangesAsync();
-            StatusMessage = "Order succesfully placed!";
+            await AddGamesToAccount(Input.cartItems, user);
+            TempData["successMessage"] = "Order succesfully placed!";
             return RedirectToAction("Index", "Home");
         }
     }

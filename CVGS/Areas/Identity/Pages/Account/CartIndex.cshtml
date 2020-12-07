@@ -51,6 +51,7 @@
                     }
                     else
                     {
+                        <input type="hidden" asp-for="Input.cartItems[i].GameFormatCode"/>
                         @Html.DisplayFor(modelItem => Model.Input.cartItems[i].GameFormatCodeNavigation.EnglishCategory)
                     }
                 </td>
@@ -63,7 +64,7 @@
             </tr>
             }
             <tr>
-                <td><button class="btn btn-primary" type="submit">Update</button></td>
+                <td><button class="btn btn-primary" type="submit">Save Changes</button></td>
                 <td></td>
                 <td></td>
                 <td></td>
@@ -73,7 +74,7 @@
                         <a asp-page="CartCheckout" class="btn btn-success" type="submit">Checkout</a>
                     }
                     else { 
-                    <h5> Please select game formats.</h5>
+                    <h5> To checkout, select game formats.</h5>
                     }
                 </td>
             </tr>

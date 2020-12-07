@@ -1,0 +1,55 @@
+﻿@page
+@model CVGS.Areas.Employee.Pages.OrdersModel
+@{
+    ViewData["Title"] = "Orders";
+}
+<h3>Orders List</h3>
+<partial name="_StatusMessage" for="StatusMessage" />
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Order Tracking Id
+            </th>
+            <th>
+                User Name
+            </th>
+            <th>
+                Status
+            </th>
+            <th>
+                Date Ordered
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Input.orders)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.User.UserName)
+                </td>
+                <td>
+                    @if ((bool)item.IsShipped)
+                    {
+                        <div class="text-success">Processed</div>
+                    }
+                    else
+                    {
+                        <div class="text-danger">Pending</div>
+                    }
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DateCreated)
+                </td>
+                <td>
+                    <a class="btn btn-link" asp-page="OrderDetails" asp-route-id="@item.Id">Details</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

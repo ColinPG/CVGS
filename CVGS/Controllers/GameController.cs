@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using CVGS.Models;
 using Microsoft.AspNetCore.Authorization;
+using System.Text;
 
 namespace CVGS.Controllers
 {
@@ -20,15 +21,26 @@ namespace CVGS.Controllers
         }
 
         // GET: Game
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string search)
         {
             var cVGSContext = _context.Game
-                .Include(g => g.EsrbRatingCodeNavigation)
-                .Include(g => g.GameCategory)
-                .Include(g => g.GamePerspectiveCodeNavigation)
-                .Include(g => g.GameFormatCodeNavigation)
-                .Include(g => g.GameSubCategory)
-                .OrderByDescending(g => g.LastModified);
+                    .Include(g => g.EsrbRatingCodeNavigation)
+                    .Include(g => g.GameCategory)
+                    .Include(g => g.GamePerspectiveCodeNavigation)
+                    .Include(g => g.GameFormatCodeNavigation)
+                    .Include(g => g.GameSubCategory)
+                    .OrderByDescending(g => g.LastModified);
+            if (!String.IsNullOrEmpty(search))
+            {
+                cVGSContext = _context.Game
+                    .Include(g => g.EsrbRatingCodeNavigation)
+                    .Include(g => g.GameCategory)
+                    .Include(g => g.GamePerspectiveCodeNavigation)
+                    .Include(g => g.GameFormatCodeNavigation)
+                    .Include(g => g.GameSubCategory)
+                    .Where(g => g.EnglishName.Contains(search))
+                    .OrderByDescending(g => g.LastModified);
+            }
             return View(await cVGSContext.ToListAsync());
         }
 
@@ -218,6 +230,13 @@ namespace CVGS.Controllers
         private bool GameExists(Guid id)
         {
             return _context.Game.Any(e => e.Guid == id);
+        }
+
+        public FileResult DownloadFile(string id)
+        {
+            var game = _context.Game.Where(a => a.Guid.ToString() == id).FirstOrDefault();
+            byte[] fileContents = Encoding.ASCII.GetBytes("Title: " + game.EnglishName + "\nESRB Rating: " + game.EsrbRatingCode);
+            return File(fileContents, "text/plain", $"{game.EnglishName}.txt");
         }
     }
 }

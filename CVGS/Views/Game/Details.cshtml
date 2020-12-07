@@ -8,7 +8,7 @@
 
 <div>
     <div class="row">
-        @if (User.IsInRole("members") || User.IsInRole("administrators") || User.IsInRole("Employees"))
+        @if (User.IsInRole("members") || User.IsInRole("administrators"))
         {
             <form asp-area="Identity" asp-page="/Account/CartIndex" asp-page-handler="Add" asp-route-id="@Model.Guid" method="post">
                 <button class="btn btn-link">Add To Cart</button>

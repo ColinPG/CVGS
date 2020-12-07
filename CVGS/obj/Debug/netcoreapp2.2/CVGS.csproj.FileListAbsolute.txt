@@ -80,7 +80,6 @@ C:\Users\colin\source\repos\CVGS\CVGS\bin\Debug\netcoreapp2.2\CVGS.dll
 C:\Users\colin\source\repos\CVGS\CVGS\bin\Debug\netcoreapp2.2\CVGS.pdb
 C:\Users\colin\source\repos\CVGS\CVGS\bin\Debug\netcoreapp2.2\CVGS.Views.dll
 C:\Users\colin\source\repos\CVGS\CVGS\bin\Debug\netcoreapp2.2\CVGS.Views.pdb
-C:\Users\colin\source\repos\CVGS\CVGS\obj\Debug\netcoreapp2.2\CVGS.csprojAssemblyReference.cache
 C:\Users\colin\source\repos\CVGS\CVGS\obj\Debug\netcoreapp2.2\CVGS.AssemblyInfoInputs.cache
 C:\Users\colin\source\repos\CVGS\CVGS\obj\Debug\netcoreapp2.2\CVGS.AssemblyInfo.cs
 C:\Users\colin\source\repos\CVGS\CVGS\obj\Debug\netcoreapp2.2\CVGS.csproj.CoreCompileInputs.cache
@@ -89,12 +88,19 @@ C:\Users\colin\source\repos\CVGS\CVGS\obj\Debug\netcoreapp2.2\CVGS.RazorAssembly
 C:\Users\colin\source\repos\CVGS\CVGS\obj\Debug\netcoreapp2.2\CVGS.TagHelpers.input.cache
 C:\Users\colin\source\repos\CVGS\CVGS\obj\Debug\netcoreapp2.2\CVGS.TagHelpers.output.cache
 C:\Users\colin\source\repos\CVGS\CVGS\obj\Debug\netcoreapp2.2\CVGS.RazorCoreGenerate.cache
+C:\Users\colin\source\repos\CVGS\CVGS\obj\Debug\netcoreapp2.2\Razor\Areas\Employee\Pages\Error.cshtml.g.cs
+C:\Users\colin\source\repos\CVGS\CVGS\obj\Debug\netcoreapp2.2\Razor\Areas\Employee\Pages\OrderDetails.cshtml.g.cs
+C:\Users\colin\source\repos\CVGS\CVGS\obj\Debug\netcoreapp2.2\Razor\Areas\Employee\Pages\Orders.cshtml.g.cs
+C:\Users\colin\source\repos\CVGS\CVGS\obj\Debug\netcoreapp2.2\Razor\Areas\Employee\Pages\_StatusMessage.cshtml.g.cs
+C:\Users\colin\source\repos\CVGS\CVGS\obj\Debug\netcoreapp2.2\Razor\Areas\Employee\Pages\_ViewImports.cshtml.g.cs
+C:\Users\colin\source\repos\CVGS\CVGS\obj\Debug\netcoreapp2.2\Razor\Areas\Employee\Pages\_ViewStart.cshtml.g.cs
 C:\Users\colin\source\repos\CVGS\CVGS\obj\Debug\netcoreapp2.2\Razor\Areas\Identity\Pages\Account\AccessDenied.cshtml.g.cs
 C:\Users\colin\source\repos\CVGS\CVGS\obj\Debug\netcoreapp2.2\Razor\Areas\Identity\Pages\Account\CartCheckout.cshtml.g.cs
 C:\Users\colin\source\repos\CVGS\CVGS\obj\Debug\netcoreapp2.2\Razor\Areas\Identity\Pages\Account\CartIndex.cshtml.g.cs
 C:\Users\colin\source\repos\CVGS\CVGS\obj\Debug\netcoreapp2.2\Razor\Areas\Identity\Pages\Account\ConfirmEmail.cshtml.g.cs
 C:\Users\colin\source\repos\CVGS\CVGS\obj\Debug\netcoreapp2.2\Razor\Areas\Identity\Pages\Account\ForgotPassword.cshtml.g.cs
 C:\Users\colin\source\repos\CVGS\CVGS\obj\Debug\netcoreapp2.2\Razor\Areas\Identity\Pages\Account\ForgotPasswordConfirmation.cshtml.g.cs
+C:\Users\colin\source\repos\CVGS\CVGS\obj\Debug\netcoreapp2.2\Razor\Areas\Identity\Pages\Account\GameLibrary.cshtml.g.cs
 C:\Users\colin\source\repos\CVGS\CVGS\obj\Debug\netcoreapp2.2\Razor\Areas\Identity\Pages\Account\Lockout.cshtml.g.cs
 C:\Users\colin\source\repos\CVGS\CVGS\obj\Debug\netcoreapp2.2\Razor\Areas\Identity\Pages\Account\Login.cshtml.g.cs
 C:\Users\colin\source\repos\CVGS\CVGS\obj\Debug\netcoreapp2.2\Razor\Areas\Identity\Pages\Account\LoginWithRecoveryCode.cshtml.g.cs
@@ -109,6 +115,7 @@ C:\Users\colin\source\repos\CVGS\CVGS\obj\Debug\netcoreapp2.2\Razor\Areas\Identi
 C:\Users\colin\source\repos\CVGS\CVGS\obj\Debug\netcoreapp2.2\Razor\Areas\Identity\Pages\Account\Manage\Index.cshtml.g.cs
 C:\Users\colin\source\repos\CVGS\CVGS\obj\Debug\netcoreapp2.2\Razor\Areas\Identity\Pages\Account\Manage\Preferences.cshtml.g.cs
 C:\Users\colin\source\repos\CVGS\CVGS\obj\Debug\netcoreapp2.2\Razor\Areas\Identity\Pages\Account\Manage\SetPassword.cshtml.g.cs
+C:\Users\colin\source\repos\CVGS\CVGS\obj\Debug\netcoreapp2.2\Razor\Areas\Identity\Pages\Account\Manage\WishList.cshtml.g.cs
 C:\Users\colin\source\repos\CVGS\CVGS\obj\Debug\netcoreapp2.2\Razor\Areas\Identity\Pages\Account\Manage\_Layout.cshtml.g.cs
 C:\Users\colin\source\repos\CVGS\CVGS\obj\Debug\netcoreapp2.2\Razor\Areas\Identity\Pages\Account\Manage\_ManageNav.cshtml.g.cs
 C:\Users\colin\source\repos\CVGS\CVGS\obj\Debug\netcoreapp2.2\Razor\Areas\Identity\Pages\Account\Manage\_StatusMessage.cshtml.g.cs
@@ -145,4 +152,3 @@ C:\Users\colin\source\repos\CVGS\CVGS\obj\Debug\netcoreapp2.2\CVGS.dll
 C:\Users\colin\source\repos\CVGS\CVGS\obj\Debug\netcoreapp2.2\CVGS.pdb
 C:\Users\colin\source\repos\CVGS\CVGS\obj\Debug\netcoreapp2.2\CVGS.genruntimeconfig.cache
 C:\Users\colin\source\repos\CVGS\CVGS\obj\Debug\netcoreapp2.2\CVGS.csproj.CopyComplete
-C:\Users\colin\source\repos\CVGS\CVGS\obj\Debug\netcoreapp2.2\Razor\Areas\Identity\Pages\Account\Manage\WishList.cshtml.g.cs

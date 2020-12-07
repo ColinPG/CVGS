@@ -3,11 +3,6 @@
 @inject UserManager<User> UserManager
 
 <ul class="navbar-nav">
-    <li class="nav-item">
-        <form >
-            <input id="searchInput" class="nav-link" type="text" />
-        </form>
-    </li>
 @if (SignInManager.IsSignedIn(User))
 {
     <li class="nav-item">

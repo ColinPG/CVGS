@@ -1,0 +1,60 @@
+﻿@page
+@model CVGS.Areas.Identity.Pages.Account.GameLibraryModel
+@{
+    ViewData["Title"] = $"{Model.Input.libraryItems.FirstOrDefault().User.UserName} Games";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => Model.Input.libraryItems.FirstOrDefault().Game.EnglishName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => Model.Input.libraryItems.FirstOrDefault().Game.GameCategoryId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => Model.Input.libraryItems.FirstOrDefault().Game.GameSubCategoryId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => Model.Input.libraryItems.FirstOrDefault().Game.EsrbRatingCode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => Model.Input.libraryItems.FirstOrDefault().DatePurchased)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Input.libraryItems)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Game.EnglishName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Game.GameCategory.EnglishCategory)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Game.GameSubCategory.EnglishCategory)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Game.EsrbRatingCodeNavigation.Code)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DatePurchased)
+            </td>
+            <td>
+                @Html.ActionLink("Download", "DownloadFile", "Game", new { id = item.Game.Guid })
+                <div class="flex-xl-row">
+                    <a class="btn btn-link" asp-action="Details" asp-route-id="@item.Game.Guid">Details</a>
+                </div>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
+

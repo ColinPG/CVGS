@@ -90,14 +90,14 @@ namespace CVGS.Areas.Identity.Pages.Account
             {
                 if (cartItems[i].Quantity != Input.cartItems[i].Quantity)
                 {
-                    cartItems[i].Quantity = Input.cartItems[i].Quantity;
-                    _context.CartItem.Update(cartItems[i]);
+                    if (Input.cartItems[i].Quantity > 0)
+                        cartItems[i].Quantity = Input.cartItems[i].Quantity;
                 }
                 if (cartItems[i].GameFormatCode != Input.cartItems[i].GameFormatCode)
                 {
                     cartItems[i].GameFormatCode = Input.cartItems[i].GameFormatCode;
-                    _context.CartItem.Update(cartItems[i]);
                 }
+                _context.CartItem.Update(cartItems[i]);
             }
             await _context.SaveChangesAsync();
             StatusMessage = "";
