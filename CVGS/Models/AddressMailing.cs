@@ -21,6 +21,7 @@ namespace CVGS.Models
         public DateTime? LastModified { get; set; }
         public string UserId { get; set; }
         public string ProvinceCode { get; set; }
+        public bool? Archived { get; set; }
 
         public virtual Country CountryCodeNavigation { get; set; }
         public virtual Province ProvinceCodeNavigation { get; set; }

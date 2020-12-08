@@ -10,7 +10,7 @@ namespace CVGS.Tests
 {
     public class AddressTests : CVGSTestContainer
     {
-        private string addressesUrl;
+        public const string addressesUrl = "Identity/Account/Manage/Addresses";
         private string addressesAddUrl;
         private string addressesEditUrl;
         private string addressesDeleteUrl;
@@ -24,7 +24,6 @@ namespace CVGS.Tests
 
         public AddressTests()
         {
-            addressesUrl = "Identity/Account/Manage/Addresses";
             addressesAddUrl = "Identity/Account/Manage/AddressAdd";
             addressesEditUrl = "Identity/Account/Manage/AddressEdit";
             addressesDeleteUrl = "Identity/Account/Manage/AddressDelete";
@@ -35,7 +34,7 @@ namespace CVGS.Tests
         {
             IWebElement profile = driver.FindElement(By.LinkText("Profile"));
             profile.Click();
-            IWebElement addresses = driver.FindElement(By.LinkText("Addresses"));
+            IWebElement addresses = driver.FindElement(By.Id("addresses"));
             addresses.Click();
             Assert.AreEqual(driver.Url, homeURL + addressesUrl);
         }
@@ -65,6 +64,7 @@ namespace CVGS.Tests
         [Test, Order(5)]
         public void Addresses_ClickEditLinkNoAddresses_NoEditLinkFound()
         {
+            RemoveAllAddresses(driver);
             driver.Navigate().GoToUrl(homeURL + addressesUrl);
             IWebElement editLink = null;
             try
@@ -79,6 +79,7 @@ namespace CVGS.Tests
         [Test, Order(6)]
         public void Addresses_ClickDeleteLinkNoAddresses_NoEditLinkFound()
         {
+            RemoveAllAddresses(driver);
             driver.Navigate().GoToUrl(homeURL + addressesUrl);
             IWebElement deleteLink = null;
             try
@@ -87,6 +88,74 @@ namespace CVGS.Tests
             }
             catch { }
             Assert.IsNull(deleteLink);
+        }
+
+
+        internal static void AddDefaultAddresses(IWebDriver dri)
+        {
+            IWebElement profile = dri.FindElement(By.LinkText("Profile"));
+            profile.Click();
+            IWebElement addresses = dri.FindElement(By.LinkText("Addresses"));
+            addresses.Click();
+
+            //Add Address Info
+            IWebElement addShippingLink = dri.FindElement(By.LinkText(addShippingLinkText));
+            addShippingLink.Click();
+            AddDefaultAddress(dri);
+            IWebElement addMailingLink = dri.FindElement(By.LinkText(addMailingLinkText));
+            addMailingLink.Click();
+            AddDefaultAddress(dri);
+        }
+
+        private static void AddDefaultAddress(IWebDriver dri)
+        {
+            //Input_FirstName
+            IWebElement FirstName = dri.FindElement(By.Id("Input_FirstName"));
+            FirstName.SendKeys("DefaultFirst");
+            //Input_LastName
+            IWebElement lastName = dri.FindElement(By.Id("Input_LastName"));
+            lastName.SendKeys("DefaultLast");
+            //Input_ApartmentNumber
+            IWebElement apartmentNumber = dri.FindElement(By.Id("Input_ApartmentNumber"));
+            apartmentNumber.SendKeys("1");
+            //Input_Street
+            IWebElement streetBox = dri.FindElement(By.Id("Input_Street"));
+            streetBox.SendKeys("DefaultStreet");
+            //Input_City
+            IWebElement cityBox = dri.FindElement(By.Id("Input_City"));
+            cityBox.SendKeys("DefaultCity");
+            //Input_Street
+            IWebElement postalCode = dri.FindElement(By.Id("Input_PostalCode"));
+            postalCode.SendKeys("N0J1E0");
+            //Input_Country
+            SelectElement countryBox = new SelectElement(dri.FindElement(By.Id("Input_CountryCode")));
+            countryBox.SelectByValue("CAN");
+            //SubmitButton
+            IWebElement addButton = dri.FindElement(By.Id("add-address"));
+            addButton.Click();
+        }
+
+        internal static void RemoveAllAddresses(IWebDriver driver)
+        {
+            IWebElement profile = driver.FindElement(By.LinkText("Profile"));
+            profile.Click();
+            IWebElement addresses = driver.FindElement(By.LinkText("Addresses"));
+            addresses.Click();
+
+            while(true)
+            {
+                try
+                {
+                    IWebElement deleteLink = driver.FindElement(By.LinkText(deleteLinkText));
+                    deleteLink.Click();
+                    IWebElement deleteButton = driver.FindElement(By.Id("delete-address"));
+                    deleteButton.Click();
+                }
+                catch
+                {
+                    break;
+                }
+            }
         }
 
         [TestCase("TestFirstName","TestLastName","TestAptNum","TestStreet","TestCity","N2R1W2","CAN")]
@@ -125,11 +194,17 @@ namespace CVGS.Tests
             //Verify exists, and under correct list
             IReadOnlyCollection<IWebElement> elements = driver.FindElements(By.LinkText(editLinkText));
             Assert.IsNotNull(elements);
+            bool skipFirst = true;
             foreach (IWebElement e in elements)
             {
-                string[] words = e.GetAttribute("id").Split("_");
-                Assert.AreEqual(words[0], "EditS");
-                testShippingGuid = words[1];
+                if (skipFirst)
+                    skipFirst = false;
+                else
+                {
+                    string[] words = e.GetAttribute("id").Split("_");
+                    Assert.AreEqual(words[0], "EditS");
+                    testShippingGuid = words[1];
+                }
             }
         }
 
@@ -218,27 +293,27 @@ namespace CVGS.Tests
         [Test, Order(10)]
         public void Addresses_EditAddrWithInvalidData_InputValidationFailed()
         {
-            string editTestShipAddressURL = homeURL + addressesEditUrl + "?id=" + testShippingGuid + "&isMailing=false";
-            driver.Navigate().GoToUrl(editTestShipAddressURL);
+            driver.Navigate().GoToUrl(homeURL + addressesUrl);
+            IWebElement editLink = driver.FindElement(By.LinkText("Edit"));
+            editLink.Click();
             //Input_FirstName
             IWebElement firstName = driver.FindElement(By.Id("Input_FirstName"));
             string newFName = ""; //First Name can't be blank
             firstName.Clear();
             firstName.SendKeys(newFName);
+            string currURL = driver.Url;
             //SubmitButton
             IWebElement editButton = driver.FindElement(By.Id("edit-address"));
             editButton.Click();
-
-            driver.Navigate().GoToUrl(editTestShipAddressURL);
-            firstName = driver.FindElement(By.Id("Input_FirstName"));
-            Assert.AreNotEqual(newFName, firstName.GetAttribute("value"));
+            Assert.AreEqual(driver.Url, currURL);
         }
 
         [Test, Order(11)]
         public void Addresses_EditShippingAddr_ShippingAddrEditted()
         {
-            string editTestShipAddressURL = homeURL + addressesEditUrl + "?id=" + testShippingGuid + "&isMailing=false";
-            driver.Navigate().GoToUrl(editTestShipAddressURL);
+            driver.Navigate().GoToUrl(homeURL + addressesUrl);
+            IWebElement editLink = driver.FindElement(By.LinkText("Edit"));
+            editLink.Click();
             //Input_FirstName
             IWebElement firstName = driver.FindElement(By.Id("Input_FirstName"));
             string newFName = firstName.GetAttribute("value").Substring(0, firstName.GetAttribute("value").Length - 1);
@@ -248,9 +323,8 @@ namespace CVGS.Tests
             IWebElement editButton = driver.FindElement(By.Id("edit-address"));
             editButton.Click();
 
-            driver.Navigate().GoToUrl(editTestShipAddressURL);
-            firstName = driver.FindElement(By.Id("Input_FirstName"));
-            Assert.AreEqual(newFName, firstName.GetAttribute("value"));
+            IWebElement status = driver.FindElement(By.Id("statusMessage"));
+            Assert.AreEqual("Shipping Address updated.", status.Text);
         }
 
         [Test, Order(12)]
@@ -267,14 +341,15 @@ namespace CVGS.Tests
             IWebElement editButton = driver.FindElement(By.Id("edit-address"));
             editButton.Click();
 
-            driver.Navigate().GoToUrl(editTestShipAddressURL);
-            firstName = driver.FindElement(By.Id("Input_FirstName"));
-            Assert.AreEqual(newFName, firstName.GetAttribute("value"));
+            IWebElement status = driver.FindElement(By.Id("statusMessage"));
+            Assert.AreEqual("Mailing Address updated.", status.Text);
         }
 
         [Test, Order(13)]
         public void Addresses_DeleteShippingAddr_ShippingAddrDeleted()
         {
+            RemoveAllAddresses(driver);
+            AddDefaultAddresses(driver);
             driver.Navigate().GoToUrl(homeURL + addressesUrl);
             IReadOnlyCollection<IWebElement> elements = driver.FindElements(By.LinkText(deleteLinkText));
             Assert.IsNotNull(elements);
@@ -287,17 +362,17 @@ namespace CVGS.Tests
                     break;
                 }
             }
-            string deleteUrl = driver.Url;
             IWebElement deleteButton = driver.FindElement(By.Id("delete-address"));
             deleteButton.Click();
-
-            driver.Navigate().GoToUrl(deleteUrl);
-            Assert.AreNotEqual(deleteUrl, driver.Url);
+            IWebElement statusMessage = driver.FindElement(By.Id("statusMessage"));
+            Assert.AreEqual("Shipping Address deleted.", statusMessage.Text);
         }
 
         [Test, Order(14)]
         public void Addresses_DeleteMailingAddr_MailingAddrDeleted()
         {
+            RemoveAllAddresses(driver);
+            AddDefaultAddresses(driver);
             driver.Navigate().GoToUrl(homeURL + addressesUrl);
             IReadOnlyCollection<IWebElement> elements = driver.FindElements(By.LinkText(deleteLinkText));
             Assert.IsNotNull(elements);
@@ -310,12 +385,10 @@ namespace CVGS.Tests
                     break;
                 }
             }
-            string deleteUrl = driver.Url;
             IWebElement deleteButton = driver.FindElement(By.Id("delete-address"));
             deleteButton.Click();
-
-            driver.Navigate().GoToUrl(deleteUrl);
-            Assert.AreNotEqual(deleteUrl, driver.Url);
+            IWebElement statusMessage = driver.FindElement(By.Id("statusMessage"));
+            Assert.AreEqual("Mailing Address deleted.", statusMessage.Text);
         }
     }
 }

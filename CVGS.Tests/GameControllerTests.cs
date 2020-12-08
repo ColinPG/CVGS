@@ -146,5 +146,73 @@ namespace CVGS.Tests
             string resultTitleData = messages[0];
             return resultTitleData;
         }
+
+
+        [Test]
+        public void GameController_CheckForSearchBox_SearchBoxExists()
+        {
+            Logout();
+            IWebElement game = driver.FindElement(By.LinkText("Game"));
+            game.Click();
+            IWebElement searchBox = null;
+            try { searchBox = driver.FindElement(By.Name("search")); } catch { }
+            Assert.IsNotNull(searchBox);
+        }
+
+        [TestCase ("test")]
+        [Test]
+        public void GameController_SearchBoxKeepsTextAfterSearching_SearchTextInBox(string keys)
+        {
+            Logout();
+            IWebElement game = driver.FindElement(By.LinkText("Game"));
+            game.Click();
+            IWebElement searchBox = driver.FindElement(By.Name("search"));
+            searchBox.Clear();
+            searchBox.SendKeys(keys);
+            IWebElement searchButton = driver.FindElement(By.Id("SearchButton"));
+            searchButton.Click();
+            searchBox = driver.FindElement(By.Name("search"));
+            Assert.AreEqual(keys, searchBox.GetAttribute("value"));
+        }
+
+        [Test, Order(3)]
+        public void GameController_SearchTestGame_TestGameFound()
+        {
+            Logout();
+            IWebElement game = driver.FindElement(By.LinkText("Game"));
+            game.Click();
+            IWebElement searchBox = driver.FindElement(By.Name("search"));
+            searchBox.Clear();
+            searchBox.SendKeys(gameTitleData);
+            IWebElement searchButton = driver.FindElement(By.Id("SearchButton"));
+            searchButton.Click();
+
+            IWebElement gameName = driver.FindElement(By.Id("gameName"));
+            Assert.True(gameName.Text.Contains(gameTitleData));
+
+            searchBox = driver.FindElement(By.Name("search"));
+            Assert.AreEqual(gameTitleData, searchBox.GetAttribute("value"));
+        }
+
+        [Test]
+        public void GameController_SearchRandomGuid_NothingFound()
+        {
+            Logout();
+            Guid randomGuid = Guid.NewGuid();
+            IWebElement game = driver.FindElement(By.LinkText("Game"));
+            game.Click();
+            IWebElement searchBox = driver.FindElement(By.Name("search"));
+            searchBox.Clear();
+            searchBox.SendKeys(randomGuid.ToString());
+            IWebElement searchButton = driver.FindElement(By.Id("SearchButton"));
+            searchButton.Click();
+
+            IWebElement gameName = null;
+            try { gameName = driver.FindElement(By.Id("gameName")); } catch { }
+            Assert.IsNull(gameName);
+
+            searchBox = driver.FindElement(By.Name("search"));
+            Assert.AreEqual(randomGuid.ToString(), searchBox.GetAttribute("value"));
+        }
     }
 }

@@ -40,6 +40,7 @@ namespace CVGS.Areas.Identity.Pages.Account
         {
             public List<UserGameLibraryItem> libraryItems { get; set; }
             public bool allFormatsSelected { get; set; }
+            public string userName { get; set; }
         }
         public async Task<IActionResult> OnGet()
         {
@@ -60,6 +61,7 @@ namespace CVGS.Areas.Identity.Pages.Account
                     .Include(g => g.Game.GameSubCategory)
                     .Where(a => a.UserId == user.Id)
                     .OrderByDescending(g => g.DatePurchased).ToList(),
+                userName = user.UserName
             };            
             return Page();
         }

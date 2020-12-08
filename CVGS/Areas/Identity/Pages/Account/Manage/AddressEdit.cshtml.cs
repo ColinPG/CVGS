@@ -160,8 +160,6 @@ namespace CVGS.Areas.Identity.Pages.Account.Manage
             {
                 if (Input.ApartmentNumber.Length > 20)
                     ModelState.AddModelError("Input.ApartmentNumber", "Apartment Number must be 20 or less characters");
-                else if (Input.ApartmentNumber.Length < 2)
-                    ModelState.AddModelError("Input.ApartmentNumber", "Apartment Number must be 2 or more characters");
             }
             //First Name
             if (String.IsNullOrEmpty(Input.FirstName))
@@ -200,6 +198,7 @@ namespace CVGS.Areas.Identity.Pages.Account.Manage
                     Street = Input.Street,
                     CountryCode = Input.CountryCode,
                     LastModified = DateTime.Now,
+                    Archived = false,
                     UserId = user.Id
                 };
                 if (!ValidCountry(Input.CountryCode))
@@ -225,6 +224,7 @@ namespace CVGS.Areas.Identity.Pages.Account.Manage
                     Street = Input.Street,
                     CountryCode = Input.CountryCode,
                     LastModified = DateTime.Now,
+                    Archived = false,
                     UserId = user.Id
                 };
                 if (!ValidCountry(Input.CountryCode))

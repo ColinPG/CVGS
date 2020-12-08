@@ -148,13 +148,15 @@ namespace CVGS.Areas.Identity.Pages.Account.Manage
             if (_isMailing)
             {
                 var address = _context.AddressMailing.Where(a => a.MailingId.ToString() == id).FirstOrDefault();
-                _context.Remove(address);
+                address.Archived = true;
+                _context.Update(address);
                 StatusMessage = "Mailing Address deleted.";
             }
             else
             {
                 var address = _context.AddressShipping.Where(a => a.ShippingId.ToString() == id).FirstOrDefault();
-                _context.Remove(address);
+                address.Archived = true;
+                _context.Update(address);
                 StatusMessage = "Shipping Address deleted.";
             }
             await _context.SaveChangesAsync();

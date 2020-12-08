@@ -10,11 +10,11 @@
     <div class="row">
         @if (User.IsInRole("members") || User.IsInRole("administrators"))
         {
-            <form asp-area="Identity" asp-page="/Account/CartIndex" asp-page-handler="Add" asp-route-id="@Model.Guid" method="post">
-                <button class="btn btn-link">Add To Cart</button>
+            <form asp-area="Identity" asp-page="/Account/Cart" asp-page-handler="Add" asp-route-id="@Model.Guid" method="post">
+                <button id="addToCart" class="btn btn-link">Add To Cart</button>
             </form>
             <form asp-area="Identity" asp-page="/Account/Manage/WishList" asp-page-handler="Add" asp-route-id="@Model.Guid" method="post">
-                <button class="btn btn-link">Add To Wishlist</button>
+                <button id="addToWishlist" class="btn btn-link">Add To Wishlist</button>
             </form>
         }
     </div>
@@ -30,7 +30,7 @@
             @Html.DisplayNameFor(model => model.Price)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Price)
+            <div id="price">@Html.DisplayFor(model => model.Price)</div>
         </dd>
         @*<dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.FrenchName)

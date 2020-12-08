@@ -1,7 +1,7 @@
 ﻿@page
 @model CVGS.Areas.Identity.Pages.Account.GameLibraryModel
 @{
-    ViewData["Title"] = $"{Model.Input.libraryItems.FirstOrDefault().User.UserName} Games";
+    ViewData["Title"] = $"{Model.Input.userName}'s Games";
 }
 
 <h1>@ViewData["Title"]</h1>
@@ -33,7 +33,7 @@
         {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Game.EnglishName)
+                <div id="gameName">@Html.DisplayFor(modelItem => item.Game.EnglishName)</div>
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Game.GameCategory.EnglishCategory)

@@ -36,11 +36,11 @@
                 <td>
                     @if ((bool)item.IsShipped)
                     {
-                        <div class="text-success">Processed</div>
+                        <div id="orderStatus" class="text-success">Processed</div>
                     }
                     else
                     {
-                        <div class="text-danger">Pending</div>
+                        <div id="orderStatus" class="text-danger">Pending</div>
                     }
                 </td>
                 <td>

@@ -632,24 +632,24 @@ namespace CVGS.Models
                 entity.HasOne(d => d.Mailing)
                     .WithMany(p => p.Order)
                     .HasForeignKey(d => d.MailingId)
-                    .HasConstraintName("FK__Order__mailingId__47A6A41B");
+                    .HasConstraintName("FK__Order__mailingId__5AB9788F");
 
                 entity.HasOne(d => d.Shipping)
                     .WithMany(p => p.Order)
                     .HasForeignKey(d => d.ShippingId)
-                    .HasConstraintName("FK__Order__shippingI__46B27FE2");
+                    .HasConstraintName("FK__Order__shippingI__5BAD9CC8");
 
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.Order)
                     .HasForeignKey(d => d.UserId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__Order__userId__45BE5BA9");
+                    .HasConstraintName("FK__Order__userId__5CA1C101");
             });
 
             modelBuilder.Entity<OrderItem>(entity =>
             {
                 entity.HasKey(e => new { e.OrderId, e.GameId })
-                    .HasName("PK__OrderIte__35A03818F2DD497D");
+                    .HasName("PK__OrderIte__35A03818ACDF7298");
 
                 entity.Property(e => e.OrderId).HasColumnName("orderId");
 
@@ -670,19 +670,19 @@ namespace CVGS.Models
                     .WithMany(p => p.OrderItem)
                     .HasForeignKey(d => d.GameFormatCode)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__OrderItem__GameF__4D5F7D71");
+                    .HasConstraintName("FK__OrderItem__GameF__607251E5");
 
                 entity.HasOne(d => d.Game)
                     .WithMany(p => p.OrderItem)
                     .HasForeignKey(d => d.GameId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__OrderItem__gameI__4C6B5938");
+                    .HasConstraintName("FK__OrderItem__gameI__6166761E");
 
                 entity.HasOne(d => d.Order)
                     .WithMany(p => p.OrderItem)
                     .HasForeignKey(d => d.OrderId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__OrderItem__order__4B7734FF");
+                    .HasConstraintName("FK__OrderItem__order__625A9A57");
             });
 
             modelBuilder.Entity<Platform>(entity =>

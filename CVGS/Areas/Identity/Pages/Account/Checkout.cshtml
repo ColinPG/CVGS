@@ -1,0 +1,143 @@
+﻿@page
+@using CVGS.Models
+@model CVGS.Areas.Identity.Pages.Account.CheckoutModel
+@{
+    ViewData["Title"] = "Checkout";
+}
+<partial name="Manage/_StatusMessage" for="StatusMessage" />
+<form method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="curved-div">
+                
+                <h6>Address Information:</h6>   
+
+            </div>
+            <h5>Mailing Address:</h5>
+            <span asp-validation-for="@Model.Input.addressMailings" class="text-danger"></span>
+            @foreach (var item in Model.Input.addressMailings)
+            {
+                <div class="form-group">
+                    @Html.RadioButtonFor(m => m.Input.mailingSelected, item.MailingId)
+                    <label for="@item">@item.ShortSummary()</label>
+
+                </div>
+            }
+            <h5>Shipping Address:</h5>
+            <span asp-validation-for="@Model.Input.addressShippings" class="text-danger"></span>
+            @foreach (var item in Model.Input.addressShippings)
+            {
+                <div class="form-group">
+                    @Html.RadioButtonFor(m => m.Input.shipppingSelected, item.ShippingId)
+                    <label for="@item">@item.ShortSummary()</label>
+                </div>
+            }
+        </div>
+        <div class="col-sm-6">
+            <div class="curved-div">
+                <h6>Credit Card Information:</h6>
+            
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.Input.creditCardNumber"></label>
+                <input placeholder="0000000000000000" asp-for="@Model.Input.creditCardNumber" class="form-control" />
+                <span asp-validation-for="@Model.Input.creditCardNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.Input.securityCode"></label>
+                <input placeholder="000" asp-for="@Model.Input.securityCode" class="form-control" />
+                <span asp-validation-for="@Model.Input.securityCode" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.Input.month"></label>
+                <input placeholder="00" asp-for="@Model.Input.month" class="form-control" />
+                <span asp-validation-for="@Model.Input.month" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.Input.year"></label>
+                <input placeholder="00" asp-for="@Model.Input.year" class="form-control" />
+                <span asp-validation-for="@Model.Input.year" class="text-danger"></span>
+            </div>
+        </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => Model.Input.cartItems.First().Game.EnglishName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => Model.Input.cartItems.First().Game.Price)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => Model.Input.cartItems.First().Game.GameFormatCode)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => Model.Input.cartItems.First().Quantity)
+                    </th>
+                    <th>Total Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Input.cartItems)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Game.EnglishName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Game.Price)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.GameFormatCodeNavigation.EnglishCategory)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => item.Quantity)
+                        </td>
+                        <td>
+                            @String.Format("{0:$0.00}", (item.Quantity * item.Game.Price))
+                        </td>
+                    </tr>
+                }
+                <!-- Display Subtotal here-->
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <th>@Html.DisplayNameFor(model => Model.Input.subTotal)</th>
+                    <td>@String.Format("{0:$0.00}", @Model.Input.subTotal)</td>
+                </tr>
+                <!-- Display Tax here-->
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <th>@Html.DisplayNameFor(model => Model.Input.taxRate)</th>
+                    <td>@String.Format("{0:0.00%}", @Model.Input.taxRate)</td>
+                </tr>
+                <!-- Display Total here-->
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <th>@Html.DisplayNameFor(model => Model.Input.finalTotal)</th>
+                    <td>@String.Format("{0:$0.00}", @Model.Input.finalTotal)</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td><input id="submit" type="submit" class="btn btn-success" /></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    @for (int i = 0; i < Model.Input.cartItems.Count; i++)
+    {
+        <input type="hidden" asp-for="@Model.Input.cartItems[i].GameId" />
+        <input type="hidden" asp-for="@Model.Input.cartItems[i].UserId" />
+        <input type="hidden" asp-for="@Model.Input.cartItems[i].Quantity" />
+        <input type="hidden" asp-for="@Model.Input.cartItems[i].GameFormatCode" />
+    }
+</form>

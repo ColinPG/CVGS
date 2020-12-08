@@ -23,8 +23,6 @@ namespace CVGS.Tests
         private const string addCategoryButtonId = "addCategory";
         private const string addSubCategoryButtonId = "addSubcategory";
 
-        private const string testLogin = "TestEmployee1";
-
         public PreferenceTests()
         {
             preferenceUrl = "Identity/Account/Manage/Preferences";
@@ -172,7 +170,7 @@ namespace CVGS.Tests
         public void Preferences_AddWhenAllPreferencesSelected_NoPreferencesAvailable()
         {
             Logout();
-            Login(user: testLogin);
+            Login(user: employeeUsername);
             driver.Navigate().GoToUrl(homeURL + changePreferenceUrl);
             IWebElement addButton = null;
             while (true)

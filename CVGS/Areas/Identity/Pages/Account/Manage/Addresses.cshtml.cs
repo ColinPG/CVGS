@@ -50,8 +50,8 @@ namespace CVGS.Areas.Identity.Pages.Account.Manage
             }
             Input = new InputModel
             {
-                addressMailings = _context.AddressMailing.Include(a => a.ProvinceCodeNavigation).Include(a => a.CountryCodeNavigation).Where(a => a.UserId == user.Id).ToList(),
-                addressShippings = _context.AddressShipping.Include(a => a.ProvinceCodeNavigation).Include(a => a.CountryCodeNavigation).Where(a => a.UserId == user.Id).ToList()
+                addressMailings = _context.AddressMailing.Include(a => a.ProvinceCodeNavigation).Include(a => a.CountryCodeNavigation).Where(a => a.UserId == user.Id).Where(g => g.Archived == false).ToList(),
+                addressShippings = _context.AddressShipping.Include(a => a.ProvinceCodeNavigation).Include(a => a.CountryCodeNavigation).Where(a => a.UserId == user.Id).Where(g => g.Archived == false).ToList()
             };
             return Page();
         }

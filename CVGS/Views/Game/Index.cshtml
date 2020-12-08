@@ -1,5 +1,4 @@
 ﻿@model IEnumerable<CVGS.Models.Game>
-
 @{
     ViewData["Title"] = "All Games";
 }
@@ -7,8 +6,8 @@
 <h1>@ViewData["Title"]</h1>
 <form method="get" class="float-right">
     <div class="form-group">
-        <input name="search" type="text" />
-        <input class="btn btn-dark" type="submit" value="Search" />
+        <input name="search" type="text" value="@TempData["searchInput"]" />
+        <input id="SearchButton" class="btn btn-dark" type="submit" value="Search" />
     </div>
 </form>
 <p>
@@ -39,7 +38,7 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.EnglishName)
+                <div id="gameName">@Html.DisplayFor(modelItem => item.EnglishName)</div>
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.GameCategory.EnglishCategory)
@@ -54,11 +53,11 @@
                 <div class="row">
                     @if (User.IsInRole("members") || User.IsInRole("administrators"))
                     {
-                        <form asp-area="Identity" asp-page="/Account/CartIndex" asp-page-handler="Add" asp-route-id="@item.Guid" method="post">
-                            <button class="btn btn-link">Add To Cart</button>
+                        <form asp-area="Identity" asp-page="/Account/Cart" asp-page-handler="Add" asp-route-id="@item.Guid" method="post">
+                            <button id="addToCart" class="btn btn-link">Add To Cart</button>
                         </form>
                         <form asp-area="Identity" asp-page="/Account/Manage/WishList" asp-page-handler="Add" asp-route-id="@item.Guid" method="post">
-                            <button class="btn btn-link">Add To Wishlist</button>
+                            <button id="addToWishlist" class="btn btn-link">Add To Wishlist</button>
                         </form>
                     }
                 </div>

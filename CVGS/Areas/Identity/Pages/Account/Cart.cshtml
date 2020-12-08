@@ -1,0 +1,87 @@
+﻿@page
+@model CVGS.Areas.Identity.Pages.Account.CartModel
+@{
+    ViewData["Title"] = "Cart";
+}
+<partial name="Manage/_StatusMessage" for="StatusMessage" />
+<form method="post">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => Model.Input.cartItems.First().Quantity)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => Model.Input.cartItems.First().Game.EnglishName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => Model.Input.cartItems.First().Game.EsrbRatingCode)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => Model.Input.cartItems.First().Game.GameFormatCode)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => Model.Input.cartItems.First().Game.Price)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < Model.Input.cartItems.Count; i++)
+            {
+            <tr>
+                <td>
+                    <input type="hidden" asp-for="@Model.Input.cartItems[i].GameId" />
+                    <div>
+                        <input asp-for="@Model.Input.cartItems[i].Quantity" class="form-control" />
+                        <span asp-validation-for="@Model.Input.cartItems[i].Quantity" class="text-danger"></span>
+                    </div>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => Model.Input.cartItems[i].Game.EnglishName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => Model.Input.cartItems[i].Game.EsrbRatingCodeNavigation.Code)
+                </td>
+                <td>
+                    @if (Model.Input.cartItems[i].GameFormatCode == "B")
+                    {
+                        <select asp-for="Input.cartItems[i].GameFormatCode" class="form-control" asp-items="ViewBag.GameFormat"></select>
+                        <span asp-validation-for="Input.cartItems[i].GameFormatCode" class="text-danger"></span>
+                    }
+                    else
+                    {
+                        <input type="hidden" asp-for="Input.cartItems[i].GameFormatCode"/>
+                        @Html.DisplayFor(modelItem => Model.Input.cartItems[i].GameFormatCodeNavigation.EnglishCategory)
+                    }
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => Model.Input.cartItems[i].Game.Price)
+                </td>
+                <td>
+                    <button id="remove" asp-page="Cart" asp-page-handler="Remove" asp-route-id="@Model.Input.cartItems[i].Game.Guid" class="btn btn-link">Remove</button>
+                </td>
+            </tr>
+            }
+            <tr>
+                <td><button id="SaveChanges" class="btn btn-primary" type="submit">Save Changes</button></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>
+                    @if (Model.Input.allFormatsSelected)
+                    {
+                        if (Model.Input.cartItems.Count != 0)
+                        {
+                            <a id="Checkout" asp-page="Checkout" class="btn btn-success" type="submit">Checkout</a>
+                        }
+                    }
+                    else
+                    {
+                        <h5> To checkout, select game formats.</h5>
+                    }
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</form>

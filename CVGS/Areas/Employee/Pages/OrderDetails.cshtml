@@ -55,7 +55,7 @@
                 {
                     <form method="post">
                         <input type="hidden" id="id" asp-for="Input.Id" />
-                        <input type="submit" class="btn btn-primary" value="Mark as Processed" />
+                        <input id="mark" type="submit" class="btn btn-primary" value="Mark as Processed" />
                     </form>
                 }
             </td>
@@ -112,7 +112,7 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Game.EnglishName)
+                    <div id="GameTitle">@Html.DisplayFor(modelItem => item.Game.EnglishName)</div>
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Game.Price)

@@ -29,6 +29,7 @@ namespace CVGS.Controllers
                     .Include(g => g.GamePerspectiveCodeNavigation)
                     .Include(g => g.GameFormatCodeNavigation)
                     .Include(g => g.GameSubCategory)
+                    .Where(g => g.Archived == false)
                     .OrderByDescending(g => g.LastModified);
             if (!String.IsNullOrEmpty(search))
             {
@@ -38,9 +39,11 @@ namespace CVGS.Controllers
                     .Include(g => g.GamePerspectiveCodeNavigation)
                     .Include(g => g.GameFormatCodeNavigation)
                     .Include(g => g.GameSubCategory)
+                    .Where(g => g.Archived == false)
                     .Where(g => g.EnglishName.Contains(search))
                     .OrderByDescending(g => g.LastModified);
             }
+            TempData["searchInput"] = search;
             return View(await cVGSContext.ToListAsync());
         }
 
@@ -91,6 +94,7 @@ namespace CVGS.Controllers
                 Guid newGuid = Guid.NewGuid();
                 //while (GameExists(newGuid))
                 //    newGuid = Guid.NewGuid();
+                game.Archived = false;
                 game.Guid = newGuid;
                 game.FrenchName = "";
                 game.FrenchDescription = "";
@@ -153,6 +157,7 @@ namespace CVGS.Controllers
             {
                 try
                 {
+                    game.Archived = false;
                     game.FrenchName = "";
                     game.FrenchDescription = "";
                     game.FrenchDetail = "";
@@ -218,7 +223,8 @@ namespace CVGS.Controllers
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
             var game = await _context.Game.FindAsync(id);
-            _context.Game.Remove(game);
+            game.Archived = true;
+            _context.Game.Update(game);
             await _context.SaveChangesAsync();
             if (User.IsInRole("administrators"))
                 TempData["message"] = $"Game: {game.EnglishName} deleted with id:{id.ToString()}";

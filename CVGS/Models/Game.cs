@@ -33,6 +33,7 @@ namespace CVGS.Models
         public string UserName { get; set; }
         public DateTime? LastModified { get; set; }
         public double? Price { get; set; }
+        public bool? Archived { get; set; }
 
         public virtual EsrbRating EsrbRatingCodeNavigation { get; set; }
         public virtual GameCategory GameCategory { get; set; }

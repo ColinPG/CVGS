@@ -95,8 +95,6 @@ C:\Users\colin\source\repos\CVGS\CVGS\obj\Debug\netcoreapp2.2\Razor\Areas\Employ
 C:\Users\colin\source\repos\CVGS\CVGS\obj\Debug\netcoreapp2.2\Razor\Areas\Employee\Pages\_ViewImports.cshtml.g.cs
 C:\Users\colin\source\repos\CVGS\CVGS\obj\Debug\netcoreapp2.2\Razor\Areas\Employee\Pages\_ViewStart.cshtml.g.cs
 C:\Users\colin\source\repos\CVGS\CVGS\obj\Debug\netcoreapp2.2\Razor\Areas\Identity\Pages\Account\AccessDenied.cshtml.g.cs
-C:\Users\colin\source\repos\CVGS\CVGS\obj\Debug\netcoreapp2.2\Razor\Areas\Identity\Pages\Account\CartCheckout.cshtml.g.cs
-C:\Users\colin\source\repos\CVGS\CVGS\obj\Debug\netcoreapp2.2\Razor\Areas\Identity\Pages\Account\CartIndex.cshtml.g.cs
 C:\Users\colin\source\repos\CVGS\CVGS\obj\Debug\netcoreapp2.2\Razor\Areas\Identity\Pages\Account\ConfirmEmail.cshtml.g.cs
 C:\Users\colin\source\repos\CVGS\CVGS\obj\Debug\netcoreapp2.2\Razor\Areas\Identity\Pages\Account\ForgotPassword.cshtml.g.cs
 C:\Users\colin\source\repos\CVGS\CVGS\obj\Debug\netcoreapp2.2\Razor\Areas\Identity\Pages\Account\ForgotPasswordConfirmation.cshtml.g.cs
@@ -152,3 +150,6 @@ C:\Users\colin\source\repos\CVGS\CVGS\obj\Debug\netcoreapp2.2\CVGS.dll
 C:\Users\colin\source\repos\CVGS\CVGS\obj\Debug\netcoreapp2.2\CVGS.pdb
 C:\Users\colin\source\repos\CVGS\CVGS\obj\Debug\netcoreapp2.2\CVGS.genruntimeconfig.cache
 C:\Users\colin\source\repos\CVGS\CVGS\obj\Debug\netcoreapp2.2\CVGS.csproj.CopyComplete
+C:\Users\colin\source\repos\CVGS\CVGS\obj\Debug\netcoreapp2.2\CVGS.csprojAssemblyReference.cache
+C:\Users\colin\source\repos\CVGS\CVGS\obj\Debug\netcoreapp2.2\Razor\Areas\Identity\Pages\Account\Cart.cshtml.g.cs
+C:\Users\colin\source\repos\CVGS\CVGS\obj\Debug\netcoreapp2.2\Razor\Areas\Identity\Pages\Account\Checkout.cshtml.g.cs

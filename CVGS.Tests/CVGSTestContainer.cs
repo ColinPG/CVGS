@@ -15,7 +15,9 @@ namespace CVGS.Tests
         protected string profileUrl;
         protected string loginUrl;
         protected string registerUrl;
-        private const string adminUsername = "TestAdmin1";
+        protected const string adminUsername = "TestAdmin1";
+        protected const string memberUsername = "TestMember1";
+        protected const string employeeUsername = "TestEmployee1";
         protected const string password = "aA!123";
 
 
@@ -28,16 +30,28 @@ namespace CVGS.Tests
         }
 
         [SetUp]
-        public void Setup()
+        public virtual void Setup()
         {
             driver = new ChromeDriver();
             Login(adminUsername, password);
         }
 
         [TearDown]
-        public void TearDown()
+        public virtual void TearDown()
         {
             driver.Close();
+        }
+
+        public virtual void LoginAsMember()
+        {
+            Logout();
+            Login(user: memberUsername);
+        }
+
+        public virtual void LoginAsEmployee()
+        {
+            Logout();
+            Login(user: employeeUsername);
         }
 
         public void Login(string user = adminUsername, string pass = password)

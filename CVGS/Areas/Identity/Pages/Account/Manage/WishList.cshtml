@@ -37,7 +37,7 @@
                             @Html.DisplayFor(modelItem => Model.Input.wishListItems[i].Game.Price)
                         </td>
                         <td>
-                            <button asp-page="WishList" asp-page-handler="Remove" asp-route-id="@Model.Input.wishListItems[i].Game.Guid" class="btn btn-link">Remove</button>
+                            <button id="remove" asp-page="WishList" asp-page-handler="Remove" asp-route-id="@Model.Input.wishListItems[i].Game.Guid" class="btn btn-link">Remove</button>
                         </td>
                     </tr>
                 }

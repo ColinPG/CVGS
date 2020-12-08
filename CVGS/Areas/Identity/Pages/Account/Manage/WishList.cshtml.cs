@@ -89,20 +89,21 @@ namespace CVGS.Areas.Identity.Pages.Account.Manage
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
             var game = _context.Game.Include(a => a.GameFormatCodeNavigation).Where(a => a.Guid == id).FirstOrDefault();
-
-
-            //otherwise, add new Wish List item.
-            WishListItem newWishListItem = new WishListItem()
+            if(!_context.WishListItem.Where(a => a.GameId == game.Guid && a.UserId == user.Id).Any())
             {
-                GameId = id,
-                
-                DateCreated = DateTime.Now,
-                UserId = user.Id,
-               
-            };
-            _context.WishListItem.Add(newWishListItem);
-            StatusMessage = $"{game.EnglishName} added to cart.";
-
+                WishListItem newWishListItem = new WishListItem()
+                {
+                    GameId = id,
+                    DateCreated = DateTime.Now,
+                    UserId = user.Id,
+                };
+                _context.WishListItem.Add(newWishListItem);
+                StatusMessage = $"{game.EnglishName} added to wishlist.";
+            }
+            else
+            {
+                TempData["message"] = $"{game.EnglishName} is already on wishlist.";
+            }
             await _context.SaveChangesAsync();
             return RedirectToPage();
         }

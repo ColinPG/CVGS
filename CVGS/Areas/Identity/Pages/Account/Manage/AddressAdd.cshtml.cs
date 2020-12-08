@@ -141,6 +141,7 @@ namespace CVGS.Areas.Identity.Pages.Account.Manage
                     Street = Input.Street,
                     CountryCode = Input.CountryCode,
                     LastModified = DateTime.Now,
+                    Archived = false,
                     UserId = user.Id
                 };
                 if (!ValidCountry(Input.CountryCode))
@@ -166,6 +167,7 @@ namespace CVGS.Areas.Identity.Pages.Account.Manage
                     Street = Input.Street,
                     CountryCode = Input.CountryCode,
                     LastModified = DateTime.Now,
+                    Archived = false,
                     UserId = user.Id
                 };
                 if (!ValidCountry(Input.CountryCode))
