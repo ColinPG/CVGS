@@ -118,7 +118,7 @@ namespace CVGS.Areas.Identity.Pages.Account.Manage
             var wishListitem = _context.WishListItem.Where(a => a.GameId == id && a.UserId == user.Id).FirstOrDefault();
             _context.WishListItem.Remove(wishListitem);
             await _context.SaveChangesAsync();
-            StatusMessage = "Item removed from cart.";
+            StatusMessage = "Item removed from wishlist.";
             return RedirectToPage();
         }
     }
