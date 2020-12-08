@@ -18,6 +18,7 @@ namespace CVGS.Areas.Identity.Pages.Account
     {
         private readonly SignInManager<User> _signInManager;
         private readonly UserManager<User> _userManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
 
@@ -118,6 +119,8 @@ namespace CVGS.Areas.Identity.Pages.Account
                 if (user.GamerTag == null)
                     user.GamerTag = "";
                 var result = await _userManager.CreateAsync(user, Input.Password);
+                if(result.Succeeded)
+                    result = await _userManager.AddToRoleAsync(user, "members");
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");

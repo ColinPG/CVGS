@@ -47,7 +47,7 @@ namespace CVGS.Tests
         }
 
         [Test]
-        public void GameLibrary_NavigateToLibrary_URLIsLibrary()
+        public void GameLibrary_DownloadFile_FileExistsOnLocalMachine()
         {
             driver.Close();
             string downloadPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);

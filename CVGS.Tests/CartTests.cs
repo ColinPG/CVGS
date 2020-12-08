@@ -25,7 +25,7 @@ namespace CVGS.Tests
         }
 
         [Test]
-        public void Cart_NavigateToCartAsEmployee_URLIsNotLibrary()
+        public void Cart_NavigateToCartAsEmployee_URLIsNotCart()
         {
             LoginAsEmployee();
             IWebElement cart = null;
